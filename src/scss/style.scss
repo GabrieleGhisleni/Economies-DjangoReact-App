@@ -1,0 +1,42 @@
+$mainColor: rgb(240, 191, 118)!important;
+
+
+.containerImg{
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.err{
+    font-weight: 800;
+    border: solid red 2px;
+}
+
+.myNav{
+    background-color: $mainColor;
+    margin-bottom: 10px;
+    padding-right: 15px;
+    .navbar-nav{
+        padding-right: 25px!important;
+    }
+    .navbar-brand{
+        a{
+         color:black!important;
+        }
+    }
+}
+
+.myFooter{
+    margin-top: 15px;
+    background-color: $mainColor;
+    font-weight: 600;
+    color:black;
+    min-height: 50px;
+    .Icons{
+        margin-top: 5px;
+
+    }
+    a {
+        color:black;
+    }
+
+}

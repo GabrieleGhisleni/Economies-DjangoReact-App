@@ -1,0 +1,28 @@
+.containerImg {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat; }
+
+.err {
+  font-weight: 800;
+  border: solid red 2px; }
+
+.myNav {
+  background-color: #f0bf76 !important;
+  margin-bottom: 10px;
+  padding-right: 15px; }
+  .myNav .navbar-nav {
+    padding-right: 25px !important; }
+  .myNav .navbar-brand a {
+    color: black !important; }
+
+.myFooter {
+  margin-top: 15px;
+  background-color: #f0bf76 !important;
+  font-weight: 600;
+  color: black;
+  min-height: 50px; }
+  .myFooter .Icons {
+    margin-top: 5px; }
+  .myFooter a {
+    color: black; }
