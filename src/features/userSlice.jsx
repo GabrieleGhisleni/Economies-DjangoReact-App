@@ -25,7 +25,6 @@ export const authSlice = createSlice({
             state.isLogged=false
             state.token = null
             state.refreshToken = null
-
         }
 
     }});

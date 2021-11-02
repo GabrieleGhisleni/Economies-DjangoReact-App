@@ -16,7 +16,6 @@ const MyNav = () => {
         return (
             <React.Fragment>
                 <LogoutForm />
-                <span>profile</span>
             </React.Fragment>
         );
     };
@@ -37,11 +36,6 @@ const MyNav = () => {
             <NavbarToggler onClick={() => setOpen(!isOpen)} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav navbar className='ml-auto'>
-                    <NavItem>
-                        <NavLink to='/' className='nav-link'>
-                            Home
-                        </NavLink>
-                    </NavItem>
                     {isLogged?  <AuthenticatedUser /> : ExternalUser() }
                 </Nav>
             </Collapse>

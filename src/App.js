@@ -1,5 +1,7 @@
-import Main from './components/Main'
 import './css/style.css'
+
+import Main from './components/Main'
+
 import { Provider } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -13,10 +15,7 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <Router>
-          <Switch>
-            <Route exact path="/login" component={Main} />
-            <Main />
-          </Switch>
+          <Main />
         </Router>
       </PersistGate>
     </Provider>

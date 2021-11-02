@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'records',
     'users',
     # externalApp,
+    'django_extensions',
     'rest_framework',
     'corsheaders',
 ]

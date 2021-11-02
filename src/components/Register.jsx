@@ -9,6 +9,7 @@ import authSlice, { login } from '../features/userSlice';
 // persisent and axios
 import { useHistory } from "react-router";
 import axios from 'axios';
+import { Fetch } from './Fetching';
 
 
 const RegisterForm = () => {
@@ -29,7 +30,9 @@ const RegisterForm = () => {
                 dispatch(authSlice.actions.setAccount(res.data.user));
                 history.push('/')
                 setModal(!modal)
+                return res.data.refresh
             })
+            .then(token => Fetch(token))
             .catch(e => {
                 setErr(<div className='err btn btn-danger'> Username Not Available!</div>)
                 setCol('firebrick')

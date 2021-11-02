@@ -6,9 +6,12 @@ import { ErrorMessage, useFormik } from 'formik';
 // Redux import
 import { useDispatch } from 'react-redux';
 import authSlice, { login } from '../features/userSlice';
+import memberSlice from '../features/memberSlice';
 // persisent and axios
 import { useHistory } from "react-router";
 import axios from 'axios';
+// 
+import { Fetch } from './Fetching';
 
 
 const LoginModal = () => {
@@ -17,12 +20,11 @@ const LoginModal = () => {
     const [modal, setModal] = useState(false)
     const [col, setCol] = useState('white')
     const [err, setErr] = useState('')
-    
-    const login = ( username, password ) => {
-        let url = "http://localhost:8000/auth/login/"
+
+    const login = (username, password) => {
+        let url = "http://localhost:8000/auth/login/";
         axios.post(url, { username, password })
             .then((res) => {
-                console.log(res)
                 dispatch(authSlice.actions.setAuthTokens({
                     token: res.data.access,
                     refreshToken: res.data.refresh,
@@ -30,11 +32,15 @@ const LoginModal = () => {
                 dispatch(authSlice.actions.setAccount(res.data.user));
                 history.push('/')
                 setModal(!modal)
-            })
+                return res.data.access
+            }).then(token => {Fetch(token)})
             .catch(e => {
+                console.log({ e })
                 setErr(<div className='err btn btn-danger'> User or Password ARE not Valid</div>)
                 setCol('firebrick')
             })
+        
+
     }
 
     const formik = useFormik({
@@ -46,16 +52,16 @@ const LoginModal = () => {
 
     return (
         <React.Fragment>
-        <NavItem className>
-                <NavLink to='#' className='nav-link'  onClick={() => setModal(!modal)}>
+            <NavItem className>
+                <NavLink to='#' className='nav-link' onClick={() => setModal(!modal)}>
                     Login
-        </NavLink>
-        </NavItem>
+                </NavLink>
+            </NavItem>
             <Modal isOpen={modal} toggle={() => setModal(!modal)}>
-                <ModalHeader 
-                close={<button className="close" onClick={()=>setModal(!modal)}>×</button>}
-                toggle={()=>setModal(!modal)} >Login Form {err? err: ''}</ModalHeader>
-                <ModalBody style={{backgroundColor: col}}>
+                <ModalHeader
+                    close={<button className="close" onClick={() => setModal(!modal)}>×</button>}
+                    toggle={() => setModal(!modal)} >Login Form {err ? err : ''}</ModalHeader>
+                <ModalBody style={{ backgroundColor: col }}>
                     <Form onSubmit={formik.handleSubmit}>
                         <FormGroup>
                             <Col>
@@ -89,7 +95,7 @@ const LoginModal = () => {
                         </FormGroup>
                         <Row className='ml-auto'>
                             <Col xs={2}>
-                                <Button  type='submit' className='primary bg-primary'>
+                                <Button type='submit' className='primary bg-primary'>
                                     Submit
                                 </Button>
                             </Col>
@@ -105,7 +111,7 @@ const LoginModal = () => {
                     </Form>
                 </ModalBody>
             </Modal>
-            </React.Fragment>
+        </React.Fragment>
     );
 };
 

@@ -1,5 +1,23 @@
 $mainColor: rgb(240, 191, 118)!important;
+$secondColor: rgb(241, 129, 1)!important;
 
+.recordForm{
+    padding: 10px;
+    margin: 15px;
+}
+.secondNav{
+    background-color: $secondColor;
+    margin-bottom: 20px;
+    a {
+        font-size: 1.5rem;
+        padding: 0 2rem;
+        margin: 0 2rem;
+        font-style: italic;
+    }
+    a:hover{
+        font-size:2rem;
+    }
+}
 
 .containerImg{
     background-position: center;
@@ -13,7 +31,7 @@ $mainColor: rgb(240, 191, 118)!important;
 
 .myNav{
     background-color: $mainColor;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     padding-right: 15px;
     .navbar-nav{
         padding-right: 25px!important;

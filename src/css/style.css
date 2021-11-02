@@ -1,3 +1,18 @@
+.recordForm {
+  padding: 10px;
+  margin: 15px; }
+
+.secondNav {
+  background-color: #f18101 !important;
+  margin-bottom: 20px; }
+  .secondNav a {
+    font-size: 1.5rem;
+    padding: 0 2rem;
+    margin: 0 2rem;
+    font-style: italic; }
+  .secondNav a:hover {
+    font-size: 2rem; }
+
 .containerImg {
   background-position: center;
   background-size: cover;
@@ -9,7 +24,7 @@
 
 .myNav {
   background-color: #f0bf76 !important;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   padding-right: 15px; }
   .myNav .navbar-nav {
     padding-right: 25px !important; }

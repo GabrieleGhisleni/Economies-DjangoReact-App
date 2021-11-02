@@ -26,12 +26,15 @@ router.register(r'auth/login', LoginViewSet, basename='auth-login')
 router.register(r'auth/register', RegistrationViewSet, basename='auth-register')
 router.register(r'auth/refresh', RefreshViewSet, basename='auth-refresh')
 
-router.register(r'api/records', views.RecordsView, basename='record')
-router.register(r'api/r', views.RecordsListApi, basename='record')
+router.register(r'api/records', views.RecordsListApi, basename='record')
+router.register(r'api/members', views.MemberListApi, basename='members')
+router.register(r'api/category', views.CategoryView, basename='category')
 
 # The router class allows us to make the following queries: s
 # /records/ - This returns a list of all the Todo items (Create and Read operations can be done here).
 # /records/id - this returns a single Todo item using the id primary key (Update and Delete operations can be done here).
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
