@@ -32,8 +32,8 @@ const LoginModal = () => {
                 dispatch(authSlice.actions.setAccount(res.data.user));
                 history.push('/')
                 setModal(!modal)
-                return res.data.access
-            }).then(token => {Fetch(token)})
+                return res.data.access})
+            .then(token =>  Fetch(token, dispatch))
             .catch(e => {
                 console.log({ e })
                 setErr(<div className='err btn btn-danger'> User or Password ARE not Valid</div>)

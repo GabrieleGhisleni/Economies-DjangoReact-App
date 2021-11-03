@@ -1,6 +1,15 @@
 $mainColor: rgb(240, 191, 118)!important;
 $secondColor: rgb(241, 129, 1)!important;
 
+.confRow{
+    margin:20px 0;
+    padding: 20px 0;
+    border-bottom: 2px dashed black;
+}
+.Plus{
+    color:green;
+}
+
 .recordForm{
     padding: 10px;
     margin: 15px;

@@ -2,24 +2,23 @@ from django.db import models
 from django.conf import settings
 
 
-
 class Records(models.Model):
-    record_name = models.CharField(max_length=100)
     price = models.FloatField(null=True)
+    record_name = models.CharField(max_length=100)
     created_at = models.DateField(auto_now_add=True)
+    description = models.CharField(max_length=1000, null=True, blank=True)
     made_by = models.ForeignKey('Members', on_delete=models.CASCADE)
-    category_associated = models.ManyToManyField('Category', through='Categorized')
+    category_associated = models.ForeignKey('UserCategory', on_delete=models.CASCADE, null=True, blank=True)
+    sub_category_associated = models.ForeignKey('SubCategory', on_delete=models.CASCADE, null=True, blank=True)
 
-class Category(models.Model):
+class UserCategory(models.Model):
     category_name = models.CharField(max_length=100)
-    # records_associated = models.ManyToManyField('Records', through='Categorized',related_name='record_assigned')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-class Categorized(models.Model):
-    record = models.ForeignKey(Records, on_delete = models.CASCADE, related_name='id_record')
-    categories = models.ForeignKey(Category, on_delete = models.CASCADE, related_name='id_category')
-    created_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
-
+class SubCategory(models.Model):
+    sub_category_name = models.CharField(max_length=100)
+    primary_category = models.ForeignKey('UserCategory', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 class Members(models.Model):
     member_name = models.CharField(max_length=100)

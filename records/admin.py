@@ -3,4 +3,4 @@ from .models import *
 
 admin.site.register(Members)
 admin.site.register(Records)
-admin.site.register(Category)
+# admin.site.register(Category)

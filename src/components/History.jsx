@@ -30,7 +30,7 @@ const History = () => {
 
     let i = 0;
     const renderedRecords = records.map((r) => {
-        const catNames = r.category_associated.map(n => categories.find(u => u.id === n).category_name)
+        const catNames = categories.find(u => u.id === r.category_associated).category_name
         const membNames = members.find(u => u.id === r.made_by).member_name
         i++;
         return (
@@ -57,6 +57,7 @@ const History = () => {
 
     return (
         <React.Fragment>
+            <Container>
             <Table hover responsive>
                 <thead>
                     <tr>
@@ -71,6 +72,7 @@ const History = () => {
                 </thead>
                 <tbody>{renderedRecords}</tbody>
             </Table>
+            </Container>
         </React.Fragment>
     );
 };

@@ -29,6 +29,7 @@ router.register(r'auth/refresh', RefreshViewSet, basename='auth-refresh')
 router.register(r'api/records', views.RecordsListApi, basename='record')
 router.register(r'api/members', views.MemberListApi, basename='members')
 router.register(r'api/category', views.CategoryView, basename='category')
+router.register(r'api/sub_category', views.SubCategoryView, basename='subcategory')
 
 # The router class allows us to make the following queries: s
 # /records/ - This returns a list of all the Todo items (Create and Read operations can be done here).

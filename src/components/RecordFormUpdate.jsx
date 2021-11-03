@@ -21,7 +21,6 @@ const RecordFormUpdate = ({props}) => {
       .then((res) => {dispatch(memberSlice.actions.addRecords(res.data))})
       .catch((e) => console.log({e}));
   };
-  console.log(members)
   const renderedMembers = members.map((m) => {
     return <option value={m.id}>{m.member_name}</option>;
   });

@@ -5,7 +5,8 @@ export const memberSlice = createSlice({
     initialState: {
         members: [],
         records: [],
-        categories:[]
+        categories:[],
+        subcategories:[]
     },
     reducers: {
         setMembers: (state, action) => {
@@ -16,6 +17,9 @@ export const memberSlice = createSlice({
         },
         setCategory: (state, action) => {
             state.categories = action.payload
+        },
+        setSubCategory: (state, action) => {
+            state.subcategories = action.payload
         },
         addRecords: (state, action) => {
             state.records.push(action.payload)

@@ -24,15 +24,15 @@ const RegisterForm = () => {
         axios.post(url, { username, password, email })
             .then((res) => {
                 dispatch(authSlice.actions.setAuthTokens({
-                    token: res.data.access,
+                    token: res.data.token,
                     refreshToken: res.data.refresh,
                 }));
                 dispatch(authSlice.actions.setAccount(res.data.user));
                 history.push('/')
                 setModal(!modal)
-                return res.data.refresh
+                return res.data.token
             })
-            .then(token => Fetch(token))
+            .then(token => Fetch(token, dispatch))
             .catch(e => {
                 setErr(<div className='err btn btn-danger'> Username Not Available!</div>)
                 setCol('firebrick')

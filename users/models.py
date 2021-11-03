@@ -7,5 +7,4 @@ class MyUser(models.Model):
     username = models.CharField(max_length=100)
     password =  models.CharField(max_length=100)
     email = models.CharField(max_length=100)
-    Gender = models.CharField(max_length=100, null=True, blank=True)
 
