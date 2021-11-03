@@ -1,24 +1,19 @@
 from .serializer import (RecordsSerializer,
                          SubCategorySerializer,
                          MembersSerializer,
-                         #  CategorySerializer,
                          UserCategorySerializer)
 
+from .models import Members, UserCategory, SubCategory, Records
 from django.shortcuts import get_object_or_404
-from .models import Members, UserCategory, SubCategory  # Category
-from rest_framework import viewsets
-from .models import Records
 from django.contrib.auth.models import User
 
-from rest_framework.views import APIView
-from django.http import Http404
-from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import viewsets
+from rest_framework import generics
 from rest_framework import status
 from rest_framework import mixins
-from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
-
+import datetime
 
 class CategoryView(viewsets.GenericViewSet,
                    mixins.RetrieveModelMixin,
@@ -118,8 +113,9 @@ class SubCategoryView(viewsets.GenericViewSet,
             return Response({"data": self.request.data, "necessary_field": [ 'id', "primary_category_id", "sub_category_name"]}, status=status.HTTP_400_BAD_REQUEST)
         subCategory = get_object_or_404(SubCategory, pk=self.request.data['id'])
         if subCategory.user_id == request.user.id:
+            primary = get_object_or_404(UserCategory, pk=self.request.data['primary_category_id'])
             subCategory.sub_category_name = self.request.data['sub_category_name']
-            subCategory.primary_category_id = self.request.data['primary_category_id']
+            subCategory.primary_category = primary
             subCategory.save()
             return Response(SubCategorySerializer(subCategory).data, status=status.HTTP_202_ACCEPTED)
         else:
@@ -200,14 +196,57 @@ class RecordsListApi(
         return self.retrieve(request, *args, **kwargs)
 
     def put(self, request, *args, **kwargs):
-        ""
-        # record = Records.objects.filter(pk=request.data['id'])
-        # serializer = RecordsSerializer(data=request.data)
-        # serializer.is_valid(raise_exception=True)
-        # record.update(serializer)
+        if "id" not in self.request.data: 
+            return Response({"data": self.request.data, "necessary_field": [ 'id']}, status=status.HTTP_400_BAD_REQUEST)
+        ids = set([i for i in self.get_queryset()])
+        m_id,c_id,s_id,i_id = set(),set(),set(), set()
+        m,c,s,i = set(),set(),set(), set()
+        for r in ids: 
+            m.add(r.made_by), m_id.add(r.made_by.id)
+            c.add(r.category_associated), c_id.add(r.category_associated.id)
+            # s.add(r.sub_category_associated), s_id.add(r.sub_category_associated.id)
+            i.add(r.id)
+        if request.data['id'] not in i:
+            return Response({"not_allowed": request.data}, status=status.HTTP_403_FORBIDDEN)
+        record = get_object_or_404(Records, pk=self.request.data['id'])
+        if "price" in self.request.data: 
+            record.price=self.request.data['price']
 
-        # # print(record, serializer)
-        return Response(status=status.HTTP_202_ACCEPTED)
+        if "record_name" in self.request.data: record.record_name=self.request.data['record_name']
+        if "created_at" in self.request.data:
+            try:
+                datetime.datetime.strptime(self.request.data['created_at'], '%Y-%m-%d')
+            except ValueError:
+                return Response({"data": self.request.data['created_at'], "format time": [ '%Y-%m-%d']}, status=status.HTTP_400_BAD_REQUEST)
+            record.created_at=self.request.data['created_at']
+
+        if "description" in self.request.data: record.description=self.request.data['description']
+
+      
+        if "made_by" in self.request.data: 
+            if self.request.data['made_by'] in m_id:
+                m = get_object_or_404(Members, pk=self.request.data['made_by'])
+                record.made_by = m
+            else: 
+                return Response({"not_allowed_member_not_valid": request.data}, status=status.HTTP_403_FORBIDDEN)
+
+        if "category_associated" in self.request.data:
+            if  self.request.data['category_associated'] in c_id: 
+                c = get_object_or_404(UserCategory, pk=self.request.data['category_associated'])
+                record.category_associated = c
+            else: 
+                return Response({"not_allowed_category_not_valid": request.data}, status=status.HTTP_403_FORBIDDEN)
+
+        if "sub_category_associated" in self.request.data and self.request.data["sub_category_associated"]:
+            if self.request.data['sub_category_associated'] in s_id: 
+                s = get_object_or_404(SubCategory, pk=self.request.data['sub_category_associated'])
+                record.sub_category_associated = s
+            else: 
+                return Response({"not_allowed_subcategory_not_valid": request.data}, status=status.HTTP_403_FORBIDDEN)
+
+        record.save()
+
+        return Response(RecordsSerializer(record).data, status=status.HTTP_202_ACCEPTED)
 
     def delete(self, request, format=None):
         ids = set([i.id for i in self.get_queryset()])

@@ -6,10 +6,10 @@ import { ErrorMessage, useFormik } from 'formik';
 // Redux import
 import { useDispatch } from 'react-redux';
 import authSlice, { login } from '../features/userSlice';
+import memberSlice from '../features/memberSlice';
 // persisent and axios
 import { useHistory } from "react-router";
 import axios from 'axios';
-import { Fetch } from './Fetching';
 
 
 const RegisterForm = () => {
@@ -18,21 +18,36 @@ const RegisterForm = () => {
     const [modal, setModal] = useState(false)
     const [col, setCol] = useState('white')
     const [err, setErr] = useState('')
-    
-    const login = ( username, password,email ) => {
+
+    const register = (username, password, email) => {
         let url = "http://localhost:8000/auth/register/"
         axios.post(url, { username, password, email })
             .then((res) => {
-                dispatch(authSlice.actions.setAuthTokens({
-                    token: res.data.token,
-                    refreshToken: res.data.refresh,
-                }));
+                dispatch(authSlice.actions.setAuthTokens(
+                    { token: res.data.token, refreshToken: res.data.refresh, }));
                 dispatch(authSlice.actions.setAccount(res.data.user));
                 history.push('/')
                 setModal(!modal)
-                return res.data.token
+                return (res.data.token)
+            }).then(token => {
+                const headers = { headers: { "Authorization": `Bearer ${token}` } }
+
+                axios.get('http://localhost:8000/api/records/', headers)
+                    .then(res => { dispatch(memberSlice.actions.setRecords(res.data)) })
+                    .catch(e => console.log('Error fetching data records', { e }))
+
+                axios.get('http://localhost:8000/api/category/', headers)
+                    .then(res => { dispatch(memberSlice.actions.setCategory(res.data)) })
+                    .catch(e => console.log('Error fetching data cat', { e }))
+
+                axios.get('http://localhost:8000/api/sub_category/', headers)
+                    .then(res => { dispatch(memberSlice.actions.setSubCategory(res.data)) })
+                    .catch(e => console.log('Error fetching data subcat', { e }))
+
+                axios.get('http://localhost:8000/api/members/', headers)
+                    .then(res => { dispatch(memberSlice.actions.setMembers(res.data)) })
+                    .catch(e => console.log('Error fetching data members', { e }))
             })
-            .then(token => Fetch(token, dispatch))
             .catch(e => {
                 setErr(<div className='err btn btn-danger'> Username Not Available!</div>)
                 setCol('firebrick')
@@ -40,24 +55,24 @@ const RegisterForm = () => {
     }
 
     const formik = useFormik({
-        initialValues: { username: '', password: '', email:'' },
-        onSubmit: (values) => { login(values.username, values.password, values.email) },
+        initialValues: { username: '', password: '', email: '' },
+        onSubmit: (values) => { register(values.username, values.password, values.email) },
         validateOnChange: false,
         validateOnBlur: false
     });
 
     return (
         <React.Fragment>
-        <NavItem className>
-                <NavLink to='#' className='nav-link'  onClick={() => setModal(!modal)}>
-                    Register                           
-        </NavLink>
-        </NavItem>
+            <NavItem className>
+                <NavLink to='#' className='nav-link' onClick={() => setModal(!modal)}>
+                    Register
+                </NavLink>
+            </NavItem>
             <Modal isOpen={modal} toggle={() => setModal(!modal)} >
-                <ModalHeader 
-                close={<button className="close" onClick={()=>setModal(!modal)}>×</button>}
-                toggle={()=>setModal(!modal)} >Register Form  {err? err: ''}</ModalHeader>
-                <ModalBody  style={{backgroundColor: col}}>
+                <ModalHeader
+                    close={<button className="close" onClick={() => setModal(!modal)}>×</button>}
+                    toggle={() => setModal(!modal)} >Register Form  {err ? err : ''}</ModalHeader>
+                <ModalBody style={{ backgroundColor: col }}>
                     <Form onSubmit={formik.handleSubmit}>
                         <FormGroup>
                             <Col>
@@ -106,7 +121,7 @@ const RegisterForm = () => {
                         </FormGroup>
                         <Row className='ml-auto'>
                             <Col xs={2}>
-                                <Button  type='submit' className='primary bg-primary'>
+                                <Button type='submit' className='primary bg-primary'>
                                     Submit
                                 </Button>
                             </Col>
@@ -122,7 +137,7 @@ const RegisterForm = () => {
                     </Form>
                 </ModalBody>
             </Modal>
-            </React.Fragment>
+        </React.Fragment>
     );
 };
 

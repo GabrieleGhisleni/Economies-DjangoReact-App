@@ -2,7 +2,7 @@ import React, { Component, useState } from "react";
 import { Label, Col, Row, Button, FormGroup, Input, Form } from "reactstrap";
 import { ErrorMessage, useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import * as axios from 'axios';
 import memberSlice from "../features/memberSlice";
 import { NavLink } from 'react-router-dom';
 
@@ -10,27 +10,27 @@ const RecordForm = () => {
   const dispatch = useDispatch()
   const token = useSelector((state) => state.auth.token);
   const members = useSelector((state) => state.members.members);
+  const headers = { "Authorization": `Bearer ${token}` }
   const categories = useSelector((state) => state.members.categories);
   const subCategories = useSelector((state) => state.members.subcategories);
 
-  const addRecord = (title, price, member, main_cat, sub_cat, description, date) => {
-    let url = "http://localhost:8000/api/records/";
-    const headers = { Authorization: `Bearer ${token}` }
-    const body = {
-      record_name: title,
-      price: price,
-      made_by: member, 
-      category_associated: main_cat,
-      sub_category_associated: sub_cat,
-      description: description,
-      created_at: date,
-    }
-    console.log('values body', body)
-    axios
-      .post(url, body, { headers })
+  function addRecord(title, price, member, main_cat, sub_cat, description, date) {
+    var axios = require('axios');
+    var config = {
+      method: 'post', url: 'http://localhost:8000/api/records/', headers: headers,
+      data: {
+        record_name: title,
+        price: price,
+        made_by: member,
+        category_associated: main_cat,
+        sub_category_associated: sub_cat,
+        description: description,
+        created_at: date,
+      }};
+
+    axios(config)
       .then((res) => { dispatch(memberSlice.actions.addRecords(res.data)) })
-      .catch((e) => console.log({ e }));
-  };
+      .catch(e => console.log('Error while adding record', {e}))}
 
   const formik = useFormik({
     initialValues: {
@@ -40,9 +40,7 @@ const RecordForm = () => {
       category: categories[0].id,
       sub_category: null,
       description: null,
-      date: new Date().toJSON().slice(0, 10).replace(/-/g, '-'),
-    },
-
+      date: new Date().toJSON().slice(0, 10).replace(/-/g, '-')},
     onSubmit: (values, { resetForm }) => {
       console.log('values formik', values)
       addRecord(
@@ -54,17 +52,15 @@ const RecordForm = () => {
         values.description,
         values.date
       );
-      resetForm()
-    },
+      resetForm()},
     validateOnChange: false,
     validateOnBlur: false,
   });
 
   const renderdCategories = categories.map(c => { return <option value={c.id}>{c.category_name}</option> })
   const selectedSub = subCategories.filter(sb => sb.primary_category == formik.values.category)
-  const renderedSubCategories = selectedSub.map((m) => { return <option value={m.id}>{m.sub_category_name}</option>});
+  const renderedSubCategories = selectedSub.map((m) => { return <option value={m.id}>{m.sub_category_name}</option> });
   const renderedMembers = members.map((m) => { return <option value={m.id}>{m.member_name}</option> });
-  console.log('prefor', formik.values)
   return (
     <React.Fragment>
       <Form onSubmit={formik.handleSubmit}>

@@ -2,16 +2,16 @@ import React, { Component, useState } from 'react';
 import { Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Button, NavItem } from 'reactstrap'
 import { NavLink } from 'react-router-dom';
 // Formik form
-import { ErrorMessage, useFormik } from 'formik';
+import { useFormik } from 'formik';
 // Redux import
 import { useDispatch } from 'react-redux';
 import authSlice, { login } from '../features/userSlice';
 import memberSlice from '../features/memberSlice';
 // persisent and axios
 import { useHistory } from "react-router";
-import axios from 'axios';
+import * as axios from 'axios';
 // 
-import { Fetch } from './Fetching';
+
 
 
 const LoginModal = () => {
@@ -20,26 +20,47 @@ const LoginModal = () => {
     const [modal, setModal] = useState(false)
     const [col, setCol] = useState('white')
     const [err, setErr] = useState('')
+    var axios = require('axios');
 
     const login = (username, password) => {
-        let url = "http://localhost:8000/auth/login/";
-        axios.post(url, { username, password })
-            .then((res) => {
-                dispatch(authSlice.actions.setAuthTokens({
-                    token: res.data.access,
-                    refreshToken: res.data.refresh,
-                }));
+        var config = {
+            method: 'post',
+            url: 'http://127.0.0.1:8000/auth/login/',
+            headers: { 'Content-Type': 'application/json' },
+            data: { username: username, password: password }
+        };
+        axios(config)
+            .then(res => {
+                dispatch(authSlice.actions.setAuthTokens(
+                    { token: res.data.access, refreshToken: res.data.refresh }
+                ));
                 dispatch(authSlice.actions.setAccount(res.data.user));
                 history.push('/')
                 setModal(!modal)
-                return res.data.access})
-            .then(token =>  Fetch(token, dispatch))
-            .catch(e => {
-                console.log({ e })
-                setErr(<div className='err btn btn-danger'> User or Password ARE not Valid</div>)
-                setCol('firebrick')
+                return (res.data.access)})
+            .then(token =>{
+
+                const headers = { headers: { "Authorization": `Bearer ${token}` } }
+
+                axios.get('http://localhost:8000/api/records/', headers)
+                .then(res => {dispatch(memberSlice.actions.setRecords(res.data)) })
+                .catch(e => console.log('Error fetching data records', { e }))
+
+                axios.get('http://localhost:8000/api/category/', headers)
+                .then(res => {dispatch(memberSlice.actions.setCategory(res.data)) })
+                .catch(e => console.log('Error fetching data cat', { e }))
+
+                axios.get('http://localhost:8000/api/sub_category/', headers)
+                .then(res => {dispatch(memberSlice.actions.setSubCategory(res.data)) })
+                .catch(e => console.log('Error fetching data subcat', { e }))
+
+                axios.get('http://localhost:8000/api/members/', headers)
+                .then(res => { dispatch(memberSlice.actions.setMembers(res.data))})
+                .catch(e => console.log('Error fetching data members', { e }))
             })
-        
+            .catch(e => console.log('ERROR IN LOGIN', { e }))
+
+
 
     }
 

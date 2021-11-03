@@ -1,6 +1,16 @@
 $mainColor: rgb(240, 191, 118)!important;
 $secondColor: rgb(241, 129, 1)!important;
 
+.deleteName{
+    font-size: 2rem;
+    font-weight: 800;
+    background-color: rgb(197, 109, 109);
+    padding:20px;
+}
+
+.subButton{
+    margin: 20px 10px 0 0;
+}
 .confRow{
     margin:20px 0;
     padding: 20px 0;

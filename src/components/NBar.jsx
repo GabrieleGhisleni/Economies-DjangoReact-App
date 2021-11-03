@@ -20,7 +20,7 @@ const MyNav = () => {
         );
     };
 
-    function ExternalUser() {
+    const ExternalUser = () => {
         return (
             <React.Fragment>
                 <LoginModal />
@@ -36,7 +36,7 @@ const MyNav = () => {
             <NavbarToggler onClick={() => setOpen(!isOpen)} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav navbar className='ml-auto'>
-                    {isLogged?  <AuthenticatedUser /> : ExternalUser() }
+                    {isLogged?  <AuthenticatedUser /> : < ExternalUser /> }
                 </Nav>
             </Collapse>
             </Container>

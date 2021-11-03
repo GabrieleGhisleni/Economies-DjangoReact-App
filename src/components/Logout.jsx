@@ -9,9 +9,7 @@ import authSlice from '../features/userSlice';
 
 const LogoutForm = () => {
     const dispatch = useDispatch()
-    const handleLogout = () => {
-        dispatch(authSlice.actions.logout())
-    }
+    const handleLogout = () => {dispatch(authSlice.actions.logout())}
 
     return (
         <React.Fragment>

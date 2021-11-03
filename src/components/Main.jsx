@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import React, { Component } from 'react';
 
 import LoginForm from './Login'
 import LogoutForm from './Logout'
 
-import Default from './Default'
-import Dashboard from './Dashboard';
-import Stats from './Stats';
 import Configurations from './Configuration';
-import Footer from './Footer';
-import MyNav from './NBar';
-import History from './History';
+import Dashboard from './Dashboard';
+import Default from './Default'
+import Stats from './Stats';
+import  Registry  from './Registry';
+
 import SecondNav from './SecondNav';
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import MyNav from './NBar';
+import Footer from './Footer';
 
 
 const Main = () => {
@@ -25,7 +26,7 @@ const Main = () => {
                 <Route exact path="/home" component={isLogged? Dashboard: Default} />
                 <Route exact path="/dashboard/" component={Stats} />
                 {isLogged? <Route exact path="/dashboard/" component={Stats} /> : null}
-                {isLogged? <Route exact path="/history/" component={History} /> : null}
+                {isLogged? <Route exact path="/history/" component={Registry} /> : null}
                 {isLogged? <Route path="/configurations/" component={Configurations} />: null}
                 <Redirect to='/home' />
             </Switch>
