@@ -83,7 +83,7 @@ const RenderdSubCat = () => {
                 .then(res => { dispatch(memberSlice.actions.setSubCategory(res.data)) })
                 .catch(e => console.log('Error fetching data records', { e }))
 
-            setTimeout(setUpdate(!update), 200)
+            setTimeout(setUpdate(!update), 300)
         }
 
         return (
@@ -181,11 +181,12 @@ const RenderdSubCat = () => {
     let i = 0;
     const subcategoriesRendered = subcategories.map((r) => {
         i++;
+        let catname = categories.find(c => c.id == r.primary_category)
         return (
             <tr>
                 <th>{i}</th>
                 <td>{r.sub_category_name}</td>
-                <td>{categories.find(c => c.id == r.primary_category).category_name}</td>
+                <td>{catname? catname.category_name: "This sub category does not exists anymore"}</td>
                 <td>
                     <Button color="primary" onClick={() => { setaddModalS(!addModalS); setType("update"); setCurrent(r) }} ><i className='fa fa-refresh'></i></Button>
                     <Button color="danger" onClick={() => { setaddModalS(!addModalS); setType("delete"); setCurrent(r) }} ><i className='fa fa-trash-o sm'></i></Button>

@@ -9,14 +9,29 @@ import { Button, Col, Container, Form, FormGroup, Input, Label, Modal, ModalBody
 const Registry = () => {
     var axios = require("axios")
     const dispatch = useDispatch()
-    const categories = useSelector(state => state.members.categories)
-
     const token = useSelector(state => state.auth.token)
+    const categories = useSelector(state => state.members.categories)
     const headers = { Authorization: `Bearer ${token}` }
     const url = 'http://localhost:8000/api/records/'
+
     const [type, setType] = useState("add")
     const [addModalS, setaddModalS] = useState(false)
+    const [iModal, setInfoModal] = useState(false)
+
     const renderdCategories = categories.map(c => { return <option value={c.id}>{c.category_name}</option> })
+    
+    const Info = () => {
+        return (
+            <Modal size='xl' isOpen={iModal} toggle={() => setInfoModal(!iModal)}>
+                <ModalHeader close={<button className="close" onClick={() => setInfoModal(!iModal)}>×
+                </button>}>Detail Record</ModalHeader>
+                <ModalBody>
+                    <h4>Title</h4>
+                    <p>{current.record_name}</p>
+                </ModalBody>
+            </Modal>
+        )
+    };
 
     const AddModal = () => {
         const formik = useFormik({
@@ -31,16 +46,17 @@ const Registry = () => {
             },
             onSubmit: (values, { resetForm }) => {
                 setaddModalS(!addModalS)
+                if (values.sub_category_associated === -1) { values.sub_category_associated = null }
                 switch (type) {
                     case "delete":
                         deleteCategory();
                         break;
                     default:
-                        modifyCategory({values});
+                        modifyCategory({ values });
                         break;
                 }
-                updateDisplay()
                 resetForm()
+                updateDisplay()
             }
         });
 
@@ -57,7 +73,7 @@ const Registry = () => {
         }
 
 
-        function modifyCategory({values}) {
+        function modifyCategory({ values }) {
             values.id = current.id
             var config = {
                 method: 'put',
@@ -74,9 +90,12 @@ const Registry = () => {
             axios.get(url, headers)
                 .then(res => { dispatch(memberSlice.actions.setRecords(res.data)) })
                 .catch(e => console.log('Error fetching data records', { e }))
+            setType(type)
         }
 
         const renderedMembers = members.map((m) => { return <option value={m.id}>{m.member_name}</option> });
+        const selectedSub = subcategories.filter(sb => sb.primary_category == formik.values.category_associated)
+        const renderedSubCategories = selectedSub.map((m) => { return <option value={m.id}>{m.sub_category_name}</option> });
         return (
             <Modal isOpen={addModalS} toggle={() => setaddModalS(!addModalS)}>
                 <ModalHeader close={<button className="close" onClick={() => setaddModalS(!addModalS)}>×
@@ -97,9 +116,9 @@ const Registry = () => {
                                                     name="record_name"
                                                     id="record_name"
                                                     type="text"
-                                                    onChange={(e) => {formik.handleChange(e)}}
+                                                    onChange={(e) => { formik.handleChange(e) }}
                                                     value={formik.values.record_name}
-                                                
+
                                                 >
                                                 </Input>
                                             </Col>
@@ -118,12 +137,12 @@ const Registry = () => {
                                                     type="number"
                                                     onChange={formik.handleChange}
                                                     value={formik.values.price}
-                                                 
+
                                                 >
                                                 </Input>
                                             </Col>
                                         </Row>
-                                        </FormGroup>
+                                    </FormGroup>
                                     <FormGroup>
                                         <Row>
                                             <Col xs="4" className="align-items-center">
@@ -137,13 +156,13 @@ const Registry = () => {
                                                     type="select"
                                                     onChange={formik.handleChange}
                                                     value={formik.values.made_by}
-                                                  
+
                                                 >
                                                     {renderedMembers}
                                                 </Input>
                                             </Col>
                                         </Row>
-                                        </FormGroup>
+                                    </FormGroup>
                                     <FormGroup>
                                         <Row>
                                             <Col xs="4" className="align-items-center">
@@ -155,16 +174,16 @@ const Registry = () => {
                                                     name="category_associated"
                                                     id="category_associated"
                                                     type="select"
-                                                    onChange={(e) => {formik.handleChange(e);}}
+                                                    onChange={(e) => { formik.handleChange(e); formik.values.sub_category = -1 }}
                                                     value={formik.values.category_associated}
-                                                
+
                                                 >
                                                     {renderdCategories}
                                                 </Input>
                                             </Col>
                                         </Row>
-                                        </FormGroup>
-                                        <FormGroup>
+                                    </FormGroup>
+                                    <FormGroup>
                                         <Row>
                                             <Col xs={4}>
                                                 <Label>Sub category</Label>
@@ -178,12 +197,13 @@ const Registry = () => {
                                                     onChange={formik.handleChange}
                                                     value={formik.values.sub_category_name}
                                                 >
+                                                    <option value={-1}> None </option>
                                                     {renderedSubCategories}
                                                 </Input>
                                             </Col>
                                         </Row>
                                     </FormGroup>
-                                        <FormGroup>
+                                    <FormGroup>
                                         <Row>
                                             <Col xs={4}>
                                                 <Label>Description </Label>
@@ -196,12 +216,12 @@ const Registry = () => {
                                                     onChange={formik.handleChange}
                                                     value={formik.values.description}
                                                     placeholder='Description'
-                    
+
                                                 />
                                             </Col>
                                         </Row>
                                     </FormGroup>
-                                        <FormGroup>
+                                    <FormGroup>
                                         <Row>
                                             <Col xs={4}>
                                                 <Label>Created at</Label>
@@ -218,18 +238,18 @@ const Registry = () => {
                                         </Row>
                                     </FormGroup>
                                 </React.Fragment> :
-                   <Container>
-                   <Row>
-                       <Col xs={12}>
-                           <span>Are you sure to delete?</span>
-                       </Col>
-                   </Row>
-                   <Row className='text-center'>
-                       <Col xs={12} >
-                           <span><h3 className='deleteName'>{current.record_name}</h3></span>
-                       </Col>
-                   </Row>
-               </Container>
+                                <Container>
+                                    <Row>
+                                        <Col xs={12}>
+                                            <span>Are you sure to delete?</span>
+                                        </Col>
+                                    </Row>
+                                    <Row className='text-center'>
+                                        <Col xs={12} >
+                                            <span><h3 className='deleteName'>{current.record_name}</h3></span>
+                                        </Col>
+                                    </Row>
+                                </Container>
                             }
                             {type != "delete" ?
                                 <Row className="text-center">
@@ -244,7 +264,7 @@ const Registry = () => {
                                 </Row> :
                                 <Row className="text-center">
                                     <Col xs={12}>
-                                        <Button type="submit" className='subButton'  color='danger'>
+                                        <Button type="submit" className='subButton' color='danger'>
                                             Delete record
                                         </Button>
                                         <Button type="reset" className='subButton' onClick={() => setaddModalS(!addModalS)} color='secondary'>
@@ -258,7 +278,7 @@ const Registry = () => {
                 </ModalBody>
             </Modal>);
     }
-    
+
     const members = useSelector(state => state.members.members)
     const records = useSelector(state => state.members.records)
     const subcategories = useSelector(state => state.members.subcategories)
@@ -266,12 +286,17 @@ const Registry = () => {
     const [current, setCurrent] = useState({})
     const [currentCategory, setcurrentCategory] = useState({})
 
-    if (records.lenght > 0) {setCurrent(records[0]); setcurrentCategory(records[0].category_associated)}
+    if (records.lenght > 0) { setCurrent(records[0]); setcurrentCategory(records[0].category_associated) }
     const selectedSub = subcategories.filter(sb => sb.primary_category == currentCategory)
-    const renderedSubCategories = selectedSub.map((m) => {return <option value={m.id}>{m.sub_category_name}</option>});
+    const renderedSubCategories = selectedSub.map((m) => { return <option value={m.id}>{m.sub_category_name}</option> });
+
+    const formik_s = useFormik({ initialValues: { category: -1 } })
+    if (formik_s.values.category != -1) {
+        var filteredRecords = records.filter(o => o.category_associated == formik_s.values.category)
+    } else { var filteredRecords = records }
 
     let i = 0;
-    const recordsRendered = records.map((r) => {
+    const recordsRendered = filteredRecords.map((r) => {
         i++;
         return (
             <tr>
@@ -281,43 +306,62 @@ const Registry = () => {
                 <td>{members.find(c => c.id == r.made_by).member_name}</td>
                 <td>{categories.find(c => c.id == r.category_associated).category_name}</td>
                 <td>{r.sub_category_associated ? subcategories.find(sc => sc.id == r.sub_category_associated).sub_category_name : 'Null'}</td>
-                <td>{r.description ? r.description : 'Null'}</td>
                 <td>{r.created_at}</td>
                 <td>
-                    <Button color="primary" onClick={() => { setaddModalS(!addModalS); setType("update"); setCurrent(r) }} ><i className='fa fa-refresh'></i></Button>
+                    <Button color="info" onClick={() => { setCurrent(r); setInfoModal(!iModal); }} ><i className='fa fa-info-circle'></i></Button>
                     <Button color="danger" onClick={() => { setaddModalS(!addModalS); setType("delete"); setCurrent(r) }} ><i className='fa fa-trash-o sm'></i></Button>
+                    <Button color="primary" onClick={() => { setaddModalS(!addModalS); setCurrent(r) }} ><i className='fa fa-refresh'></i></Button>
                 </td>
             </tr>
         );
     });
 
+
+
     return (
         <Container>
-        <Row className='confRow'>
+            <Info />
+
+
             <AddModal />
-            <Col>
-                <Row className='text-center'>
-                    <Table hover responsive>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Member</th>
-                                <th>Main Category</th>
-                                <th>Sub Category</th>
-                                <th>Description</th>
-                                <th>Created at</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {recordsRendered}
-                        </tbody>
-                    </Table>
-                </Row>
-            </Col>
-        </Row>
+            <Form inline className='text-center'>
+                <Label>Filter by category &nbsp;</Label>
+                <Input
+                    name="category"
+                    id="category"
+                    type="select"
+                    onChange={formik_s.handleChange}
+                    value={formik_s.values.category}
+                    className='form-control'
+                >
+                    <option value={-1}> None </option>
+                    {renderdCategories}
+                </Input>
+            </Form>
+            <Row className='confRow'>
+
+                <Col>
+                    <Row className='text-center'>
+                        <Table hover responsive striped >
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Member</th>
+                                    <th>Main Category</th>
+                                    <th>Sub Category</th>
+                                    <th>Created at</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {recordsRendered}
+                            </tbody>
+                        </Table>
+                    </Row>
+                </Col>
+            </Row>
         </Container>
     );
 
