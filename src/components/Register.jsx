@@ -17,7 +17,7 @@ const RegisterForm = () => {
     const history = useHistory();
     const [modal, setModal] = useState(false)
     const [col, setCol] = useState('white')
-    const [err, setErr] = useState('')
+
 
     const register = (username, password, email) => {
         let url = "http://localhost:8000/auth/register/"
@@ -49,8 +49,7 @@ const RegisterForm = () => {
                     .catch(e => console.log('Error fetching data members', { e }))
             })
             .catch(e => {
-                setErr(<div className='err btn btn-danger'> Username Not Available!</div>)
-                setCol('firebrick')
+                setCol('#E74C3C'); setTimeout(()=> setCol('white'), 3000)
             });
     }
 
@@ -71,7 +70,7 @@ const RegisterForm = () => {
             <Modal isOpen={modal} toggle={() => setModal(!modal)} >
                 <ModalHeader
                     close={<button className="close" onClick={() => setModal(!modal)}>×</button>}
-                    toggle={() => setModal(!modal)} >Register Form  {err ? err : ''}</ModalHeader>
+                    toggle={() => setModal(!modal)} >Register Form </ModalHeader>
                 <ModalBody style={{ backgroundColor: col }}>
                     <Form onSubmit={formik.handleSubmit}>
                         <FormGroup>
@@ -126,7 +125,7 @@ const RegisterForm = () => {
                                 </Button>
                             </Col>
                             <Col xs={2}>
-                                <Button className='primary bg-secondary '>
+                                <Button type='reset' className='primary bg-secondary '>
                                     Cancel
                                 </Button>
                             </Col>

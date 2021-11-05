@@ -143,7 +143,8 @@ const RenderdCategory = () => {
 
     const categories = useSelector(state => state.members.categories)
     const [current, setCurrent] = useState({})
-    if (categories.lenght > 0) {setCurrent(categories[0])}
+    // if (current.lenght > 0) {setCurrent(current[0])}
+
 
     let i = 0;
     const categoriesRendered = categories.map((r) => {

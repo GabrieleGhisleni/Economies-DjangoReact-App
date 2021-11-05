@@ -15,7 +15,7 @@ const persistedReducer = persistReducer(
         key: "root",
         version: 1,
         storage: storage,
-        blacklist: ['members']
+        // blacklist: ['members']
     },
     rootReducer
 );

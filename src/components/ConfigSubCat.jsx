@@ -23,7 +23,8 @@ const RenderdSubCat = () => {
 
     const AddModal = () => {
         const formik = useFormik({
-            initialValues: { sub_category_name: current.sub_category_name, primary_category: categories[0].id },
+            initialValues: { sub_category_name: current.sub_category_name, 
+                primary_category: categories[0]? categories[0].id: '' },
             onSubmit: (values, { resetForm }) => {
                 setaddModalS(!addModalS)
                 switch (type) {
@@ -169,6 +170,7 @@ const RenderdSubCat = () => {
 
     const subcategories = useSelector(state => state.members.subcategories)
     const [current, setCurrent] = useState({})
+    // if (subcategories.lenght > 0) {setCurrent(subcategories[0])}
 
     let i = 0;
     const subcategoriesRendered = subcategories.map((r) => {

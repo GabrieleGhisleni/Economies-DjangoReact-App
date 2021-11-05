@@ -148,7 +148,7 @@ const RenderMember = () => {
 
     const members = useSelector(state => state.members.members)
     const [current, setCurrent] = useState({})
-    if (members.lenght > 0) {setCurrent(members[0])}
+    // if (members.lenght > 0) {setCurrent(members[0])}
 
     let i = 0;
     const membersRendered = members.map((r) => {

@@ -19,7 +19,6 @@ const LoginModal = () => {
     const history = useHistory();
     const [modal, setModal] = useState(false)
     const [col, setCol] = useState('white')
-    const [err, setErr] = useState('')
     var axios = require('axios');
 
     const login = (username, password) => {
@@ -58,7 +57,7 @@ const LoginModal = () => {
                 .then(res => { dispatch(memberSlice.actions.setMembers(res.data))})
                 .catch(e => console.log('Error fetching data members', { e }))
             })
-            .catch(e => console.log('ERROR IN LOGIN', { e }))
+            .catch(e => {console.log('ERROR IN LOGIN', { e }); setCol('#E74C3C'); setTimeout(()=>setCol('white'),3000)})
 
 
 
@@ -66,7 +65,10 @@ const LoginModal = () => {
 
     const formik = useFormik({
         initialValues: { username: '', password: '' },
-        onSubmit: (values) => { login(values.username, values.password) },
+        onSubmit: (values, {setErrors, setStatus, resetForm}) => { 
+            login(values.username, values.password) 
+        },
+        onReset: (e, {resetForm}) => {resetForm({})},
         validateOnChange: false,
         validateOnBlur: false
     });
@@ -78,10 +80,10 @@ const LoginModal = () => {
                     Login
                 </NavLink>
             </NavItem>
-            <Modal isOpen={modal} toggle={() => setModal(!modal)}>
+            <Modal isOpen={modal} toggle={() => setModal(!modal)} >
                 <ModalHeader
                     close={<button className="close" onClick={() => setModal(!modal)}>×</button>}
-                    toggle={() => setModal(!modal)} >Login Form {err ? err : ''}</ModalHeader>
+                    toggle={() => setModal(!modal)} >Login Form</ModalHeader>
                 <ModalBody style={{ backgroundColor: col }}>
                     <Form onSubmit={formik.handleSubmit}>
                         <FormGroup>
@@ -121,12 +123,11 @@ const LoginModal = () => {
                                 </Button>
                             </Col>
                             <Col xs={2}>
-                                <Button className='primary bg-secondary '>
+                                <Button type='reset' className='primary bg-secondary '>
                                     Cancel
                                 </Button>
                             </Col>
                             <Col xs='auto' className='text-center align-items-center '>
-
                             </Col>
                         </Row>
                     </Form>

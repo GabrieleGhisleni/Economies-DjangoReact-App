@@ -366,11 +366,11 @@ const Registry = () => {
     });
 
 
-
+    console.log(records, current)
     return (
         <Container>
-            <Info />
-            <AddModal />
+            {current? <Info />:null}
+           {current?  <AddModal />: null}
             <Form inline className='text-center'>
                 <Label>Filter by category &nbsp;</Label>
                 <Input
