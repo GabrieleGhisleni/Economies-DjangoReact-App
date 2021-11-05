@@ -30,10 +30,11 @@ const MyNav = () => {
     };
 
     return (
-        <Navbar light expand='md' className='myNav'>
+        <Navbar light expand='xs' className='myNav'>
             <Container>
             <NavbarBrand> <NavLink to='/home'> Economies </NavLink></NavbarBrand>
             <NavbarToggler onClick={() => setOpen(!isOpen)} />
+            
             <Collapse isOpen={isOpen} navbar>
                 <Nav navbar className='ml-auto'>
                     {isLogged?  <AuthenticatedUser /> : < ExternalUser /> }
