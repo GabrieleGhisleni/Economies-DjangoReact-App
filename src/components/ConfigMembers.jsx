@@ -34,7 +34,6 @@ const RenderMember = () => {
                         modifyMember(values.member_name);
                         break;
                 }
-                updateDisplay()
                 resetForm()
             }
         });
@@ -47,6 +46,7 @@ const RenderMember = () => {
                 data: { member_name: new_name }
             };
             axios(config)
+            .then(res=>{ dispatch(memberSlice.actions.addMember(res.data)) })
                 .catch(e => console.log({ e }))
         }
 
@@ -59,6 +59,7 @@ const RenderMember = () => {
             };
 
             axios(config)
+            .then(() => {dispatch(memberSlice.actions.removeMember(current.id))})
                 .catch(e => console.log({ e }))
         }
 
@@ -71,18 +72,9 @@ const RenderMember = () => {
                 data: { id: current.id, member_name: new_name }
             };
             axios(config)
+            .then((values) =>{dispatch(memberSlice.actions.updateMember({values}))})
                 .catch(e => console.log({ e }))
         }
-
-        function updateDisplay() {
-            const headers = { headers: { "Authorization": `Bearer ${token}` } }
-            axios.get('http://localhost:8000/api/members/', headers)
-                .then(res => { dispatch(memberSlice.actions.setMembers(res.data)) })
-                .catch(e => console.log('Error fetching data records', { e }))
-
-            setTimeout(setUpdate(!update), 200)
-        }
-
 
         return (
             <Modal isOpen={addModal} toggle={() => setaddModal(!addModal)}>
@@ -120,6 +112,7 @@ const RenderMember = () => {
                                             <Col xs={12} >
                                                 <span><h3 className='deleteName'>{current.member_name}</h3></span>
                                             </Col>
+                                            <span>Deleting the member will imply lose all the records produced by this member.</span>
                                         </Row>
 
 

@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {  Container } from 'reactstrap';
-import { useSelector } from 'react-redux';
+import {useLocation} from 'react-router-dom'
+
 import RenderMember from './ConfigMembers'
 import RenderdCategory from './ConfigCategory'
 import RenderdSubCat from './ConfigSubCat'
 
 const Configurations = () => {
+    const location = useLocation()
+    useEffect(() => {
+        if (location.hash) document.getElementById(location.hash.slice(1)).scrollIntoView({behavior:"smooth"})
+        else window.scrollTo({top:0, left:0, behavior:"smooth"})
+    }, [location,])
+
     return (
-        <React.Fragment>
             <Container>
-                <RenderMember />
-                < RenderdCategory />
-                < RenderdSubCat />
+                <div id='member'>< RenderMember /></div>
+                <div id='category'>< RenderdCategory /></div>
+                <div id='subcategory'>< RenderdSubCat /></div>
             </Container>
-        </React.Fragment>
     )
 }
 

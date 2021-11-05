@@ -5,7 +5,7 @@ from django.conf import settings
 class Records(models.Model):
     price = models.FloatField(null=True)
     record_name = models.CharField(max_length=100)
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateField()
     description = models.CharField(max_length=1000, null=True, blank=True)
     made_by = models.ForeignKey('Members', on_delete=models.CASCADE)
     category_associated = models.ForeignKey('UserCategory', on_delete=models.CASCADE, null=True, blank=True)

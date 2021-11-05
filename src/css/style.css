@@ -1,3 +1,26 @@
+@media screen and (max-width: 900px) {
+  .summaryChart {
+    padding: 0 !important;
+    margin-bottom: 50px !important; } }
+
+.monthButton {
+  background-color: transparent !important;
+  color: black !important;
+  border-top: white solid 1px !important;
+  border-bottom: white solid 1px !important;
+  box-shadow: royalblue 0 0 0 0.15rem; }
+  .monthButton:hover {
+    text-decoration: underline !important; }
+  .monthButton:focus {
+    box-shadow: royalblue 0 0 0 0.15rem !important; }
+
+.notCentral {
+  border-top: #000000 solid 1px !important;
+  border-bottom: #000000 solid 1px !important;
+  box-shadow: none !important; }
+  .notCentral:focus {
+    box-shadow: none !important; }
+
 .deleteName {
   font-size: 2rem;
   font-weight: 800;
@@ -12,8 +35,10 @@
   padding: 20px 0;
   border-bottom: 2px dashed black; }
 
-.Plus {
-  color: green; }
+.plusSign {
+  padding-right: 0 !important; }
+  .plusSign a {
+    color: #075f07; }
 
 .recordForm {
   padding: 10px;
@@ -21,14 +46,15 @@
 
 .secondNav {
   background-color: #f18101 !important;
-  margin-bottom: 20px; }
+  margin-bottom: 15px; }
+  .secondNav .navbar-nav {
+    padding: 0  2rem  0 0; }
   .secondNav a {
-    font-size: 1.5rem;
-    padding: 0 2rem;
-    margin: 0 2rem;
-    font-style: italic; }
-  .secondNav a:hover {
-    font-size: 2rem; }
+    font-size: 1.3rem;
+    padding: 0  2rem  0 0;
+    color: black !important; }
+  .secondNav ul > * {
+    padding-right: 4rem; }
 
 .containerImg {
   background-position: center;

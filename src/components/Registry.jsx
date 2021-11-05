@@ -1,10 +1,13 @@
+import {
+    Button, Col, Container, Form, FormGroup, Input,
+    Label, Modal, ModalBody, ModalHeader, Row, Table
+} from 'reactstrap';
+
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as axios from 'axios';
-import { useDispatch } from 'react-redux';
 import { memberSlice } from './../features/memberSlice'
-import { Button, Col, Container, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row, Table } from 'reactstrap';
 
 const Registry = () => {
     var axios = require("axios")
@@ -14,20 +17,76 @@ const Registry = () => {
     const headers = { Authorization: `Bearer ${token}` }
     const url = 'http://localhost:8000/api/records/'
 
-    const [type, setType] = useState("add")
+    const [type, setType] = useState("update")
     const [addModalS, setaddModalS] = useState(false)
     const [iModal, setInfoModal] = useState(false)
 
     const renderdCategories = categories.map(c => { return <option value={c.id}>{c.category_name}</option> })
-    
+
     const Info = () => {
         return (
-            <Modal size='xl' isOpen={iModal} toggle={() => setInfoModal(!iModal)}>
+            <Modal size='lg' isOpen={iModal} toggle={() => setInfoModal(!iModal)}>
                 <ModalHeader close={<button className="close" onClick={() => setInfoModal(!iModal)}>×
                 </button>}>Detail Record</ModalHeader>
                 <ModalBody>
-                    <h4>Title</h4>
-                    <p>{current.record_name}</p>
+                    <Row>
+                        <Col xs={4}><h6>Title</h6></Col>
+                        <Col><p>{current.record_name}</p></Col>
+                    </Row>
+                    <hr />
+                    <Row>
+                        <Col xs={4}>
+                            <h6>Price</h6>
+                        </Col>
+                        <Col>
+                            <p>{current.price}</p>
+                        </Col>
+                    </Row>
+                    <hr />
+                    <Row>
+                        <Col xs={4}>
+                            <h6>Member</h6>
+                        </Col>
+                        <Col>
+                            <p> {current? members.find((c) => c.id == current.made_by).member_name: null}</p>
+                        </Col>
+                    </Row>
+                    <hr />
+                    <Row>
+                        <Col xs={4}>
+                            <h6>Main Category</h6>
+                        </Col>
+                        <Col>
+                            <p>{current? categories.find((c) => c.id == current.category_associated).category_name: null}</p>
+                        </Col>
+                    </Row>
+                    <hr />
+                    <Row>
+                        <Col xs={4}>
+                            <h6>Sub Category</h6>
+                        </Col>
+                        <Col>
+                            <p>{current.sub_category_associated ? subcategories.find((sc) => sc.id == current.sub_category_associated).sub_category_name : 'Null'}</p>
+                        </Col>
+                    </Row>
+                    <hr />
+                    <Row>
+                        <Col xs={4}>
+                            <h6>Created at</h6>
+                        </Col>
+                        <Col>
+                            <p>{current.created_at}</p>
+                        </Col>
+                    </Row>
+                    <hr />
+                    <Row>
+                        <Col xs={4}>
+                            <h6>Description</h6>
+                        </Col>
+                        <Col>
+                            <p>{current.description}</p>
+                        </Col>
+                    </Row>
                 </ModalBody>
             </Modal>
         )
@@ -49,26 +108,26 @@ const Registry = () => {
                 if (values.sub_category_associated === -1) { values.sub_category_associated = null }
                 switch (type) {
                     case "delete":
-                        deleteCategory();
+                        deleteCategory(current.id);
                         break;
                     default:
                         modifyCategory({ values });
                         break;
                 }
                 resetForm()
-                updateDisplay()
             }
         });
 
-        function deleteCategory() {
+        function deleteCategory(id) {
             var config = {
                 method: 'delete',
                 url: url,
                 headers: headers,
-                data: { id: current.id }
+                data: { id: id }
             };
 
             axios(config)
+                .then(() => {dispatch(memberSlice.actions.removeRecord(current.id))})
                 .catch(e => console.log({ e }))
         }
 
@@ -82,15 +141,8 @@ const Registry = () => {
                 data: values
             };
             axios(config)
+                .then((values) =>{dispatch(memberSlice.actions.updateRecord({values}))})
                 .catch(e => console.log({ e }))
-        }
-
-        function updateDisplay() {
-            const headers = { headers: { "Authorization": `Bearer ${token}` } }
-            axios.get(url, headers)
-                .then(res => { dispatch(memberSlice.actions.setRecords(res.data)) })
-                .catch(e => console.log('Error fetching data records', { e }))
-            setType(type)
         }
 
         const renderedMembers = members.map((m) => { return <option value={m.id}>{m.member_name}</option> });
@@ -272,7 +324,6 @@ const Registry = () => {
                                         </Button>
                                     </Col>
                                 </Row>}
-
                         </Container>
                     </Form >
                 </ModalBody>
@@ -283,12 +334,10 @@ const Registry = () => {
     const records = useSelector(state => state.members.records)
     const subcategories = useSelector(state => state.members.subcategories)
 
-    const [current, setCurrent] = useState({})
+    const [current, setCurrent] = useState(records[0])
     const [currentCategory, setcurrentCategory] = useState({})
+    
 
-    if (records.lenght > 0) { setCurrent(records[0]); setcurrentCategory(records[0].category_associated) }
-    const selectedSub = subcategories.filter(sb => sb.primary_category == currentCategory)
-    const renderedSubCategories = selectedSub.map((m) => { return <option value={m.id}>{m.sub_category_name}</option> });
 
     const formik_s = useFormik({ initialValues: { category: -1 } })
     if (formik_s.values.category != -1) {
@@ -321,8 +370,6 @@ const Registry = () => {
     return (
         <Container>
             <Info />
-
-
             <AddModal />
             <Form inline className='text-center'>
                 <Label>Filter by category &nbsp;</Label>

@@ -23,7 +23,7 @@ const RenderdSubCat = () => {
 
     const AddModal = () => {
         const formik = useFormik({
-            initialValues: { sub_category_name: current.sub_category_name, primary_category: current.primary_category },
+            initialValues: { sub_category_name: current.sub_category_name, primary_category: categories[0].id },
             onSubmit: (values, { resetForm }) => {
                 setaddModalS(!addModalS)
                 switch (type) {
@@ -31,13 +31,12 @@ const RenderdSubCat = () => {
                         addCategory(values.sub_category_name, values.primary_category);
                         break;
                     case "delete":
-                        deleteCategory();
+                        deleteCategory(current.id);
                         break;
                     default:
-                        modifyCategory(values.sub_category_name, values.primary_category);
+                        modifyCategory(current.id, values.sub_category_name, values.primary_category);
                         break;
                 }
-                updateDisplay()
                 resetForm()
             }
         });
@@ -50,40 +49,34 @@ const RenderdSubCat = () => {
                 data: { sub_category_name: new_name, primary_category: primary_category }
             };
             axios(config)
+                .then(res=>{ dispatch(memberSlice.actions.addSub(res.data)) })
                 .catch(e => console.log({ e }))
         }
 
-        function deleteCategory() {
+        function deleteCategory(id) {
             var config = {
                 method: 'delete',
                 url: url,
                 headers: headers,
-                data: { id: current.id }
+                data: { id: id }
             };
 
             axios(config)
+                .then(res=>{ dispatch(memberSlice.actions.removeSub(current.id)) })
                 .catch(e => console.log({ e }))
         }
 
 
-        function modifyCategory(new_name, primary_category) {
+        function modifyCategory(id, new_name, primary_category) {
             var config = {
                 method: 'put',
                 url: url,
                 headers: headers,
-                data: { id: current.id, sub_category_name: new_name, primary_category_id: primary_category }
+                data: { id: id, sub_category_name: new_name, primary_category_id: primary_category }
             };
             axios(config)
+                .then((values) =>{dispatch(memberSlice.actions.updateSub({values}))})
                 .catch(e => console.log({ e }))
-        }
-
-        function updateDisplay() {
-            const headers = { headers: { "Authorization": `Bearer ${token}` } }
-            axios.get('http://localhost:8000/api/sub_category/', headers)
-                .then(res => { dispatch(memberSlice.actions.setSubCategory(res.data)) })
-                .catch(e => console.log('Error fetching data records', { e }))
-
-            setTimeout(setUpdate(!update), 300)
         }
 
         return (
@@ -176,7 +169,6 @@ const RenderdSubCat = () => {
 
     const subcategories = useSelector(state => state.members.subcategories)
     const [current, setCurrent] = useState({})
-    if (subcategories.lenght > 0) {setCurrent(subcategories[0])}
 
     let i = 0;
     const subcategoriesRendered = subcategories.map((r) => {

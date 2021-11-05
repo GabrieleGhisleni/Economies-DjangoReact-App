@@ -199,15 +199,18 @@ class RecordsListApi(
         if "id" not in self.request.data: 
             return Response({"data": self.request.data, "necessary_field": [ 'id']}, status=status.HTTP_400_BAD_REQUEST)
         ids = set([i for i in self.get_queryset()])
-        m_id,c_id,s_id,i_id = set(),set(),set(), set()
-        m,c,s,i = set(),set(),set(), set()
+        m_id, c_id, s_id, i_id = set(),set(),set(), set()
+        m, c, s, i = set(),set(),set(), set()
         for r in ids: 
-            m.add(r.made_by), m_id.add(r.made_by.id)
-            c.add(r.category_associated), c_id.add(r.category_associated.id)
-            # s.add(r.sub_category_associated), s_id.add(r.sub_category_associated.id)
+            m.add(r.made_by)
+            m_id.add(r.made_by.id)
+            c.add(r.category_associated)
+            c_id.add(r.category_associated.id)
             i.add(r.id)
+            if r.sub_category_associated: s_id.add(r.sub_category_associated.id)
         if request.data['id'] not in i:
             return Response({"not_allowed": request.data}, status=status.HTTP_403_FORBIDDEN)
+
         record = get_object_or_404(Records, pk=self.request.data['id'])
         if "price" in self.request.data: 
             record.price=self.request.data['price']

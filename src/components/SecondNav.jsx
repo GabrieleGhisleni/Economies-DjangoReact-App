@@ -6,19 +6,14 @@ const SecondNav = () =>{
     const [isOpen, setOpen] = useState(false)
 
     return(
-        <React.Fragment>
-            <Navbar light expand='sm' className='secondNav'>
+   
+            <Navbar light expand='lg' className='secondNav'>
             <Container>
+                <NavbarBrand> <NavLink to='/home'> Summary </NavLink></NavbarBrand>
                 <NavbarToggler onClick={() => setOpen(!isOpen)} />
-                {/* <NavbarBrand> <NavLink to='/'> Summary </NavLink></NavbarBrand> */}
 
                 <Collapse isOpen={isOpen} navbar>
-                <Nav navbar className='m-auto'>
-                    <NavItem>
-                        <NavLink to='/home' className='nav-link'>
-                            Summary
-                        </NavLink>
-                    </NavItem>
+                <Nav navbar className='mr-auto'>
                     <NavItem>
                         <NavLink to='/dashboard' className='nav-link'>
                             Dashboards
@@ -38,7 +33,6 @@ const SecondNav = () =>{
                 </Collapse>
             </Container>
             </Navbar>
-        </React.Fragment>
     )
     
 }

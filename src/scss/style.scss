@@ -1,6 +1,37 @@
 $mainColor: rgb(240, 191, 118)!important;
 $secondColor: rgb(241, 129, 1)!important;
+$small: 900px;
 
+.summaryChart{
+    @media screen and (max-width: $small) {
+        padding:0!important;
+        margin-bottom:50px!important;
+      }
+
+}
+.monthButton{
+    background-color:transparent!important;
+    color: black !important;
+    border-top: white solid 1px!important;
+    border-bottom: white solid 1px!important;
+    box-shadow: royalblue 0 0 0 0.15rem;
+    &:hover{
+        text-decoration: underline!important;
+    }
+    &:focus{
+        box-shadow: royalblue 0 0 0 0.15rem!important;
+    }
+    
+}
+
+.notCentral{
+    border-top: #000000 solid 1px!important;
+    border-bottom: #000000 solid 1px!important;
+    box-shadow: none!important;
+    &:focus{
+        box-shadow: none!important;
+    }
+}
 .deleteName{
     font-size: 2rem;
     font-weight: 800;
@@ -16,8 +47,12 @@ $secondColor: rgb(241, 129, 1)!important;
     padding: 20px 0;
     border-bottom: 2px dashed black;
 }
-.Plus{
-    color:green;
+
+.plusSign{
+    padding-right:0!important;
+    a{
+        color:rgb(7, 95, 7);
+    }
 }
 
 .recordForm{
@@ -26,15 +61,20 @@ $secondColor: rgb(241, 129, 1)!important;
 }
 .secondNav{
     background-color: $secondColor;
-    margin-bottom: 20px;
-    a {
-        font-size: 1.5rem;
-        padding: 0 2rem;
-        margin: 0 2rem;
-        font-style: italic;
+    margin-bottom: 15px;
+    .navbar-nav{
+        padding: 0  2rem  0 0;
+
     }
-    a:hover{
-        font-size:2rem;
+    a {
+        font-size: 1.3rem;
+        padding: 0  2rem  0 0;
+        // margin: 0 2rem;
+        color:black!important;
+           
+    }
+    ul>*{
+        padding-right: 4rem;
     }
 }
 

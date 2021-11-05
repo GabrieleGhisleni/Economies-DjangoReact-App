@@ -1,40 +1,28 @@
-import axios from "axios"
-import { useSelector, useDispatch } from 'react-redux'
-import React, { useState, Component } from 'react'
-import { memberSlice } from './../features/memberSlice'
-import { Row, Col, Container } from 'reactstrap'
-import RecordForm from './RecordForm'
-import SecondNav from "./SecondNav"
+import axios from "axios";
 
+import React, { useState, Component } from "react";
 
-
-
-
+import { Row, Col, Container } from "reactstrap";
+import RecordForm from "./SummaryForm";
+import SecondNav from "./SecondNav";
+import SummaryChart from "./SummaryChart";
 
 function Dashboard() {
-    const members = useSelector(state => state.members.members)
-    const records = useSelector(state => state.members.records)
-    const categories = useSelector(state => state.members.categories)
-    const subcategories = useSelector(state => state.members.subcategories)
-    return (<React.Fragment>
-        <Container>
-            <Row>
-                <Col className='recordForm' xs='auto'>
-                    <RecordForm members={members} />
-                </Col>
-                <Col style={{ border: "2px black solid" }}>
-            
-                </Col>
-            </Row>
-            m{JSON.stringify(members)}<br /><br />
-            r{JSON.stringify(records)}<br /><br />
-            r{JSON.stringify(categories)}<br /><br />
-            r{JSON.stringify(subcategories)}<br /><br />
-        </Container>
-    </React.Fragment>
-
-
-    )
+    return (
+        <React.Fragment>
+            <Container>
+                <Row>
+                    <Col xs="12" lg = '8' className='summaryChart'>
+                    <SummaryChart />
+                    <hr style={{border:"black 1px dashed", display: "none"}}/>
+                    </Col>
+                    <Col xs="12" lg='4'>
+                        <RecordForm />
+                    </Col>
+                </Row>
+            </Container>
+        </React.Fragment>
+    );
 }
 
 export default Dashboard;

@@ -1,9 +1,7 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import React, { Component } from 'react';
+import React  from 'react';
 
-import LoginForm from './Login'
-import LogoutForm from './Logout'
 
 import Configurations from './Configuration';
 import Dashboard from './Dashboard';

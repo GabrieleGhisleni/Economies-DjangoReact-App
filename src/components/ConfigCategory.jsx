@@ -1,11 +1,11 @@
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { memberSlice } from './../features/memberSlice'
 import { Button, Col, Container, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row, Table } from 'reactstrap';
-import * as axios from 'axios';
 
 const RenderdCategory = () => {
+
     var axios = require("axios")
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
@@ -26,14 +26,12 @@ const RenderdCategory = () => {
                         addCategory(values.category_name);
                         break;
                     case "delete":
-                        deleteCategory();
+                        deleteCategory(current.id);
                         break;
                     default:
-                        modifyCategory(values.category_name);
+                        modifyCategory(current.id, values.category_name);
                         break;
                 }
-                console.log('out')
-                updateDisplay()
                 resetForm()
             }
         });
@@ -45,41 +43,34 @@ const RenderdCategory = () => {
                 data: { category_name: new_name }
             };
             axios(config)
+            .then(res=>{ dispatch(memberSlice.actions.addCat(res.data)) })
                 .catch(e => console.log({ e }))
         }
 
-        function deleteCategory() {
+        function deleteCategory(id) {
             var config = {
                 method: 'delete',
                 url: url,
                 headers: headers,
-                data: { id: current.id }
+                data: { id: id }
             };
-
             axios(config)
+             .then(() => {dispatch(memberSlice.actions.removeCat(current.id))})
                 .catch(e => console.log({ e }))
         }
 
 
-        function modifyCategory(new_name) {
+        function modifyCategory(id, new_name) {
             var config = {
                 method: 'put',
                 url: url,
                 headers: headers,
-                data: { id: current.id, category_name: new_name }
+                data: { id: id, category_name: new_name }
             };
             axios(config)
+            .then((values) =>{dispatch(memberSlice.actions.updateCat({values}))})
                 .catch(e => console.log(e))
         }
-
-        function updateDisplay() {
-            const headers = { headers: { "Authorization": `Bearer ${token}` } }
-            axios.get('http://localhost:8000/api/category/', headers)
-                .then(res => { dispatch(memberSlice.actions.setCategory(res.data)) })
-                .catch(e => console.log('Error fetching data records', { e }))
-            setTimeout(setUpdate(!update), 200)
-        }
-
 
 
         return (
