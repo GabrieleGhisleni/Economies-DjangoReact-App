@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList} from 'recharts';
 import { COLORS, SHORT_MONTH } from './colors.js'
 
-const StatsMember = () => {
-    const records = useSelector(state => state.members.records)
-    const members = useSelector(state => state.members.members)
+const StatsMember = (data) => {
+    const records = data.records
+    const members = data.members
     const unique_month = new Set()
     records.forEach(r => unique_month.add(new Date(r.created_at).getMonth()))
 
@@ -33,8 +33,9 @@ const StatsMember = () => {
     var i = 0;
     const colorBar = [];
     Object.keys(unique_member).forEach(m => { colorBar.push(<Bar dataKey={unique_member[m]} fill={COLORS[i]}><LabelList dataKey={unique_member[m]} position="top" /></Bar>); i++ })
+    const max = Math.max.apply(Math, dataMember.map(function(o) { return o.tot; }))
     return (
-        <ResponsiveContainer width="99%" aspect={1.5}>
+        <ResponsiveContainer width="99%" aspect={1}>
             <BarChart
                 width={500}
                 height={300}
@@ -42,7 +43,7 @@ const StatsMember = () => {
             >
                 <CartesianGrid />
                 <XAxis dataKey="month" />
-                <YAxis />
+                <YAxis domain={[0, max+20]} tickCount={10}/>
                 <Tooltip />
                 <Legend />
                 {colorBar}

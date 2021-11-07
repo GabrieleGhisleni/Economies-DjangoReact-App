@@ -44,7 +44,12 @@ const RenderdCategory = () => {
             };
             axios(config)
             .then(res=>{ dispatch(memberSlice.actions.addCat(res.data)) })
-                .catch(e => console.log({ e }))
+            .catch(e => {
+                let err = {e}
+                console.log({ e })
+                try {if (err.e.response.data.forbidden.includes("exceeded")) alert('Max Category Exceeded')}
+                catch{}
+            })
         }
 
         function deleteCategory(id) {

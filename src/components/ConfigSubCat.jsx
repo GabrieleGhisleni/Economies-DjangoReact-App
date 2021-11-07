@@ -51,7 +51,12 @@ const RenderdSubCat = () => {
             };
             axios(config)
                 .then(res=>{ dispatch(memberSlice.actions.addSub(res.data)) })
-                .catch(e => console.log({ e }))
+                .catch(e => {
+                    let err = {e}
+                    console.log({ e })
+                    try {if (err.e.response.data.forbidden.includes("exceeded")) alert('Max Sub Category Exceeded')}
+                    catch{}
+                })
         }
 
         function deleteCategory(id) {
@@ -77,7 +82,7 @@ const RenderdSubCat = () => {
             };
             axios(config)
                 .then((values) =>{dispatch(memberSlice.actions.updateSub({values}))})
-                .catch(e => console.log({ e }))
+                .catch(e => {console.log({ e })})
         }
 
         return (
@@ -170,7 +175,7 @@ const RenderdSubCat = () => {
 
     const subcategories = useSelector(state => state.members.subcategories)
     const [current, setCurrent] = useState({})
-    // if (subcategories.lenght > 0) {setCurrent(subcategories[0])}
+
 
     let i = 0;
     const subcategoriesRendered = subcategories.map((r) => {

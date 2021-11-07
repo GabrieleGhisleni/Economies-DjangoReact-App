@@ -9,7 +9,7 @@ const SecondNav = () =>{
    
             <Navbar light expand='lg' className='secondNav'>
             <Container>
-                <NavbarBrand> <NavLink to='/home'> Summary </NavLink></NavbarBrand>
+                <NavbarBrand> <NavLink to='/home'> Summary</NavLink></NavbarBrand>
                 <NavbarToggler onClick={() => setOpen(!isOpen)} />
 
                 <Collapse isOpen={isOpen} navbar>

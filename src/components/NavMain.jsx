@@ -32,7 +32,7 @@ const MyNav = () => {
     return (
         <Navbar light expand='xs' className='myNav'>
             <Container>
-            <NavbarBrand> <NavLink to='/home'> Economies </NavLink></NavbarBrand>
+            <NavbarBrand> <NavLink to='/home'> Economies  <img src='images/piggy_bank.png '/> </NavLink></NavbarBrand>
             <NavbarToggler onClick={() => setOpen(!isOpen)} />
             
             <Collapse isOpen={isOpen} navbar>

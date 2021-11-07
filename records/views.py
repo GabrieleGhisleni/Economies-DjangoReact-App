@@ -15,6 +15,11 @@ from rest_framework import status
 from rest_framework import mixins
 import datetime
 
+max_records = 5000
+max_members = 10
+max_categories = 50
+max_subcategories = 150
+
 class CategoryView(viewsets.GenericViewSet,
                    mixins.RetrieveModelMixin,
                    mixins.ListModelMixin,
@@ -38,6 +43,9 @@ class CategoryView(viewsets.GenericViewSet,
             u = UserCategory(
                 category_name=self.request.data['category_name'],
                 user=self.request.user)
+            if self.get_queryset().count() >= max_categories:
+                return Response({"forbidden": "exceeded max_numbers of categories"}, status=status.HTTP_403_FORBIDDEN)
+
             u.save()
             serialized = UserCategorySerializer(u)
             return Response(serialized.data, status=status.HTTP_202_ACCEPTED)
@@ -91,6 +99,9 @@ class SubCategoryView(viewsets.GenericViewSet,
                 sub_category_name=self.request.data['sub_category_name'],
                 primary_category=userCategory,
                 user=self.request.user)
+            if self.get_queryset().count() >= max_subcategories:
+                return Response({"forbidden": "exceeded max_numbers of sub_categories"}, status=status.HTTP_403_FORBIDDEN)
+
             u.save()
             serialized = SubCategorySerializer(u)
             return Response(serialized.data, status=status.HTTP_202_ACCEPTED)
@@ -143,6 +154,9 @@ class MemberListApi(mixins.CreateModelMixin,
         try:
             m = Members(member_name = self.request.data['member_name'],
                         user = self.request.user)
+            if self.get_queryset().count() >= max_members:
+                return Response({"forbidden": "exceeded max_numbers of sub_categories"}, status=status.HTTP_403_FORBIDDEN)
+
             m.save()
             return Response(MembersSerializer(m).data, status=status.HTTP_202_ACCEPTED)
         except:
@@ -189,6 +203,9 @@ class RecordsListApi(
     def create(self, request, *args, **kwargs):
         serializer = RecordsSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        if self.get_queryset().count() > max_records:
+            return Response({"forbidden": "exceeded max_numbers of categories"}, status=status.HTTP_403_FORBIDDEN)
+
         serializer.save()
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 

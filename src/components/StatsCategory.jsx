@@ -2,16 +2,15 @@ import { Container, Row, Col, Button } from 'reactstrap';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { COLORS, SHORT_MONTH } from './colors.js'
+import { SECOND_COLORS, SHORT_MONTH } from './colors.js'
 
-const StatsCategory = () => {
-    const records = useSelector(state => state.members.records)
-    const categories = useSelector(state => state.members.categories)
-
+const StatsCategory = (data) => {
+    const records = data.records
+    const categories = data.categories
     const unique_month = new Set()
-    records.forEach(r => unique_month.add(new Date(r.created_at).getMonth()))
-
     const unique_category = {};
+
+    records.forEach(r => unique_month.add(new Date(r.created_at).getMonth()))
     categories.forEach(m => unique_category[m.id] = m.category_name)
 
     const categoryCost = {};
@@ -31,24 +30,16 @@ const StatsCategory = () => {
 
     var i = 0;
     const colorCategory = [];
-    Object.keys(unique_category).forEach(m => { colorCategory.push(<Bar dataKey={unique_category[m]} stackId='a' fill={COLORS[i]} />); i++ })
+    Object.keys(unique_category).forEach(m => { colorCategory.push(<Bar dataKey={unique_category[m]} stackId='a' fill={SECOND_COLORS[i]} />); i++ })
     return (
-        
-        <ResponsiveContainer width="99%" aspect={1.5}>
+        <ResponsiveContainer width="99%" aspect={1}>
             <BarChart
                 width={500}
                 height={300}
-                data={dataCategory}
-                margin= {{
-                    top: 5,
-                    right: 20,
-                    left: 0,
-                    bottom: 20
-                  }}
-            >
+                data={dataCategory}>
                 <CartesianGrid />
                 <XAxis dataKey="month" />
-                <YAxis />
+                <YAxis tickCount={10}/>
                 <Tooltip />
                 {colorCategory}
                 <Legend position='right'/>

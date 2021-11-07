@@ -47,7 +47,12 @@ const RenderMember = () => {
             };
             axios(config)
             .then(res=>{ dispatch(memberSlice.actions.addMember(res.data)) })
-                .catch(e => console.log({ e }))
+            .catch(e => {
+                let err = {e}
+                console.log({ e })
+                try {if (err.e.response.data.forbidden.includes("exceeded")) alert('Max Members Exceeded')}
+                catch{}
+            })
         }
 
         function deleteMember() {

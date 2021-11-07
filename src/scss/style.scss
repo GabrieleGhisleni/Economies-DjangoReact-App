@@ -1,6 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Open+Sans:ital,wght@1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,600&display=swap');
+$main-font: 'Merriweather', serif!important;
+$second-font : 'Lora', serif!important;
 $mainColor: rgb(240, 191, 118)!important;
 $secondColor: rgb(241, 129, 1)!important;
 $small: 900px;
+
+body{
+    font-family: $main-font;
+    
+}
+.chart-row{
+    margin-top: 25px;
+}
+.dashboard{
+    h2{
+        font-style: italic;
+        margin-top: 15px;
+    }
+    h4{
+        font-size: 1.2rem;
+    }
+    .dashboard-form{
+        padding: 15px;
+        // background-color: $secondColor;
+        border-radius: 20px;
+        .dashboard-form-inside{
+            margin: 15px 0;
+        }
+    }
+
+}
 
 .summaryChart{
     @media screen and (max-width: $small) {
@@ -60,6 +90,7 @@ $small: 900px;
     margin: 15px;
 }
 .secondNav{
+    font-family:$second-font;
     background-color: $secondColor;
     margin-bottom: 15px;
     .navbar-nav{
@@ -98,6 +129,7 @@ $small: 900px;
     .navbar-brand{
         a{
          color:black!important;
+         font-size: 1.5rem;
         }
     }
 }

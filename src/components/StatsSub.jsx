@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { COLORS, SHORT_MONTH, SECOND_COLORS } from './colors.js'
 
-const StatsSubCategory = () => {
-    const records_c = useSelector(state => state.members.records)
-    const subcategories = useSelector(state => state.members.subcategories)
-    const categories = useSelector(state => state.members.categories)
+const StatsSubCategory = (data) => {
+    const records_c = data.records
+    const subcategories = data.subcategories
+    const categories = data.categories
     const unique_subcategories = {};
     const unique_category = {};
 
@@ -16,7 +16,6 @@ const StatsSubCategory = () => {
 
     const dataSub = {};
     const dataCate = {};
-
     var records = [...records_c]
     records.sort(function (a, b) { return a.category_associated - b.category_associated; })
     records.forEach(r => {
@@ -74,7 +73,7 @@ const StatsSubCategory = () => {
     const rateo = window.innerWidth < 800 ? 1 : 2.5
     return (
 
-        <ResponsiveContainer width="99%" aspect={rateo}>
+        <ResponsiveContainer width="100%" aspect={rateo}>
             <PieChart>
                 <Pie data={dataMain} dataKey="value"
                 paddingAngle={1}

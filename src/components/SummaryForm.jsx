@@ -66,8 +66,10 @@ const RecordForm = () => {
       .catch((e ) => {
         setRedAlert(true)
         setTimeout(()=> setRedAlert(false), 5000) 
-        console.log('Error while adding record', { e })})
-  }
+        console.log('Error while adding record', { e })
+        let err = {e}
+        try {if (err.e.response.data.forbidden.includes("exceeded")) alert('Max Members Exceeded')}
+        catch{}})}
 
   const renderdCategories = categories.map(c => { return <option value={c.id}>{c.category_name}</option> })
   const selectedSub = subCategories.filter(sb => sb.primary_category == formik.values.category)
@@ -106,7 +108,7 @@ const RecordForm = () => {
                 {renderedMembers}
               </Input>
             </Col>
-            <Col className='plusSign'>
+            <Col className='plusSign' xs='auto'>
               <NavLink to='/configurations#member'>
                   <i className='fa fa-plus fa-lg'></i>
               </NavLink>
@@ -129,7 +131,7 @@ const RecordForm = () => {
                 placeholder="Dai un Titolo"
               />
             </Col>
-            <Col></Col>
+    
           </Row>
         </FormGroup>
         <FormGroup>
@@ -148,7 +150,7 @@ const RecordForm = () => {
                 required
               />
             </Col>
-            <Col></Col>
+       
           </Row>
         </FormGroup>
         <FormGroup>
@@ -173,7 +175,7 @@ const RecordForm = () => {
               </Input>
             </Col>
             
-            <Col  className='plusSign'>
+            <Col  className='plusSign' xs='auto'>
               <NavLink to='/configurations#category'>
            
                   <i className='fa fa-plus fa-lg'></i>
@@ -200,7 +202,7 @@ const RecordForm = () => {
                 {renderedSubCategories}
               </Input>
             </Col>
-            <Col  className='plusSign'>
+            <Col  className='plusSign' xs='auto'>
               <NavLink to='/configurations#subcategory'>
              
                   <i className='fa fa-plus fa-lg'></i>
@@ -223,7 +225,7 @@ const RecordForm = () => {
                 value={formik.values.date}
               />
             </Col>
-            <Col></Col>
+    
           </Row>
         </FormGroup>
         <FormGroup>

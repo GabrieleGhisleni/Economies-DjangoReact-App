@@ -4,13 +4,13 @@ import React, { useState, Component } from "react";
 
 import { Row, Col, Container } from "reactstrap";
 import RecordForm from "./SummaryForm";
-import SecondNav from "./SecondNav";
+import SecondNav from "./NavSecond";
 import SummaryChart from "./SummaryChart";
 
 function Dashboard() {
     return (
         <React.Fragment>
-            <Container>
+            <Container style={{marginTop:"50px"}}>
                 <Row>
                     <Col xs="12" lg = '8' className='summaryChart'>
                     <SummaryChart />

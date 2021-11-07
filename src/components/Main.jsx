@@ -9,8 +9,8 @@ import Default from './Default'
 import Stats from './Stats';
 import  Registry  from './Registry';
 
-import SecondNav from './SecondNav';
-import MyNav from './NBar';
+import SecondNav from './NavSecond';
+import MyNav from './NavMain';
 import Footer from './Footer';
 
 
@@ -22,10 +22,9 @@ const Main = () => {
             {isLogged? <SecondNav/>: <div></div>}
             <Switch>
                 <Route exact path="/home" component={isLogged? Dashboard: Default} />
-                <Route exact path="/dashboard/" component={Stats} />
                 {isLogged? <Route exact path="/dashboard/" component={Stats} /> : null}
                 {isLogged? <Route exact path="/history/" component={Registry} /> : null}
-                {isLogged? <Route path="/configurations/" component={Configurations} />: null}
+                {isLogged? <Route exact path="/configurations/" component={Configurations} />: null}
                 <Redirect to='/home' />
             </Switch>
             <Footer />
