@@ -45,20 +45,22 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
 
 
     def create(self, request, *args, **kwargs):
-        if 'username' in request.data and User.objects.filter(username= request.data['username']).count() > 0:
+        if 'username' in request.data and User.objects.filter(username= request.data['username']).count() >= 1:
              return Response({"data": request.data, "user_already_taken":"not available"}, 
              status=status.HTTP_400_BAD_REQUEST)
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        try:
+            user = User(username=request.data['username'], 
+                        email=request.data['email'],
+                        password=request.data['password'])
 
-        try: 
-            user = serializer.save()
-            Members.objects.create(user=user, member_name='Comune')
-            Members.objects.create(user=user, member_name=user.username)
+            user.save()
+            Members(user=user, member_name='Comune').save()
+            Members(user=user, member_name=user.username).save()
             for cat in ['Alimentari', 'Sport', 'Trasporti', 'Alimentari','Ristorante','Svago','Viaggi', 'Auto','Casa']: 
-                UserCategory.objects.create(category_name=cat, user=user)
+                UserCategory(category_name=cat, user=user).save()
         except Exception as e:
-            return Response(serializer.validated_data, status=status.HTTP_400_BAD_REQUEST)
+            print(e)
+            return Response({'try except bad request'}, status=status.HTTP_400_BAD_REQUEST)
 
         refresh = RefreshToken.for_user(user)
         res = {
@@ -67,7 +69,7 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
         }
 
         return Response({
-            "user": serializer.data,
+            "user": request.data['username'],
             "refresh": res["refresh"],
             "token": res["access"]
         }, status=status.HTTP_201_CREATED)

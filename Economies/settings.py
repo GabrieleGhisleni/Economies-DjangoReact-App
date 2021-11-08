@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('ECO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =  os.environ.get('DEBUG_', 'True') == "True"
 
 ALLOWED_HOSTS = ['*']
 
@@ -73,7 +73,8 @@ REST_FRAMEWORK = {
 # for react
 CORS_ORIGIN_WHITELIST = [
     'https://localhost:3000', 'http://localhost:3000',  "http://127.0.0.1:3000",
-     'https://localhost:8000', 'http://localhost:8000',  "http://127.0.0.1:8000"
+     'https://localhost:8000', 'http://localhost:8000',  "http://127.0.0.1:8000",
+     "https://smart-economies.herokuapp.com/", "https://smart-economies.herokuapp.com"
 ]
 
 import datetime
