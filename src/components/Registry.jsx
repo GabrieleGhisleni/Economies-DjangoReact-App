@@ -6,7 +6,6 @@ import {
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import * as axios from 'axios';
 import { memberSlice } from './../features/memberSlice'
 
 const Registry = () => {
@@ -15,7 +14,8 @@ const Registry = () => {
     const token = useSelector(state => state.auth.token)
     const categories = useSelector(state => state.members.categories)
     const headers = { Authorization: `Bearer ${token}` }
-    const url = 'http://localhost:8000/api/records/'
+    const BASE_URL = useSelector(state => state.members.base_url)
+    const url = `${BASE_URL}/api/records/`   
 
     const [type, setType] = useState("update")
     const [addModalS, setaddModalS] = useState(false)

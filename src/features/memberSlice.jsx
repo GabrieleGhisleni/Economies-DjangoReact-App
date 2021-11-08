@@ -6,7 +6,8 @@ export const memberSlice = createSlice({
         members: [],
         records: [],
         categories:[],
-        subcategories:[]
+        subcategories:[],
+        base_url:'https://dashboard.heroku.com/apps/smart-economies'
     },
     reducers: {
         // members

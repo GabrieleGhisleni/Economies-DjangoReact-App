@@ -1,13 +1,12 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Button, NavItem } from 'reactstrap'
 import { NavLink } from 'react-router-dom';
 // Formik form
-import { ErrorMessage, useFormik } from 'formik';
+import { useFormik } from 'formik';
 // Redux import
-import { useDispatch } from 'react-redux';
-import authSlice, { login } from '../features/userSlice';
+import { useDispatch, useSelector} from 'react-redux';
+import authSlice from '../features/userSlice';
 import memberSlice from '../features/memberSlice';
-// persisent and axios
 import { useHistory } from "react-router";
 import axios from 'axios';
 
@@ -18,9 +17,9 @@ const RegisterForm = () => {
     const [modal, setModal] = useState(false)
     const [col, setCol] = useState('white')
     const [notavailable, setnotavailable] = useState(<div></div>)
-
+    const BASE_URL = useSelector(state => state.members.base_url)
     const register = (username, password, email) => {
-        let url = "http://localhost:8000/auth/register/"
+        let url = url
         axios.post(url, { username, password, email })
             .then((res) => {
                 dispatch(authSlice.actions.setAuthTokens(
@@ -32,21 +31,21 @@ const RegisterForm = () => {
             }).then(token => {
                 const headers = { headers: { "Authorization": `Bearer ${token}` } }
 
-                axios.get('http://localhost:8000/api/records/', headers)
-                    .then(res => { dispatch(memberSlice.actions.setRecords(res.data)) })
-                    .catch(e => ({ e })) //console.log
+                axios.get(`${BASE_URL}/api/records/` , headers)
+                .then(res => {dispatch(memberSlice.actions.setRecords(res.data)) })
+                .catch(e => ({ e })) //console.log
 
-                axios.get('http://localhost:8000/api/category/', headers)
-                    .then(res => { dispatch(memberSlice.actions.setCategory(res.data)) })
-                    .catch(e => ({ e })) //console.log
+                axios.get(`${BASE_URL}/api/category/`, headers)
+                .then(res => {dispatch(memberSlice.actions.setCategory(res.data)) })
+                .catch(e => ({ e })) //console.log
 
-                axios.get('http://localhost:8000/api/sub_category/', headers)
-                    .then(res => { dispatch(memberSlice.actions.setSubCategory(res.data)) })
-                    .catch(e => ({ e })) //console.log
+                axios.get(`${BASE_URL}/api/sub_category/`, headers)
+                .then(res => {dispatch(memberSlice.actions.setSubCategory(res.data)) })
+                .catch(e => ({ e })) //console.log
 
-                axios.get('http://localhost:8000/api/members/', headers)
-                    .then(res => { dispatch(memberSlice.actions.setMembers(res.data)) })
-                    .catch(e => ({ e })) //console.log
+                axios.get(`${BASE_URL}/api/members/`, headers)
+                .then(res => { dispatch(memberSlice.actions.setMembers(res.data))})
+                .catch(e => ({ e })) //console.log
             })
             .catch(e => {
                 try{

@@ -20,13 +20,13 @@ const LoginModal = () => {
     const [col, setCol] = useState('white')
     const [wrongdata, setwrongdata] = useState(<div></div>)
     var axios = require('axios');
-    console.log('here', process.env)
+    const BASE_URL = useSelector(state => state.members.base_url) 
 
     const login = (username, password) => {
         var config = {
             method: 'post',
             // mode: 'same-origin',
-            url: 'https://smart-economies.herokuapp.com/auth/login/',
+            url: `${BASE_URL}/auth/login/`,
             headers: { 
             'Accept': 'application/json', 
             'Content-Type': 'application/json'},
@@ -45,20 +45,19 @@ const LoginModal = () => {
             .then(token =>{
 
                 const headers = { headers: { "Authorization": `Bearer ${token}` } }
-
-                axios.get('http://localhost:8000/api/records/', headers)
+                axios.get(`${BASE_URL}/api/records/` , headers)
                 .then(res => {dispatch(memberSlice.actions.setRecords(res.data)) })
                 .catch(e => ({ e })) //console.log
 
-                axios.get('http://localhost:8000/api/category/', headers)
+                axios.get(`${BASE_URL}/api/category/`, headers)
                 .then(res => {dispatch(memberSlice.actions.setCategory(res.data)) })
                 .catch(e => ({ e })) //console.log
 
-                axios.get('http://localhost:8000/api/sub_category/', headers)
+                axios.get(`${BASE_URL}/api/sub_category/`, headers)
                 .then(res => {dispatch(memberSlice.actions.setSubCategory(res.data)) })
                 .catch(e => ({ e })) //console.log
 
-                axios.get('http://localhost:8000/api/members/', headers)
+                axios.get(`${BASE_URL}/api/members/`, headers)
                 .then(res => { dispatch(memberSlice.actions.setMembers(res.data))})
                 .catch(e => ({ e })) //console.log
             })

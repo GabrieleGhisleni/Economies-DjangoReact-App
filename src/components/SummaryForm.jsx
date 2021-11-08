@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import { Label, Col, Row, Button, FormGroup, Input, Form } from "reactstrap";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import * as axios from 'axios';
 import memberSlice from "../features/memberSlice";
 import { NavLink } from 'react-router-dom';
 
@@ -15,6 +14,8 @@ const RecordForm = () => {
   const subCategories = useSelector((state) => state.members.subcategories);
   const [alert, setAlert] = useState(false)
   const [redAlert, setRedAlert] = useState(false)
+  const BASE_URL = useSelector(state => state.members.base_url)
+  const url = `${BASE_URL}/api/records/`   
 
   const formik = useFormik({
     initialValues: {
@@ -47,7 +48,7 @@ const RecordForm = () => {
   function addRecord(title, price, member, main_cat, sub_cat, description, date) {
     var axios = require('axios');
     var config = {
-      method: 'post', url: 'http://localhost:8000/api/records/', headers: headers,
+      method: 'post', url: url, headers: headers,
       data: {
         record_name: title,
         price: price,

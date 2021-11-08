@@ -1,16 +1,9 @@
-import axios from "axios";
-
-import React, { useState, Component } from "react";
-
+import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import RecordForm from "./SummaryForm";
-import SecondNav from "./NavSecond";
 import SummaryChart from "./SummaryChart";
 
-
-
 function Dashboard() {
-
     return (
         <React.Fragment>
             <Container className='home-container'>

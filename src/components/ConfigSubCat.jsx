@@ -12,7 +12,8 @@ const RenderdSubCat = () => {
 
     const token = useSelector(state => state.auth.token)
     const headers = { Authorization: `Bearer ${token}` }
-    const url = 'http://localhost:8000/api/sub_category/'
+    const BASE_URL = useSelector(state => state.members.base_url)
+    const url = `${BASE_URL}/api/sub_category/`    
 
     const [type, setType] = useState("add")
     const [addModalS, setaddModalS] = useState(false)

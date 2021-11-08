@@ -10,7 +10,8 @@ const RenderMember = () => {
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
     const headers = { Authorization: `Bearer ${token}` }
-    const url = 'http://localhost:8000/api/members/'
+    const BASE_URL = useSelector(state => state.members.base_url)
+    const url = `${BASE_URL}/api/members/`
     const [type, setType] = useState("delete")
     const [addModal, setaddModal] = useState(false)
 

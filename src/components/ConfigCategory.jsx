@@ -10,7 +10,8 @@ const RenderdCategory = () => {
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
     const headers = { Authorization: `Bearer ${token}` }
-    const url = 'http://localhost:8000/api/category/'
+    const BASE_URL = useSelector(state => state.members.base_url)
+    const url = `${BASE_URL}/api/category/`
     const [type, setType] = useState("delete")
     const [addModalC, setaddModalC] = useState(false)
 
