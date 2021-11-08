@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('ECO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG_', "True") == 'True'
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*",]
 
 
 # Application definition
@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'corsheaders',
+    #
+   "whitenoise.runserver_nostatic",
 ]
 
 MIDDLEWARE = [
@@ -56,6 +58,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # mine
     'corsheaders.middleware.CorsMiddleware',   
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 # for rest_framework
 REST_FRAMEWORK = {
@@ -110,7 +113,18 @@ WSGI_APPLICATION = 'Economies.wsgi.application'
 # }
 
 import django_heroku
-DATABASES = {}
+import dj_database_url
+from decouple import config
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
+
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 
@@ -151,13 +165,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 # ROOT_URLCONF = 'Economies.urls'
 
 django_heroku.settings(locals())
 
-try: 
-    from .local_settings import *
-except ImportError: 
-    pass
