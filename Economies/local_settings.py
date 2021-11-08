@@ -6,6 +6,6 @@ DATABASES = {
         'USER': "ggabry",                     
         'PASSWORD': os.environ.get('ECONOMIES_DB_PSW'),                  
         'HOST': 'localhost',                      
-        'PORT': '',                      
+        'PORT': '5432',                      
     }
 }

@@ -68,9 +68,9 @@ REST_FRAMEWORK = {
 }
 
 # for react
-CORS_ORIGIN_WHITELIST = [
-    'https://localhost:3000', 'http://localhost:3000',  "http://127.0.0.1:3000"
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'https://localhost:3000', 'http://localhost:3000',  "http://127.0.0.1:3000"
+# ]
 
 import datetime
 SIMPLE_JWT = {
@@ -111,9 +111,8 @@ WSGI_APPLICATION = 'Economies.wsgi.application'
 
 import django_heroku
 DATABASES = {}
-
-
 CORS_ORIGIN_ALLOW_ALL = True
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -157,6 +156,7 @@ STATIC_URL = '/static/'
 # ROOT_URLCONF = 'Economies.urls'
 
 django_heroku.settings(locals())
+
 try: 
     from .local_settings import *
 except ImportError: 
