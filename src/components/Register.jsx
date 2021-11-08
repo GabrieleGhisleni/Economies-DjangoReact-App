@@ -17,8 +17,8 @@ const RegisterForm = () => {
     const BASE_URL = useSelector(state => state.members.base_url)
 
     const register = (username, password, email) => {
-        let url = `${BASE_URL}/auth/register`
-        axios.post(url, { username, password, email })
+
+        axios.post(`${BASE_URL}/auth/register`, { username, password, email })
             .then((res) => {
                 dispatch(authSlice.actions.setAuthTokens(
                     { token: res.data.token, refreshToken: res.data.refresh, }));
@@ -43,7 +43,7 @@ const RegisterForm = () => {
 
                 axios.get(`${BASE_URL}/api/members/`, headers)
                 .then(res => { dispatch(memberSlice.actions.setMembers(res.data))})
-                .catch(e => ({ e })) //console.log
+                .catch(e => console.log({ e })) //console.log
             })
             .catch(e => {
                 try{
