@@ -52,7 +52,6 @@ const RenderdSubCat = () => {
                 .then(res=>{ dispatch(memberSlice.actions.addSub(res.data)) })
                 .catch(e => {
                     let err = {e}
-                    console.log({ e })
                     try {if (err.e.response.data.forbidden.includes("exceeded")) alert('Max Sub Category Exceeded')}
                     catch{}
                 })

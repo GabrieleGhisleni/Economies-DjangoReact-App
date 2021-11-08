@@ -62,7 +62,6 @@ const LoginModal = () => {
                 .catch(e => ({ e })) //console.log
             })
             .catch(e => {
-                    console.log({e})
                     try{if ({e}.e.response.data.detail === ('Wrong data')) setwrongdata(<div style={{color:"firebrick"}}>Wrong Data</div>)}
                     catch{}
                     setCol('#E74C3C'); setTimeout(()=> {setCol('white'); setwrongdata(<div></div>)}, 5000)})

@@ -49,7 +49,6 @@ const RenderMember = () => {
             .then(res=>{ dispatch(memberSlice.actions.addMember(res.data)) })
             .catch(e => {
                 let err = {e}
-                console.log({ e })
                 try {if (err.e.response.data.forbidden.includes("exceeded")) alert('Max Members Exceeded')}
                 catch{}
             })
