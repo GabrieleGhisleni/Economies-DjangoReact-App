@@ -11,6 +11,8 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.exceptions import AuthenticationFailed
 from django.db.utils import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
+from records.models import Members, UserCategory
+from django.contrib.auth.models import User
 
 
 
@@ -43,14 +45,19 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
 
 
     def create(self, request, *args, **kwargs):
+        if 'username' in request.data and User.objects.filter(username= request.data['username']).count() > 0:
+             return Response({"data": request.data, "user_already_taken":"not available"}, 
+             status=status.HTTP_400_BAD_REQUEST)
         serializer = self.get_serializer(data=request.data)
-
         serializer.is_valid(raise_exception=True)
+
         try: 
             user = serializer.save()
-        except IntegrityError:
-            return Response({"data": serializer.validated_data, "user_already_taken":"not available"}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception:
+            Members.objects.create(user=user, member_name='Comune')
+            Members.objects.create(user=user, member_name=user.username)
+            for cat in ['Alimentari', 'Sport', 'Trasporti', 'Alimentari','Ristorante','Svago','Viaggi', 'Auto','Casa']: 
+                UserCategory.objects.create(category_name=cat, user=user)
+        except Exception as e:
             return Response(serializer.validated_data, status=status.HTTP_400_BAD_REQUEST)
 
         refresh = RefreshToken.for_user(user)
