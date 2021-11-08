@@ -18,7 +18,7 @@ const RegisterForm = () => {
 
     const register = (username, password, email) => {
 
-        axios.post(`${BASE_URL}/auth/register`, { username, password, email })
+        axios.post(`${BASE_URL}/auth/register/`, { username, password, email })
             .then((res) => {
                 dispatch(authSlice.actions.setAuthTokens(
                     { token: res.data.token, refreshToken: res.data.refresh, }));
@@ -33,7 +33,7 @@ const RegisterForm = () => {
                 axios.get(`${BASE_URL}/api/records/` , headers)
                 .then(res => {dispatch(memberSlice.actions.setRecords(res.data)) })
                 .catch(e => ({ e })) //console.log
-                
+
                 axios.get(`${BASE_URL}/api/category/`, headers)
                 .then(res => {dispatch(memberSlice.actions.setCategory(res.data)) })
                 .catch(e => ({ e })) //console.log
