@@ -17,7 +17,7 @@ const Default = () => {
 
                         {window.innerHeight < 800 ?
                             <Col xs={12} sm={6} className='img-home' >
-                                <img src='images/piggy_bank_home.png' className='img-fluid img-home' alt='piggybank' />
+                                <img src='static/piggy_bank_home.png' className='img-fluid img-home' alt='piggybank' />
                                 <div className='login-register-button text-center'>
                                     <List type="inline">
                                         <ListInlineItem>
@@ -54,7 +54,7 @@ const Default = () => {
                 </Col>
                 {window.innerHeight > 800 ?
                     <Col xs={12} sm={6} className='img-home' >
-                        <img src='images/piggy_bank_home.png' className='img-fluid img-home' alt='piggybank' />
+                        <img src='static/piggy_bank_home.png' className='img-fluid img-home' alt='piggybank' />
                         <div className='login-register-button text-center'>
                             <List type="inline">
                                 <ListInlineItem>
