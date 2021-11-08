@@ -15,7 +15,7 @@ const Default = () => {
                         fra diversi periodi dell'anno oppure tieni d'occhio chi, in famiglia,
                         spende di più. <br /><br />
 
-                        {window.innerHeight < 800 ?
+                        {window.innerWidth < 800 ?
                             <Col xs={12} sm={6} className='img-home' >
                                 <img src='static/piggy_bank_home.png' className='img-fluid img-home' alt='piggybank' />
                                 <div className='login-register-button text-center'>
@@ -52,7 +52,7 @@ const Default = () => {
                         />
                     </Col> */}
                 </Col>
-                {window.innerHeight > 800 ?
+                {window.innerWidth > 800 ?
                     <Col xs={12} sm={6} className='img-home' >
                         <img src='static/piggy_bank_home.png' className='img-fluid img-home' alt='piggybank' />
                         <div className='login-register-button text-center'>
