@@ -32,6 +32,10 @@ REACT_ROUTES = [
     'history',
     'configurations',
     'home',
+    'dashboard/',
+    'history/',
+    'configurations/',
+    'home/',
 ]
 
 # Application definition

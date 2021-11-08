@@ -14,8 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-
+from django.urls import path, include,  re_path
+from django.conf import settings
 from users.auth.viewset import LoginViewSet, RegistrationViewSet, RefreshViewSet
 from django.views.generic.base import TemplateView
 from rest_framework import routers
@@ -35,20 +35,14 @@ router.register(r'api/sub_category', views.SubCategoryView, basename='subcategor
 # /records/ - This returns a list of all the Todo items (Create and Read operations can be done here).
 # /records/id - this returns a single Todo item using the id primary key (Update and Delete operations can be done here).
 
+react_routes = getattr(settings, 'REACT_ROUTES', [])
 
 
 urlpatterns = [
+    re_path('', TemplateView.as_view(template_name="index.html")),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-
-    # path('accounts/', include('django.contrib.auth.urls')),
 ]
 
-from django.conf import settings
 
-react_routes = getattr(settings, 'REACT_ROUTES', [])
 
-for route in react_routes:
-    urlpatterns += [
-        path('{}'.format(route), TemplateView.as_view(template_name='index.html'))
-    ]
