@@ -7,7 +7,10 @@ from django.contrib.auth.models import User
 
 @receiver(post_save, sender=User)
 def create_member(sender, instance, created, **kwargs):
+    print('inside SIGNAL')
     if created:
+        print('inside CREATED')
+        print(sender, instance, created)
         defaultCategory = ['Auto', 'Sport','Alimentari','Ristorante','Svago','Viaggi']
         try:
             Members.objects.create(user=instance, member_name='Comune')
