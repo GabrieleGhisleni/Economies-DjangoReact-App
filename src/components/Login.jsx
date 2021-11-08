@@ -4,11 +4,12 @@ import { NavLink } from 'react-router-dom';
 // Formik form
 import { useFormik } from 'formik';
 // Redux import
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import authSlice from '../features/userSlice';
 import memberSlice from '../features/memberSlice';
 // persisent and axios
 import { useHistory } from "react-router";
+
 
 
 
@@ -19,13 +20,13 @@ const LoginModal = () => {
     const [col, setCol] = useState('white')
     const [wrongdata, setwrongdata] = useState(<div></div>)
     var axios = require('axios');
+    console.log('here', process.env)
 
     const login = (username, password) => {
-        console.log(process.env.SECRET_KEY)
         var config = {
             method: 'post',
             // mode: 'same-origin',
-            url: 'http://127.0.0.1:8000/auth/login/',
+            url: 'https://smart-economies.herokuapp.com/auth/login/',
             headers: { 
             'Accept': 'application/json', 
             'Content-Type': 'application/json'},

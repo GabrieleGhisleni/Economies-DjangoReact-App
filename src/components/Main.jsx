@@ -15,6 +15,7 @@ import Footer from './Footer';
 
 
 const Main = () => {
+    require('dotenv').config();
     const isLogged = useSelector(state => state.auth.isLogged)
     return (
         <React.Fragment>
