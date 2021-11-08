@@ -19,6 +19,7 @@ from django.conf import settings
 from users.auth.viewset import LoginViewSet, RegistrationViewSet, RefreshViewSet
 from django.views.generic.base import TemplateView
 from rest_framework import routers
+from django.shortcuts import render
 from records import views
 
 router = routers.SimpleRouter()
@@ -35,13 +36,14 @@ router.register(r'api/sub_category', views.SubCategoryView, basename='subcategor
 # /records/ - This returns a list of all the Todo items (Create and Read operations can be done here).
 # /records/id - this returns a single Todo item using the id primary key (Update and Delete operations can be done here).
 
-react_routes = getattr(settings, 'REACT_ROUTES', [])
-
+def render_react(request):
+    return render(request, "index.html")
 
 urlpatterns = [
-    re_path('home/', TemplateView.as_view(template_name="index.html")),
-    path('admin/', admin.site.urls),
+    re_path(r"^$", render_react),
+    re_path(r"^(?:.*)/?$", render_react),
     path('', include(router.urls)),
+    path('admin/', admin.site.urls),
 ]
 
 
