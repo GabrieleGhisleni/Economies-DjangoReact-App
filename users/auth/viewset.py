@@ -54,12 +54,7 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
                         password=request.data['password'])
 
             user.save()
-            Members(user=user, member_name='Comune').save()
-            Members(user=user, member_name=user.username).save()
-            for cat in ['Alimentari', 'Sport', 'Trasporti', 'Alimentari','Ristorante','Svago','Viaggi', 'Auto','Casa']: 
-                UserCategory(category_name=cat, user=user).save()
         except Exception as e:
-            print(e)
             return Response({'try except bad request'}, status=status.HTTP_400_BAD_REQUEST)
 
         refresh = RefreshToken.for_user(user)
