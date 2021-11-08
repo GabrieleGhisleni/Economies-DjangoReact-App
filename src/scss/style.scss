@@ -10,7 +10,10 @@ body{
     font-family: $main-font;
     
 }
-
+.home-container{
+    margin-top:50px;
+    min-height: calc(100vh - 70px - 140px);
+}
 .chart-row{
     margin-top: 25px;
 }

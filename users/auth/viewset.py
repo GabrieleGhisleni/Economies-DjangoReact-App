@@ -10,6 +10,9 @@ from users.auth.serializer import LoginSerializer, RegisterSerializer
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.exceptions import AuthenticationFailed
 from django.db.utils import IntegrityError
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 class LoginViewSet(ModelViewSet, TokenObtainPairView):
     serializer_class = LoginSerializer
@@ -37,6 +40,7 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
     serializer_class = RegisterSerializer
     permission_classes = (AllowAny,)
     http_method_names = ['post']
+
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

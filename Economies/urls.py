@@ -20,30 +20,30 @@ from users.auth.viewset import LoginViewSet, RegistrationViewSet, RefreshViewSet
 from django.views.generic.base import TemplateView
 from rest_framework import routers
 from django.shortcuts import render
+from django.views.generic import TemplateView
 from records import views
 
 router = routers.SimpleRouter()
 router.register(r'auth/login', LoginViewSet, basename='auth-login')
 router.register(r'auth/register', RegistrationViewSet, basename='auth-register')
 router.register(r'auth/refresh', RefreshViewSet, basename='auth-refresh')
-
 router.register(r'api/records', views.RecordsListApi, basename='record')
 router.register(r'api/members', views.MemberListApi, basename='members')
 router.register(r'api/category', views.CategoryView, basename='category')
 router.register(r'api/sub_category', views.SubCategoryView, basename='subcategory')
-
-# The router class allows us to make the following queries: s
-# /records/ - This returns a list of all the Todo items (Create and Read operations can be done here).
-# /records/id - this returns a single Todo item using the id primary key (Update and Delete operations can be done here).
-
-from django.views.generic import TemplateView
 catchall = TemplateView.as_view(template_name='index.html')
 
 urlpatterns = [
-    re_path(r'', catchall),
+    path('', catchall),
+    path('home', catchall),
+    path('history', catchall),
+    path('dashboard', catchall),
+    path('configurations', catchall),
+    ##################################
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
 ]
+
 
 
 

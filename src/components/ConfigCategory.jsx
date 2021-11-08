@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { memberSlice } from './../features/memberSlice'
 import { Button, Col, Container, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row, Table } from 'reactstrap';
@@ -13,8 +13,6 @@ const RenderdCategory = () => {
     const url = 'http://localhost:8000/api/category/'
     const [type, setType] = useState("delete")
     const [addModalC, setaddModalC] = useState(false)
-    const [update, setUpdate] = useState(false)
-
 
     const AddModalS = () => {
         const formik = useFormik({

@@ -25,8 +25,32 @@ SECRET_KEY = os.environ.get('ECO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG_', "True") == 'True'
-ALLOWED_HOSTS = ["*",]
 
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+        "localhost",
+    "192.168.0.1",
+    # "mockbic.spnnjy4rjm.eu-west-3.elasticbeanstalk.com"
+]
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'Access-Control-Allow-Origin',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    # 'mock-bic-token',  # IMPORTANT
+)
 
 # Application definition
 
@@ -58,7 +82,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # mine
     'corsheaders.middleware.CorsMiddleware',   
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 # for rest_framework
 REST_FRAMEWORK = {
@@ -114,7 +138,7 @@ DATABASES = {
 # db_from_env = dj_database_url.config(conn_max_age=600)
 # DATABASES['default'].update(db_from_env)
 
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Password validation
@@ -162,4 +186,3 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-BASE_DIR

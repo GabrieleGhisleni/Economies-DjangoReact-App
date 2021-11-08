@@ -7,10 +7,13 @@ import RecordForm from "./SummaryForm";
 import SecondNav from "./NavSecond";
 import SummaryChart from "./SummaryChart";
 
+
+
 function Dashboard() {
+
     return (
         <React.Fragment>
-            <Container style={{marginTop:"50px"}}>
+            <Container className='home-container'>
                 <Row>
                     <Col xs="12" lg = '8' className='summaryChart'>
                     <SummaryChart />

@@ -1,7 +1,6 @@
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import * as axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { memberSlice } from './../features/memberSlice'
 import { Button, Col, Container, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row, Table } from 'reactstrap';
@@ -14,7 +13,7 @@ const RenderMember = () => {
     const url = 'http://localhost:8000/api/members/'
     const [type, setType] = useState("delete")
     const [addModal, setaddModal] = useState(false)
-    const [update, setUpdate] = useState(false)
+
 
 
 

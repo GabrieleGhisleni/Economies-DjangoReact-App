@@ -1,20 +1,18 @@
-import React, { Component, useState } from 'react';
-import { Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Button, NavItem } from 'reactstrap'
+import React, { useState } from 'react';
+import { Row, Col, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Button, NavItem } from 'reactstrap'
 import { NavLink } from 'react-router-dom';
 // Formik form
 import { useFormik } from 'formik';
 // Redux import
 import { useDispatch } from 'react-redux';
-import authSlice, { login } from '../features/userSlice';
+import authSlice from '../features/userSlice';
 import memberSlice from '../features/memberSlice';
 // persisent and axios
 import { useHistory } from "react-router";
-import * as axios from 'axios';
-// 
 
 
 
-const LoginModal = (force) => {
+const LoginModal = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const [modal, setModal] = useState(false)
@@ -23,12 +21,17 @@ const LoginModal = (force) => {
     var axios = require('axios');
 
     const login = (username, password) => {
+        console.log(process.env.SECRET_KEY)
         var config = {
             method: 'post',
+            // mode: 'same-origin',
             url: 'http://127.0.0.1:8000/auth/login/',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+            'Accept': 'application/json', 
+            'Content-Type': 'application/json'},
             data: { username: username, password: password }
         };
+        console.log(config)
         axios(config)
             .then(res => {
                 dispatch(authSlice.actions.setAuthTokens(
@@ -59,6 +62,7 @@ const LoginModal = (force) => {
                 .catch(e => ({ e })) //console.log
             })
             .catch(e => {
+                    console.log({e})
                     try{if ({e}.e.response.data.detail === ('Wrong data')) setwrongdata(<div style={{color:"firebrick"}}>Wrong Data</div>)}
                     catch{}
                     setCol('#E74C3C'); setTimeout(()=> {setCol('white'); setwrongdata(<div></div>)}, 5000)})
@@ -91,6 +95,7 @@ const LoginModal = (force) => {
                     toggle={() => setModal(!modal)} >Login Form {wrongdata}</ModalHeader>
                 <ModalBody style={{ backgroundColor: col }}>
                     <Form onSubmit={formik.handleSubmit}>
+                   
                         <FormGroup>
                             <Col>
                                 <Label>Username</Label>

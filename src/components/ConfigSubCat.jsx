@@ -1,7 +1,6 @@
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import * as axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { memberSlice } from './../features/memberSlice'
 import { Button, Col, Container, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row, Table } from 'reactstrap';
@@ -17,7 +16,6 @@ const RenderdSubCat = () => {
 
     const [type, setType] = useState("add")
     const [addModalS, setaddModalS] = useState(false)
-    const [update, setUpdate] = useState(false)
 
     const renderdCategories = categories.map(c => { return <option value={c.id}>{c.category_name}</option> })
 

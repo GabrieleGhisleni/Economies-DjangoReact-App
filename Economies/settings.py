@@ -11,9 +11,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from pathlib import Path
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,19 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('ECO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG_', "True") == 'True'
-ALLOWED_HOSTS = ["*",]
+DEBUG = True
 
-REACT_ROUTES = [
-    'dashboard',
-    'history',
-    'configurations',
-    'home',
-    'dashboard/',
-    'history/',
-    'configurations/',
-    'home/',
-]
+ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 
@@ -54,8 +45,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'corsheaders',
-    #
-   "whitenoise.runserver_nostatic",
+    "whitenoise.runserver_nostatic",
 ]
 
 MIDDLEWARE = [
@@ -81,9 +71,10 @@ REST_FRAMEWORK = {
 }
 
 # for react
-# CORS_ORIGIN_WHITELIST = [
-#     'https://localhost:3000', 'http://localhost:3000',  "http://127.0.0.1:3000"
-# ]
+CORS_ORIGIN_WHITELIST = [
+    'https://localhost:3000', 'http://localhost:3000',  "http://127.0.0.1:3000",
+     'https://localhost:8000', 'http://localhost:8000',  "http://127.0.0.1:8000"
+]
 
 import datetime
 SIMPLE_JWT = {
@@ -115,13 +106,6 @@ WSGI_APPLICATION = 'Economies.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 import django_heroku
 import dj_database_url
 from decouple import config
@@ -132,12 +116,7 @@ DATABASES = {
     )
 }
 
-# db_from_env = dj_database_url.config(conn_max_age=600)
-# DATABASES['default'].update(db_from_env)
-
 CORS_ORIGIN_ALLOW_ALL = True
-
-
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -161,28 +140,21 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
+
 STATICFILES_DIRS = [
   os.path.join(BASE_DIR, "build/static"),
   os.path.join(BASE_DIR, "build/images"),
 ]
+
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
-WHITENOISE_ROOT = BASE_DIR / 'build' / 'root'
-
-django_heroku.settings(locals())
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
