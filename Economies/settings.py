@@ -27,6 +27,12 @@ SECRET_KEY = os.environ.get('ECO_KEY')
 DEBUG = os.environ.get('DEBUG_', "True") == 'True'
 ALLOWED_HOSTS = ["*",]
 
+REACT_ROUTES = [
+    'dashboard',
+    'history',
+    'configurations',
+    'home',
+]
 
 # Application definition
 
