@@ -14,11 +14,12 @@ import * as axios from 'axios';
 
 
 
-const LoginModal = () => {
+const LoginModal = (force) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const [modal, setModal] = useState(false)
     const [col, setCol] = useState('white')
+    const [wrongdata, setwrongdata] = useState(<div></div>)
     var axios = require('axios');
 
     const login = (username, password) => {
@@ -43,21 +44,25 @@ const LoginModal = () => {
 
                 axios.get('http://localhost:8000/api/records/', headers)
                 .then(res => {dispatch(memberSlice.actions.setRecords(res.data)) })
-                .catch(e => console.log('Error fetching data records', { e }))
+                .catch(e => ({ e })) //console.log
 
                 axios.get('http://localhost:8000/api/category/', headers)
                 .then(res => {dispatch(memberSlice.actions.setCategory(res.data)) })
-                .catch(e => console.log('Error fetching data cat', { e }))
+                .catch(e => ({ e })) //console.log
 
                 axios.get('http://localhost:8000/api/sub_category/', headers)
                 .then(res => {dispatch(memberSlice.actions.setSubCategory(res.data)) })
-                .catch(e => console.log('Error fetching data subcat', { e }))
+                .catch(e => ({ e })) //console.log
 
                 axios.get('http://localhost:8000/api/members/', headers)
                 .then(res => { dispatch(memberSlice.actions.setMembers(res.data))})
-                .catch(e => console.log('Error fetching data members', { e }))
+                .catch(e => ({ e })) //console.log
             })
-            .catch(e => {console.log('ERROR IN LOGIN', { e }); setCol('#E74C3C'); setTimeout(()=>setCol('white'),3000)})
+            .catch(e => {
+                    try{if ({e}.e.response.data.detail === ('Wrong data')) setwrongdata(<div style={{color:"firebrick"}}>Wrong Data</div>)}
+                    catch{}
+                    setCol('#E74C3C'); setTimeout(()=> {setCol('white'); setwrongdata(<div></div>)}, 5000)})
+   
 
 
 
@@ -83,7 +88,7 @@ const LoginModal = () => {
             <Modal isOpen={modal} toggle={() => setModal(!modal)} >
                 <ModalHeader
                     close={<button className="close" onClick={() => setModal(!modal)}>×</button>}
-                    toggle={() => setModal(!modal)} >Login Form</ModalHeader>
+                    toggle={() => setModal(!modal)} >Login Form {wrongdata}</ModalHeader>
                 <ModalBody style={{ backgroundColor: col }}>
                     <Form onSubmit={formik.handleSubmit}>
                         <FormGroup>

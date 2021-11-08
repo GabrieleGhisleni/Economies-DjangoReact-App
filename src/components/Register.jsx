@@ -17,7 +17,7 @@ const RegisterForm = () => {
     const history = useHistory();
     const [modal, setModal] = useState(false)
     const [col, setCol] = useState('white')
-
+    const [notavailable, setnotavailable] = useState(<div></div>)
 
     const register = (username, password, email) => {
         let url = "http://localhost:8000/auth/register/"
@@ -34,22 +34,25 @@ const RegisterForm = () => {
 
                 axios.get('http://localhost:8000/api/records/', headers)
                     .then(res => { dispatch(memberSlice.actions.setRecords(res.data)) })
-                    .catch(e => console.log('Error fetching data records', { e }))
+                    .catch(e => ({ e })) //console.log
 
                 axios.get('http://localhost:8000/api/category/', headers)
                     .then(res => { dispatch(memberSlice.actions.setCategory(res.data)) })
-                    .catch(e => console.log('Error fetching data cat', { e }))
+                    .catch(e => ({ e })) //console.log
 
                 axios.get('http://localhost:8000/api/sub_category/', headers)
                     .then(res => { dispatch(memberSlice.actions.setSubCategory(res.data)) })
-                    .catch(e => console.log('Error fetching data subcat', { e }))
+                    .catch(e => ({ e })) //console.log
 
                 axios.get('http://localhost:8000/api/members/', headers)
                     .then(res => { dispatch(memberSlice.actions.setMembers(res.data)) })
-                    .catch(e => console.log('Error fetching data members', { e }))
+                    .catch(e => ({ e })) //console.log
             })
             .catch(e => {
-                setCol('#E74C3C'); setTimeout(()=> setCol('white'), 3000)
+                try{
+                    if ({e}.e.response.data.user_already_taken) setnotavailable(<div style={{color:"firebrick"}}>User Not Available</div>)}
+                catch{}
+                setCol('#E74C3C'); setTimeout(()=> {setCol('white'); setnotavailable(<div></div>)}, 5000)
             });
     }
 
@@ -57,7 +60,8 @@ const RegisterForm = () => {
         initialValues: { username: '', password: '', email: '' },
         onSubmit: (values) => { register(values.username, values.password, values.email) },
         validateOnChange: false,
-        validateOnBlur: false
+        validateOnBlur: false,
+        onReset: (e, {resetForm}) => {resetForm({})}
     });
 
     return (
@@ -70,7 +74,7 @@ const RegisterForm = () => {
             <Modal isOpen={modal} toggle={() => setModal(!modal)} >
                 <ModalHeader
                     close={<button className="close" onClick={() => setModal(!modal)}>×</button>}
-                    toggle={() => setModal(!modal)} >Register Form </ModalHeader>
+                    toggle={() => setModal(!modal)} >Register Form     {notavailable}</ModalHeader>
                 <ModalBody style={{ backgroundColor: col }}>
                     <Form onSubmit={formik.handleSubmit}>
                         <FormGroup>

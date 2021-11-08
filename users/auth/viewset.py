@@ -9,6 +9,7 @@ from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from users.auth.serializer import LoginSerializer, RegisterSerializer
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.exceptions import AuthenticationFailed
+from django.db.utils import IntegrityError
 
 class LoginViewSet(ModelViewSet, TokenObtainPairView):
     serializer_class = LoginSerializer
@@ -41,7 +42,13 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
         serializer = self.get_serializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+        try: 
+            user = serializer.save()
+        except IntegrityError:
+            return Response({"data": serializer.validated_data, "user_already_taken":"not available"}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception:
+            return Response(serializer.validated_data, status=status.HTTP_400_BAD_REQUEST)
+
         refresh = RefreshToken.for_user(user)
         res = {
             "refresh": str(refresh),

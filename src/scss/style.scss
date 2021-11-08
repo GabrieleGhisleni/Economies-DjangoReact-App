@@ -10,6 +10,7 @@ body{
     font-family: $main-font;
     
 }
+
 .chart-row{
     margin-top: 25px;
 }
@@ -89,6 +90,59 @@ body{
     padding: 10px;
     margin: 15px;
 }
+
+
+.default-container{
+    min-height: calc(100vh - 70px - 140px);
+    padding:35px!important;
+    margin-top: 35px;
+    .login-register-button{
+        margin: 20px 0;
+        .login-register{
+            background-color: $mainColor;
+            a{
+                color: #346288
+                ;
+            }
+        }
+    }
+    .home-description{
+        text-align: left!important;
+    }
+    .iframe{
+        text-align: center;
+        margin:10px;
+        border-radius: 20px!important;
+    }
+    .img-home{
+        border-radius: 10px;
+    }
+
+}
+
+
+.err{
+    font-weight: 800;
+    border: solid red 2px;
+}
+
+// Nav & Footer
+
+.myNav{
+    background-color: $mainColor;
+    margin-bottom: 0px;
+    padding-right: 15px;
+    .navbar-nav{
+        padding-right: 25px!important;
+    }
+    .navbar-brand{
+        a{
+         color:black!important;
+         font-size: 1.5rem;
+        }
+    }
+}
+
 .secondNav{
     font-family:$second-font;
     background-color: $secondColor;
@@ -106,31 +160,6 @@ body{
     }
     ul>*{
         padding-right: 4rem;
-    }
-}
-
-.containerImg{
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-.err{
-    font-weight: 800;
-    border: solid red 2px;
-}
-
-.myNav{
-    background-color: $mainColor;
-    margin-bottom: 0px;
-    padding-right: 15px;
-    .navbar-nav{
-        padding-right: 25px!important;
-    }
-    .navbar-brand{
-        a{
-         color:black!important;
-         font-size: 1.5rem;
-        }
     }
 }
 

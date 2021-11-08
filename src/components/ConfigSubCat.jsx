@@ -69,7 +69,7 @@ const RenderdSubCat = () => {
 
             axios(config)
                 .then(res=>{ dispatch(memberSlice.actions.removeSub(current.id)) })
-                .catch(e => console.log({ e }))
+                .catch(e => ({ e })) //console.log
         }
 
 
@@ -82,7 +82,7 @@ const RenderdSubCat = () => {
             };
             axios(config)
                 .then((values) =>{dispatch(memberSlice.actions.updateSub({values}))})
-                .catch(e => {console.log({ e })})
+                .catch(e => ({ e })) //console.log
         }
 
         return (

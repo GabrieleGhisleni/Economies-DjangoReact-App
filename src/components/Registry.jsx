@@ -128,7 +128,7 @@ const Registry = () => {
 
             axios(config)
                 .then(() => {dispatch(memberSlice.actions.removeRecord(current.id))})
-                .catch(e => console.log({ e }))
+                .catch(e => ({ e })) //console.log
         }
 
 
@@ -142,7 +142,7 @@ const Registry = () => {
             };
             axios(config)
                 .then((values) =>{dispatch(memberSlice.actions.updateRecord({values}))})
-                .catch(e => console.log({ e }))
+                .catch(e => ({ e })) //console.log
         }
 
         const renderedMembers = members.map((m) => { return <option value={m.id}>{m.member_name}</option> });
@@ -365,8 +365,6 @@ const Registry = () => {
         );
     });
 
-
-    console.log(records, current)
     return (
         <Container>
             {current? <Info />:null}

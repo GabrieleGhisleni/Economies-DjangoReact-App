@@ -61,7 +61,7 @@ const RenderdCategory = () => {
             };
             axios(config)
              .then(() => {dispatch(memberSlice.actions.removeCat(current.id))})
-                .catch(e => console.log({ e }))
+                .catch(e => ({ e })) //console.log
         }
 
 
@@ -74,7 +74,7 @@ const RenderdCategory = () => {
             };
             axios(config)
             .then((values) =>{dispatch(memberSlice.actions.updateCat({values}))})
-                .catch(e => console.log(e))
+            .catch(e => ({ e })) //console.log
         }
 
 

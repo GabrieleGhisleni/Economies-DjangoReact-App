@@ -65,7 +65,7 @@ const RenderMember = () => {
 
             axios(config)
             .then(() => {dispatch(memberSlice.actions.removeMember(current.id))})
-                .catch(e => console.log({ e }))
+                .catch(e => ({ e })) //console.log
         }
 
 
@@ -78,7 +78,7 @@ const RenderMember = () => {
             };
             axios(config)
             .then((values) =>{dispatch(memberSlice.actions.updateMember({values}))})
-                .catch(e => console.log({ e }))
+            .catch(e => ({ e })) //console.log
         }
 
         return (

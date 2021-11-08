@@ -66,7 +66,6 @@ const RecordForm = () => {
       .catch((e ) => {
         setRedAlert(true)
         setTimeout(()=> setRedAlert(false), 5000) 
-        console.log('Error while adding record', { e })
         let err = {e}
         try {if (err.e.response.data.forbidden.includes("exceeded")) alert('Max Members Exceeded')}
         catch{}})}

@@ -2,44 +2,73 @@ import { Row, Col, Container, List, ListInlineItem, Button } from "reactstrap";
 import Iframe from "react-iframe";
 import LoginModal from "./Login";
 import RegisterForm from "./Register";
+import React from "react";
+
 const Default = () => {
     return (
-        <Container
-            className="containerImg"
-            style={{ backgroundImage: "url(images/home4.jpg)" }}
-        >
+        <Container className="default-container">
             <Row>
-                <Col xs={12}>
-                    <h6>Handle your economies smarter!</h6>
-                    <span>
-                        Handle your economies smarter! Handle your economies smarter! Handle
-                        your economies smarter! Handle your economies smarter! Handle your
-                        economies smarter! Handle your economies smarter! Handle your
-                        economies smarter! Handle your economies smarter!
+                <Col xs={12} sm={6}>
+                    <h3 style={{ textAlign: "center", marginBottom: "20px" }}>Gestici le tue Economie SMART!</h3>
+                    <span className='home-description'>
+                        Tieni traccia delle spese quotiadiane e metti a confronto le spese
+                        fra diversi periodi dell'anno oppure tieni d'occhio chi, in famiglia,
+                        spende di più. <br /><br />
+
+                        {window.innerHeight < 800 ?
+                            <Col xs={12} sm={6} className='img-home' >
+                                <img src='images/piggy_bank_home.png' className='img-fluid img-home' alt='piggybank' />
+                                <div className='login-register-button text-center'>
+                                    <List type="inline">
+                                        <ListInlineItem>
+                                            <Button className='login-register'>
+                                                <LoginModal />
+                                            </Button>
+                                        </ListInlineItem>
+                                        <ListInlineItem>
+                                            <Button className='login-register'>
+                                                <RegisterForm />
+                                            </Button>
+                                        </ListInlineItem>
+                                    </List>
+                                </div>      </Col> : null}
+
+                        Con Economies ti sarà possibile monitorare tutte le tue spese etichettate
+                        secondo categorie e sotto categorie da te create senza nessuna difficoltà.
+                        Inoltre potrai creare fino a un massimo di 5 membri per account sotto il
+                        quale assegnare tali spese.<br /><br />
+
+                       
                     </span>
-                    <Col xs={12} className="text-center" style={{ paddingTop: "20px" }}>
-                        <List type="inline">
-                            <ListInlineItem>
-                                <Button color="success">
-                                    <LoginModal />
-                                </Button>
-                            </ListInlineItem>
-                            <ListInlineItem>
-                                <Button color="success">
-                                    <RegisterForm />
-                                </Button>
-                            </ListInlineItem>
-                        </List>
-                    </Col>
-                    <span>Controlla come funziona:</span>
-                    <div>
+                    {/* <Col className='iframe'>
+                        <span> Guarda il video per capire come funziona!</span>
                         <Iframe
                             url="http://www.youtube.com/embed/xDMP3i36naA"
                             display="initial"
                             position="relative"
+                            allowFullScreen 
+                            width="450px"
+                            height="300px"
                         />
-                    </div>
+                    </Col> */}
                 </Col>
+                {window.innerHeight > 800 ?
+                    <Col xs={12} sm={6} className='img-home' >
+                        <img src='images/piggy_bank_home.png' className='img-fluid img-home' alt='piggybank' />
+                        <div className='login-register-button text-center'>
+                            <List type="inline">
+                                <ListInlineItem>
+                                    <Button className='login-register'>
+                                        <LoginModal />
+                                    </Button>
+                                </ListInlineItem>
+                                <ListInlineItem>
+                                    <Button className='login-register'>
+                                        <RegisterForm />
+                                    </Button>
+                                </ListInlineItem>
+                            </List>
+                        </div></Col> : null}
             </Row>
         </Container>
     );
