@@ -99,6 +99,7 @@ class SubCategoryView(viewsets.GenericViewSet,
                 sub_category_name=self.request.data['sub_category_name'],
                 primary_category=userCategory,
                 user=self.request.user)
+
             if self.get_queryset().count() >= max_subcategories:
                 return Response({"forbidden": "exceeded max_numbers of sub_categories"}, status=status.HTTP_403_FORBIDDEN)
 
@@ -149,18 +150,20 @@ class MemberListApi(mixins.CreateModelMixin,
         return members
 
     def create(self, request, *args, **kwargs):
+
         if "member_name" not in request.data:
             return Response({"data": self.request.data, "necessary_field": ['member_name']}, status=status.HTTP_400_BAD_REQUEST)
         try:
+            print('here1')
+            print(self.request.user)
             m = Members(member_name = self.request.data['member_name'],
                         user = self.request.user)
-            if self.get_queryset().count() >= max_members:
-                return Response({"forbidden": "exceeded max_numbers of sub_categories"}, status=status.HTTP_403_FORBIDDEN)
-
+            if len(self.get_queryset()) >= max_members:
+                return Response({"forbidden": "exceeded max_numbers of member_name"}, status=status.HTTP_403_FORBIDDEN)
             m.save()
             return Response(MembersSerializer(m).data, status=status.HTTP_202_ACCEPTED)
         except:
-            return Response({"data": self.request.data, "necessary_field": ['category_name']}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"data": self.request.data, "necessary_field": ['member_name']}, status=status.HTTP_400_BAD_REQUEST)
 
 
     def delete(self, request, format=None):

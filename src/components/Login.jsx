@@ -32,7 +32,7 @@ const LoginModal = () => {
             'Content-Type': 'application/json'},
             data: { username: username, password: password }
         };
-        console.log(config)
+
         axios(config)
             .then(res => {
                 dispatch(authSlice.actions.setAuthTokens(
