@@ -1,10 +1,9 @@
-import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Container } from 'reactstrap';
+import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, Container } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
-import React, { useState, Component } from 'react';
+import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import LoginModal from './Login'
-import LoginForm from './Login'
 import LogoutForm from './Logout';
 import RegisterForm from './Register';
 
@@ -32,7 +31,7 @@ const MyNav = () => {
     return (
         <Navbar light expand='xs' className='myNav'>
             <Container>
-            <NavbarBrand> <NavLink to='/home'> Economies  <img src='static/piggy_bank.png' width='35'/> </NavLink></NavbarBrand>
+            <NavbarBrand> <NavLink to='/home'> Economies  <img src='static/piggy_bank.png' width='35' alt='logo piggy bank'/> </NavLink></NavbarBrand>
             <NavbarToggler onClick={() => setOpen(!isOpen)} />
             
             <Collapse isOpen={isOpen} navbar>

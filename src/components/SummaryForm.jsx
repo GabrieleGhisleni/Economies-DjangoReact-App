@@ -76,8 +76,6 @@ const RecordForm = () => {
   const renderedSubCategories = selectedSub.map((m) => { return <option value={m.id}>{m.sub_category_name}</option> });
   const renderedMembers = members.map((m) => { return <option value={m.id}>{m.member_name}</option> });
   
-  const alertClass = alert?  "block": "none"
-  const redClass = redAlert?  "block": "none"
   const alertButton = "rgba(154, 255, 154,0.6)"
   const alertRedButton = "rgba(126, 25, 25,0.7)"
   var c;

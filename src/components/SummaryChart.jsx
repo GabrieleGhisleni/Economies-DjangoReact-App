@@ -14,10 +14,8 @@ import {COLORS} from './colors.js'
 
 
 const SummaryChart = () => {
-    const members = useSelector((state) => state.members.members);
     const records = useSelector((state) => state.members.records);
     const categories = useSelector((state) => state.members.categories);
-    const subcategories = useSelector((state) => state.members.subcategories);
     const [month, setMonth] = useState(new Date().getMonth());
     const [year, setYear] = useState(new Date().getFullYear());
 
@@ -37,7 +35,7 @@ const SummaryChart = () => {
     ];
 
     const myRecord = {};
-    records.map((r) => {
+    records.forEach((r) => {
         let date = new Date(r.created_at)
         if ((date.getFullYear() == year) & (date.getMonth() == month)) {
             let price = r.price;

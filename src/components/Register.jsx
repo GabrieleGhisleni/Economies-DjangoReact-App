@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Button, NavItem } from 'reactstrap'
+import { Row, Col, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Button, NavItem } from 'reactstrap'
 import { NavLink } from 'react-router-dom';
-// Formik form
 import { useFormik } from 'formik';
-// Redux import
 import { useDispatch, useSelector} from 'react-redux';
 import authSlice from '../features/userSlice';
 import memberSlice from '../features/memberSlice';
 import { useHistory } from "react-router";
 import axios from 'axios';
-
 
 const RegisterForm = () => {
     const dispatch = useDispatch();
@@ -18,8 +15,9 @@ const RegisterForm = () => {
     const [col, setCol] = useState('white')
     const [notavailable, setnotavailable] = useState(<div></div>)
     const BASE_URL = useSelector(state => state.members.base_url)
+
     const register = (username, password, email) => {
-        let url = url
+        let url = `${BASE_URL}/auth/register`
         axios.post(url, { username, password, email })
             .then((res) => {
                 dispatch(authSlice.actions.setAuthTokens(

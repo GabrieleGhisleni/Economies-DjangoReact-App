@@ -335,14 +335,13 @@ const Registry = () => {
     const subcategories = useSelector(state => state.members.subcategories)
 
     const [current, setCurrent] = useState(records[0])
-    const [currentCategory, setcurrentCategory] = useState({})
-    
 
 
     const formik_s = useFormik({ initialValues: { category: -1 } })
+    var filteredRecords;
     if (formik_s.values.category != -1) {
-        var filteredRecords = records.filter(o => o.category_associated == formik_s.values.category)
-    } else { var filteredRecords = records }
+        filteredRecords = records.filter(o => o.category_associated == formik_s.values.category)
+    } else { filteredRecords = records }
 
     let i = 0;
     const recordsRendered = filteredRecords.map((r) => {

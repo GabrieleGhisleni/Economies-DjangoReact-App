@@ -4,8 +4,7 @@ import StatsSubCategory from './StatsSub';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import {
-    Button, Col, Container, Form, FormGroup, Input,
-    Label, Modal, ModalBody, ModalHeader, Row, Table
+    Col, Container, Input, Label, Row
 } from 'reactstrap';
 
 const Stats = () => {

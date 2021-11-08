@@ -1,6 +1,3 @@
-import { Container, Row, Col, Button } from 'reactstrap';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList} from 'recharts';
 import { COLORS, SHORT_MONTH } from './colors.js'
 

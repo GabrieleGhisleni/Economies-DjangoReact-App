@@ -1,8 +1,5 @@
-import { Container, Row, Col, Button } from 'reactstrap';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import { COLORS, SHORT_MONTH, SECOND_COLORS } from './colors.js'
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { COLORS, SECOND_COLORS } from './colors.js'
 
 const StatsSubCategory = (data) => {
     const records_c = data.records
