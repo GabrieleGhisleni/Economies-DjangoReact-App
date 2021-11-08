@@ -43,9 +43,10 @@ const RegisterForm = () => {
 
                 axios.get(`${BASE_URL}/api/members/`, headers)
                 .then(res => { dispatch(memberSlice.actions.setMembers(res.data))})
-                .catch(e => console.log({ e })) //console.log
+                .catch(e => ({ e })) //console.log
             })
             .catch(e => {
+                console.log({e})
                 try{
                     if ({e}.e.response.data.user_already_taken) setnotavailable(<div style={{color:"firebrick"}}>User Not Available</div>)}
                 catch{}
