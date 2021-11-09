@@ -24,6 +24,9 @@ const Registry = () => {
     const renderdCategories = categories.map(c => { return <option value={c.id}>{c.category_name}</option> })
 
     const Info = () => {
+        const member__name = current? members.find((c) => c.id == current.made_by):null
+        const categories_name = current? categories.find((c) => c.id == current.category_associated):null
+    
         return (
             <Modal size='lg' isOpen={iModal} toggle={() => setInfoModal(!iModal)}>
                 <ModalHeader close={<button className="close" onClick={() => setInfoModal(!iModal)}>×
@@ -48,7 +51,7 @@ const Registry = () => {
                             <h6>Member</h6>
                         </Col>
                         <Col>
-                            <p> {current? members.find((c) => c.id == current.made_by).member_name: null}</p>
+                            <p>{member__name? member__name.member_name:null} </p>
                         </Col>
                     </Row>
                     <hr />
@@ -57,7 +60,7 @@ const Registry = () => {
                             <h6>Main Category</h6>
                         </Col>
                         <Col>
-                            <p>{current? categories.find((c) => c.id == current.category_associated).category_name: null}</p>
+                            <p>{categories_name? categories_name.category_name:null}</p>
                         </Col>
                     </Row>
                     <hr />
@@ -105,7 +108,7 @@ const Registry = () => {
             },
             onSubmit: (values, { resetForm }) => {
                 setaddModalS(!addModalS)
-                if (values.sub_category_associated === -1) { values.sub_category_associated = null }
+                if (values.sub_category_associated == -1) { values.sub_category_associated = null }
                 switch (type) {
                     case "delete":
                         deleteCategory(current.id);
@@ -140,8 +143,9 @@ const Registry = () => {
                 headers: headers,
                 data: values
             };
+
             axios(config)
-                .then((values) =>{dispatch(memberSlice.actions.updateRecord({values}))})
+                .then((values) => {dispatch(memberSlice.actions.updateRecord({values}))})
                 .catch(e => ({ e })) //console.log
         }
 
@@ -243,11 +247,11 @@ const Registry = () => {
                                             <Col>
                                                 <Input
                                                     className='form-control'
-                                                    name="sub_category_name"
-                                                    id="sub_category_name"
+                                                    name="sub_category_associated"
+                                                    id="sub_category_associated"
                                                     type="select"
                                                     onChange={formik.handleChange}
-                                                    value={formik.values.sub_category_name}
+                                                    value={formik.values.sub_category_associated}
                                                 >
                                                     <option value={-1}> None </option>
                                                     {renderedSubCategories}

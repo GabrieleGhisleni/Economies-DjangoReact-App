@@ -7,7 +7,8 @@ export const memberSlice = createSlice({
         records: [],
         categories:[],
         subcategories:[],
-        base_url:'https://smart-economies.herokuapp.com'
+        base_url: 'http://localhost:8000',
+        // base_url:'https://smart-economies.herokuapp.com'
     },
     reducers: {
         // members
@@ -69,6 +70,7 @@ export const memberSlice = createSlice({
         },
         updateRecord: (state, action) => {
             const index = state.records.findIndex((el) => el.id === action.payload.values.data.id)
+            console.log('updaterecord', action.payload.values)
             state.records[index] = action.payload.values.data
         }
     }});
