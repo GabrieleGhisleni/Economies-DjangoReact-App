@@ -128,12 +128,12 @@ const LoginModal = () => {
                             </Col>
                         </FormGroup>
                         <Row className='ml-auto'>
-                            <Col xs={2}>
+                            <Col xs={4}>
                                 <Button type='submit' className='primary bg-primary'>
                                     Submit
                                 </Button>
                             </Col>
-                            <Col xs={2}>
+                            <Col xs={4}>
                                 <Button type='reset' className='primary bg-secondary '>
                                     Cancel
                                 </Button>

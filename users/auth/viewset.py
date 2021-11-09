@@ -23,15 +23,16 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
+        print('here')
         try:
             serializer.is_valid(raise_exception=True)
-
         except TokenError as e:
-            Response({'failed': 'Token Expired'}, status = status.HTTP_401_UNAUTHORIZED)
-            raise TokenError()
+            return Response({'failed': 'Token Expired'}, status = status.HTTP_401_UNAUTHORIZED)
         except AuthenticationFailed as e:
-            Response({'failed': 'User not Found'}, status = status.HTTP_401_UNAUTHORIZED)
-            raise AuthenticationFailed('Wrong data')
+            return Response({'failed': 'User not Found'}, status = status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            print('here man')
+            return Response({'failed': str(e)}, status = status.HTTP_404_UNAUTHORIZED)
 
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
