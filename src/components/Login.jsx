@@ -23,6 +23,7 @@ const LoginModal = () => {
     const BASE_URL = useSelector(state => state.members.base_url) 
 
     const login = (username, password) => {
+        console.log(username, password)
         var config = {
             method: 'post',
             // mode: 'same-origin',
@@ -47,21 +48,22 @@ const LoginModal = () => {
                 const headers = { headers: { "Authorization": `Bearer ${token}` } }
                 axios.get(`${BASE_URL}/api/records/` , headers)
                 .then(res => {dispatch(memberSlice.actions.setRecords(res.data)) })
-                .catch(e => ({ e })) //console.log
+                .catch(e =>console.log ({ e })) //console.log
 
                 axios.get(`${BASE_URL}/api/category/`, headers)
                 .then(res => {dispatch(memberSlice.actions.setCategory(res.data)) })
-                .catch(e => ({ e })) //console.log
+                .catch(e => console.log({ e })) //console.log
 
                 axios.get(`${BASE_URL}/api/sub_category/`, headers)
                 .then(res => {dispatch(memberSlice.actions.setSubCategory(res.data)) })
-                .catch(e => ({ e })) //console.log
+                .catch(e => console.log({ e })) //console.log
 
                 axios.get(`${BASE_URL}/api/members/`, headers)
                 .then(res => { dispatch(memberSlice.actions.setMembers(res.data))})
-                .catch(e => ({ e })) //console.log
+                .catch(e => console.log({ e })) //console.log
             })
             .catch(e => {
+                    console.log({e})
                     try{if ({e}.e.response.data.detail === ('Wrong data')) setwrongdata(<div style={{color:"firebrick"}}>Wrong Data</div>)}
                     catch{}
                     setCol('#E74C3C'); setTimeout(()=> {setCol('white'); setwrongdata(<div></div>)}, 5000)})
