@@ -29,7 +29,7 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
         except TokenError as e:
             return Response({'failed': 'Token Expired'}, status = status.HTTP_401_UNAUTHORIZED)
         except AuthenticationFailed as e:
-            return Response({'failed': 'User not Found'}, status = status.HTTP_401_UNAUTHORIZED)
+            return Response({'failed': str(e)}, status = status.HTTP_401_UNAUTHORIZED)
         except Exception as e:
             print('here man')
             return Response({'failed': str(e)}, status = status.HTTP_401_UNAUTHORIZED)
