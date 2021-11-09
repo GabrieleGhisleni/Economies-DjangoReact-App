@@ -32,7 +32,7 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
             return Response({'failed': 'User not Found'}, status = status.HTTP_401_UNAUTHORIZED)
         except Exception as e:
             print('here man')
-            return Response({'failed': str(e)}, status = status.HTTP_404_UNAUTHORIZED)
+            return Response({'failed': str(e)}, status = status.HTTP_401_UNAUTHORIZED)
 
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
