@@ -74,7 +74,7 @@ const LoginModal = () => {
 
     const formik = useFormik({
         initialValues: { username: '', password: '' },
-        onSubmit: (values, {setErrors, setStatus, resetForm}) => { 
+        onSubmit: (values, ) => { 
             login(values.username, values.password) 
         },
         onReset: (e, {resetForm}) => {resetForm({})},
