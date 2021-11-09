@@ -246,16 +246,14 @@ class RecordsListApi(
             try:
                 m = members.get(pk= int(self.request.data['made_by']))
                 record.made_by = m
-            except Exception as e:
-                print(e)
+            except Exception:
                 return Response({"not_allowed": request.data}, status=status.HTTP_403_FORBIDDEN)
 
         if "category_associated" in self.request.data: 
             try:
                 c = userCategories.get(pk= int(self.request.data['category_associated']))
                 record.category_associated = c
-            except Exception as e:
-                print(e)
+            except Exception:
                 return Response({"not_allowed": request.data}, status=status.HTTP_403_FORBIDDEN)
 
         if "sub_category_associated" in self.request.data: 
@@ -264,8 +262,7 @@ class RecordsListApi(
                 try:
                     s = subcategories.get(pk= int(self.request.data['sub_category_associated']))
                     record.sub_category_associated = s
-                except Exception as e:
-                    print(e)
+                except Exception:
                     return Response({"not_allowed": request.data}, status=status.HTTP_403_FORBIDDEN)
         record.save()
 

@@ -53,7 +53,7 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
             user = serializer.save()
         except IntegrityError:
             return Response({"data": serializer.validated_data, "user_already_taken":"not available"}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception:
+        except Exception as e:
             return Response({"failed":str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
         refresh = RefreshToken.for_user(user)
