@@ -47,19 +47,19 @@ const LoginModal = () => {
                 const headers = { headers: { "Authorization": `Bearer ${token}` } }
                 axios.get(`${BASE_URL}/api/records/` , headers)
                 .then(res => {dispatch(memberSlice.actions.setRecords(res.data)) })
-                .catch(e =>console.log ({ e })) //console.log
+                .catch(e => ({ e })) //console.log
 
                 axios.get(`${BASE_URL}/api/category/`, headers)
                 .then(res => {dispatch(memberSlice.actions.setCategory(res.data)) })
-                .catch(e => console.log({ e })) //console.log
+                .catch(e => ({ e })) //console.log
 
                 axios.get(`${BASE_URL}/api/sub_category/`, headers)
                 .then(res => {dispatch(memberSlice.actions.setSubCategory(res.data)) })
-                .catch(e => console.log({ e })) //console.log
+                .catch(e => ({ e })) //console.log
 
                 axios.get(`${BASE_URL}/api/members/`, headers)
                 .then(res => { dispatch(memberSlice.actions.setMembers(res.data))})
-                .catch(e => console.log({ e })) //console.log
+                .catch(e => ({ e })) //console.log
             })
             .catch(e => {
                     console.log({e})
@@ -127,12 +127,12 @@ const LoginModal = () => {
                             </Col>
                         </FormGroup>
                         <Row className='ml-auto'>
-                            <Col xs={4}>
+                            <Col xs='auto'>
                                 <Button type='submit' className='primary bg-primary'>
                                     Submit
                                 </Button>
                             </Col>
-                            <Col xs={4}>
+                            <Col xs='auto'>
                                 <Button type='reset' className='primary bg-secondary '>
                                     Cancel
                                 </Button>
