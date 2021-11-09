@@ -49,14 +49,14 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
         if 'username' in request.data and User.objects.filter(username= request.data['username']).count() >= 1:
              return Response({"data": request.data, "user_already_taken":"not available"}, 
              status=status.HTTP_400_BAD_REQUEST)
-        try:
-            user = User(username=request.data['username'], 
-                        email=request.data['email'],
-                        password=request.data['password'])
-
-            user.save()
-        except Exception as e:
-            return Response({'try except bad request'}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        try: 
+            user = serializer.save()
+        except IntegrityError:
+            return Response({"data": serializer.validated_data, "user_already_taken":"not available"}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception:
+            return Response({"failed":str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
         refresh = RefreshToken.for_user(user)
         res = {

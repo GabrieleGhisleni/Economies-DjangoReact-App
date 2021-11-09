@@ -35,8 +35,5 @@ class RegisterSerializer(CurrentUserSerializer):
         fields = ['id', 'username', 'email', 'password']
 
     def create(self, validated_data):
-        try:
-            user = User.objects.get(email=validated_data['email'])
-        except ObjectDoesNotExist:
-            user = User.objects.create_user(**validated_data)
-        return user
+        return User.objects.create_user(**validated_data)
+        
