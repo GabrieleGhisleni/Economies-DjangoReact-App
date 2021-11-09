@@ -23,7 +23,6 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        print('here')
         try:
             serializer.is_valid(raise_exception=True)
         except TokenError as e:
@@ -31,7 +30,6 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
         except AuthenticationFailed as e:
             return Response({'failed': str(e)}, status = status.HTTP_401_UNAUTHORIZED)
         except Exception as e:
-            print('here man')
             return Response({'failed': str(e)}, status = status.HTTP_401_UNAUTHORIZED)
 
         return Response(serializer.validated_data, status=status.HTTP_200_OK)

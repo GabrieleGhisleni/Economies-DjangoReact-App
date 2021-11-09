@@ -23,7 +23,6 @@ const LoginModal = () => {
     const BASE_URL = useSelector(state => state.members.base_url) 
 
     const login = (username, password) => {
-        console.log(username, password)
         var config = {
             method: 'post',
             // mode: 'same-origin',
