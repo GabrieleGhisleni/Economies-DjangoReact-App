@@ -1,2 +1,2 @@
-release: python manage.py makemigrations && python manage.py migrate --run-syncdb 
+release: python manage.py makemigrations && python manage.py migrate 
 web: gunicorn Economies.wsgi --log-file -
