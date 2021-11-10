@@ -8,9 +8,6 @@ import useSWR from 'swr';
 
 function Dashboard() {
     useSWR('/api/members/', fetcher)
-    useSWR('/api/records/', fetcher)
-    useSWR('/api/category/', fetcher)
-    useSWR('/api/sub_category/', fetcher)
     return (
         <React.Fragment>
             <Container className='home-container'>
