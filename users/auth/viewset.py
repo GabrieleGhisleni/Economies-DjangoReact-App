@@ -28,7 +28,7 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
         except TokenError as e:
             return Response({'failed': 'Token Expired'}, status = status.HTTP_401_UNAUTHORIZED)
         except AuthenticationFailed as e:
-            return Response({'failed': str(e)}, status = status.HTTP_401_UNAUTHORIZED)
+            return Response({'wrong_data': str(e)}, status = status.HTTP_401_UNAUTHORIZED)
         except Exception as e:
             return Response({'failed': str(e)}, status = status.HTTP_401_UNAUTHORIZED)
 
