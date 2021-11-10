@@ -98,8 +98,9 @@ REST_FRAMEWORK = {
 
 import datetime
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=15),
-    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=15),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(seconds=10),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=2),
+    'ROTATE_REFRESH_TOKENS': True
 }
 
 ROOT_URLCONF = 'Economies.urls'

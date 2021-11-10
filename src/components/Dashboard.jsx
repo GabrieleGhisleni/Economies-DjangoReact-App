@@ -3,7 +3,11 @@ import { Row, Col, Container } from "reactstrap";
 import RecordForm from "./SummaryForm";
 import SummaryChart from "./SummaryChart";
 
+import {fetcher} from "./axios_refresh";
+import useSWR from 'swr';
+
 function Dashboard() {
+    useSWR('/api/members/', fetcher)
     return (
         <React.Fragment>
             <Container className='home-container'>

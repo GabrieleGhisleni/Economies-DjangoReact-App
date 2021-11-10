@@ -30,9 +30,9 @@ const RegisterForm = () => {
                 const headers = { headers: { "Authorization": `Bearer ${token}` } }
 
                 
-                axios.get(`${BASE_URL}/api/records/` , headers)
-                .then(res => {dispatch(memberSlice.actions.setRecords(res.data)) })
-                .catch(e => ({e})) //console.log
+                // axios.get(`${BASE_URL}/api/records/` , headers)
+                // .then(res => {dispatch(memberSlice.actions.setRecords(res.data)) })
+                // .catch(e => ({e})) //console.log
 
                 axios.get(`${BASE_URL}/api/category/`, headers)
                 .then(res => {dispatch(memberSlice.actions.setCategory(res.data)) })
