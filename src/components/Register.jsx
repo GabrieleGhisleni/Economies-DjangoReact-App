@@ -25,27 +25,7 @@ const RegisterForm = () => {
                 dispatch(authSlice.actions.setAccount(res.data.user));
                 history.push('/')
                 setModal(!modal)
-                return (res.data.token)
-            }).then(token => {
-                const headers = { headers: { "Authorization": `Bearer ${token}` } }
-
-                
-                // axios.get(`${BASE_URL}/api/records/` , headers)
-                // .then(res => {dispatch(memberSlice.actions.setRecords(res.data)) })
-                // .catch(e => ({e})) //console.log
-
-                axios.get(`${BASE_URL}/api/category/`, headers)
-                .then(res => {dispatch(memberSlice.actions.setCategory(res.data)) })
-                .catch(e =>  ({e})) //console.log
-
-                axios.get(`${BASE_URL}/api/sub_category/`, headers)
-                .then(res => {dispatch(memberSlice.actions.setSubCategory(res.data)) })
-                .catch(e =>  ({e})) //console.log
-
-                axios.get(`${BASE_URL}/api/members/`, headers)
-                .then(res => { dispatch(memberSlice.actions.setMembers(res.data))})
-                .catch(e =>  ({e})) //console.log
-            })
+                return (res.data.token)})
             .catch(e => {
             
                 try{
