@@ -3,8 +3,8 @@ import authSlice from './../features/userSlice';
 import store from './../features/store';
 import axios from 'axios';
 
-const baseURL = 'http://localhost:8000/'
-
+// const baseURL = 'http://localhost:8000/'
+const baseURL = 'https://smart-economies.herokuapp.com'
 const axiosService = axios.create({
     baseURL: baseURL,
     headers: {'Content-Type': 'application/json'}
