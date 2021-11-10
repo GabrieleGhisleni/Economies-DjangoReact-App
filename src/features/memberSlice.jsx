@@ -70,7 +70,6 @@ export const memberSlice = createSlice({
         },
         updateRecord: (state, action) => {
             const index = state.records.findIndex((el) => el.id === action.payload.values.data.id)
-            console.log('updaterecord', action.payload.values)
             state.records[index] = action.payload.values.data
         }
     }});

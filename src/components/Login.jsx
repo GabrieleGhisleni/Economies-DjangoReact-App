@@ -43,7 +43,6 @@ const LoginModal = () => {
                 setModal(!modal)
                 return (res.data.access)})
             .catch(e => {
-                    console.log({e})
                     try{
                     if ({e}.e.response.data.wrong_data) setwrongdata(<div style={{color:"firebrick"}}>User or Psw Wrong!</div>)}
                     catch{}
