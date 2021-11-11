@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { memberSlice } from './../features/memberSlice'
 import { Button, Col, Container, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row, Table } from 'reactstrap';
+import toast, { Toaster } from 'react-hot-toast';
 
 const RenderdCategory = () => {
 
@@ -42,8 +43,11 @@ const RenderdCategory = () => {
                 data: { category_name: new_name }
             };
             axios(config)
-            .then(res=>{ dispatch(memberSlice.actions.addCat(res.data)) })
+            .then(res=>{ 
+                dispatch(memberSlice.actions.addCat(res.data)) 
+                toast.success('Successfully created!', { duration: 4000, position: 'top-center',})})
             .catch(e => {
+                toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})
                 let err = {e}
                 try {if (err.e.response.data.forbidden.includes("exceeded")) alert('Max Category Exceeded')}
                 catch{}
@@ -58,8 +62,9 @@ const RenderdCategory = () => {
                 data: { id: id }
             };
             axios(config)
-             .then(() => {dispatch(memberSlice.actions.removeCat(current.id))})
-                .catch(e => ({ e })) //console.log
+             .then(() => {dispatch(memberSlice.actions.removeCat(current.id))
+                toast.success('Successfully delete!', { duration: 4000, position: 'top-center',})})
+                .catch(e =>  toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})({ e })) //console.log
         }
 
 
@@ -71,8 +76,9 @@ const RenderdCategory = () => {
                 data: { id: id, category_name: new_name }
             };
             axios(config)
-            .then((values) =>{dispatch(memberSlice.actions.updateCat({values}))})
-            .catch(e => ({ e })) //console.log
+            .then((values) =>{dispatch(memberSlice.actions.updateCat({values}))
+            toast.success('Successfully updated!', { duration: 4000, position: 'top-center',})})
+            .catch(e =>  toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})({ e })) //console.log
         }
 
 
@@ -165,6 +171,7 @@ const RenderdCategory = () => {
     });
     return (
         <Row className='confRow'>
+            < Toaster/>
             <AddModalS />
             <Col>
                 <Row>

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { memberSlice } from './../features/memberSlice'
 import { Button, Col, Container, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row, Table } from 'reactstrap';
+import toast, { Toaster } from 'react-hot-toast';
 
 const RenderMember = () => {
     var axios = require("axios")
@@ -46,8 +47,12 @@ const RenderMember = () => {
                 data: { member_name: new_name }
             };
             axios(config)
-            .then(res=>{ dispatch(memberSlice.actions.addMember(res.data)) })
+            .then(res=>{ 
+                dispatch(memberSlice.actions.addMember(res.data)) 
+                toast.success('Successfully created!', { duration: 4000, position: 'top-center',})
+            })
             .catch(e => {
+                toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})
                 let err = {e}
                 try {if (err.e.response.data.forbidden.includes("exceeded")) alert('Max Members Exceeded')}
                 catch{}
@@ -63,8 +68,9 @@ const RenderMember = () => {
             };
 
             axios(config)
-            .then(() => {dispatch(memberSlice.actions.removeMember(current.id))})
-                .catch(e => ({ e })) //console.log
+            .then(() => {dispatch(memberSlice.actions.removeMember(current.id))
+                toast.success('Successfully deleted!', { duration: 4000, position: 'top-center',})})
+                .catch(e =>  toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})({ e })) //console.log
         }
 
 
@@ -76,8 +82,9 @@ const RenderMember = () => {
                 data: { id: current.id, member_name: new_name }
             };
             axios(config)
-            .then((values) =>{dispatch(memberSlice.actions.updateMember({values}))})
-            .catch(e => ({ e })) //console.log
+            .then((values) =>{dispatch(memberSlice.actions.updateMember({values}))
+            toast.success('Successfully updated!', { duration: 4000, position: 'top-center',})})
+            .catch(e =>  toast.error('Something went wrong!', {duration: 4000, position: 'top-center',}) ({ e })) //console.log
         }
 
         return (
@@ -171,6 +178,7 @@ const RenderMember = () => {
     return (
         <Row className='confRow'>
             <AddModal />
+            < Toaster/>
             <Col>
                 <Row>
                     <Col xs='auto'>

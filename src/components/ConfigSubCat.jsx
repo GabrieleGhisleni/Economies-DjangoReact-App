@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { memberSlice } from './../features/memberSlice'
 import { Button, Col, Container, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row, Table } from 'reactstrap';
+import toast, { Toaster } from 'react-hot-toast';
 
 const RenderdSubCat = () => {
     var axios = require("axios")
@@ -49,8 +50,10 @@ const RenderdSubCat = () => {
                 data: { sub_category_name: new_name, primary_category: primary_category }
             };
             axios(config)
-                .then(res=>{ dispatch(memberSlice.actions.addSub(res.data)) })
+                .then(res=>{ dispatch(memberSlice.actions.addSub(res.data)) 
+                    toast.success('Successfully created!', { duration: 4000, position: 'top-center',})})
                 .catch(e => {
+                    toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})
                     let err = {e}
                     try {if (err.e.response.data.forbidden.includes("exceeded")) alert('Max Sub Category Exceeded')}
                     catch{}
@@ -66,8 +69,13 @@ const RenderdSubCat = () => {
             };
 
             axios(config)
-                .then(res=>{ dispatch(memberSlice.actions.removeSub(current.id)) })
-                .catch(e => ({ e })) //console.log
+                .then(res=>{ 
+                    toast.success('Successfully deleted!', { duration: 4000, position: 'top-center',})
+                    dispatch(memberSlice.actions.removeSub(current.id)) 
+                })
+                .catch(e => 
+                    toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})
+                    ({ e })) //console.log
         }
 
 
@@ -79,8 +87,11 @@ const RenderdSubCat = () => {
                 data: { id: id, sub_category_name: new_name, primary_category_id: primary_category }
             };
             axios(config)
-                .then((values) =>{dispatch(memberSlice.actions.updateSub({values}))})
-                .catch(e => ({ e })) //console.log
+                .then((values) =>{dispatch(memberSlice.actions.updateSub({values}))
+                toast.success('Successfully updated!', { duration: 4000, position: 'top-center',})})
+                .catch(e => 
+                    toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})
+                    ) //console.log
         }
 
         return (
@@ -195,6 +206,7 @@ const RenderdSubCat = () => {
     return (
         <Row className='confRow'>
             <AddModal />
+            < Toaster/>
             <Col>
                 <Row>
                     <Col xs='auto'>

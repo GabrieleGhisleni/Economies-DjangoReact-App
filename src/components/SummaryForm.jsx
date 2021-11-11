@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import memberSlice from "../features/memberSlice";
 import { NavLink } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 const RecordForm = () => {
   const dispatch = useDispatch()
@@ -64,12 +65,17 @@ const RecordForm = () => {
     };
     axios(config)
       .then((res) => { 
-        console.log(res.data)
         dispatch(memberSlice.actions.addRecords(res.data))
+        toast.success('Successfully registered!', 
+        { duration: 4000,
+          position: 'bottom-right',})
         setAlert(true)
         setTimeout(()=> setAlert(false), 5000) })
       .catch((e ) => {
         setRedAlert(true)
+        toast.error('Something went wrong!',
+        { duration: 4000,
+          position: 'bottom-right',});
         setTimeout(()=> setRedAlert(false), 5000) 
         let err = {e}
         try {if (err.e.response.data.forbidden.includes("exceeded")) alert('Max Members Exceeded')}
@@ -89,7 +95,7 @@ const RecordForm = () => {
 
   return (
     <React.Fragment>
-      <Form onSubmit={formik.handleSubmit} style={{backgroundColor:c, padding:"5px"}}>
+      <Form onSubmit={formik.handleSubmit}>
         <h4 style={{ textAlign: "center", paddingBottom: "20px" }}>New records</h4>
         <FormGroup>
           <Row className="align-items-center">
@@ -265,7 +271,7 @@ const RecordForm = () => {
             />
           </Col>
         </FormGroup>
-        <Row className="text-center">
+        <Row className="text-center"  style={{backgroundColor:c, padding:"5px"}}>
           <Col xs={12} style={{paddingBottom:"20px"}}>
             <Button type="submit" className='subButton' color='primary'>
               Save new record
@@ -273,6 +279,7 @@ const RecordForm = () => {
             <Button type="reset" className='subButton' color='secondary'>
               Cancel
             </Button>
+            <Toaster />
           </Col>
         </Row>
       </Form>

@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { memberSlice } from './../features/memberSlice'
+import toast, { Toaster } from 'react-hot-toast';
 
 const Registry = () => {
     var axios = require("axios")
@@ -146,8 +147,11 @@ const Registry = () => {
             };
 
             axios(config)
-                .then((values) => {dispatch(memberSlice.actions.updateRecord({values}))})
-                .catch(e => ({ e })) //console.log
+                .then((values) => {
+                    dispatch(memberSlice.actions.updateRecord({values}))
+                    toast.success('Successfully updated!', { duration: 4000, position: 'top-center',})})
+                .catch(e => 
+                    toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})) //console.log
         }
         const renderedMembers = members.map((m) => { return <option value={m.id}>{m.member_name}</option> });
         const selectedSub = subcategories.filter(sb => sb.primary_category == formik.values.category_associated)
@@ -156,6 +160,7 @@ const Registry = () => {
             <Modal isOpen={addModalS} toggle={() => setaddModalS(!addModalS)}>
                 <ModalHeader close={<button className="close" onClick={() => setaddModalS(!addModalS)}>×
                 </button>}>Form Record</ModalHeader>
+
                 <ModalBody>
                     <Form onSubmit={formik.handleSubmit}>
                         <Container>
@@ -392,6 +397,7 @@ const Registry = () => {
 
     return (
         <Container>
+            < Toaster/>
             {current? <Info />:null}
            {current?  <AddModal />: null}
             <Form inline className='text-center'>
