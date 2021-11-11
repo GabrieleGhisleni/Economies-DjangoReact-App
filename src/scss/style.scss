@@ -26,11 +26,11 @@ body{
         font-size: 1.2rem;
     }
     .dashboard-form{
-        padding: 15px;
-        // background-color: $secondColor;
+        padding: 10px!important;
+        background-color: $mainColor;
         border-radius: 20px;
         .dashboard-form-inside{
-            margin: 15px 0;
+            margin: 5px 0;
         }
     }
 

@@ -232,6 +232,7 @@ class RecordsListApi(
         if "price" in self.request.data: record.price = self.request.data['price']
         if "record_name" in self.request.data: record.record_name=self.request.data['record_name']
         if "description" in self.request.data: record.description=self.request.data['description']
+        if "shared" in self.request.data: record.shared = self.request.data['shared'] == 'true'
 
         if "created_at" in self.request.data:
             try:
@@ -265,7 +266,6 @@ class RecordsListApi(
                 except Exception:
                     return Response({"not_allowed": request.data}, status=status.HTTP_403_FORBIDDEN)
         record.save()
-
         return Response(RecordsSerializer(record).data, status=status.HTTP_202_ACCEPTED)
 
     def delete(self, request, format=None):

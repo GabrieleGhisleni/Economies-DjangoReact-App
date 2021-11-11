@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 def create_member(sender, instance, created, **kwargs):
     if created:
         defaultCategory = ['Auto', 'Sport','Alimentari','Ristorante','Svago','Viaggi']
-        Members.objects.create(user=instance, member_name='Comune')
         Members.objects.create(user=instance, member_name=instance.username)
         for cat in defaultCategory: 
             UserCategory.objects.create(category_name=cat, user=instance)

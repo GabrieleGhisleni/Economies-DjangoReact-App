@@ -105,6 +105,7 @@ const Registry = () => {
                 sub_category_associated: current.sub_category_associated,
                 description: current.description,
                 created_at: current.created_at,
+                shared: current.shared.toString(),
             },
             onSubmit: (values, { resetForm }) => {
                 setaddModalS(!addModalS)
@@ -148,7 +149,6 @@ const Registry = () => {
                 .then((values) => {dispatch(memberSlice.actions.updateRecord({values}))})
                 .catch(e => ({ e })) //console.log
         }
-
         const renderedMembers = members.map((m) => { return <option value={m.id}>{m.member_name}</option> });
         const selectedSub = subcategories.filter(sb => sb.primary_category == formik.values.category_associated)
         const renderedSubCategories = selectedSub.map((m) => { return <option value={m.id}>{m.sub_category_name}</option> });
@@ -219,6 +219,27 @@ const Registry = () => {
                                             </Col>
                                         </Row>
                                     </FormGroup>
+                                    <FormGroup>
+        <Row className="align-items-center">
+            <Col>
+              <Label>Shared</Label>
+            </Col>
+            <Col xs='auto'>
+                        <FormGroup check inline>
+                                <Label check><Input type="radio" 
+                                name='shared' value={"true"}
+                                checked={(formik.values.shared) === "true"}
+                                onChange={formik.handleChange}/> Shared </Label>
+                        </FormGroup>
+                        <FormGroup check inline>
+                                <Label check><Input type="radio" 
+                                name='shared' value={"false"}
+                                checked={(formik.values.shared) === "false"}
+                                onChange={formik.handleChange}/> Not Shared </Label>
+                        </FormGroup>      
+            </Col>
+          </Row>
+        </FormGroup>
                                     <FormGroup>
                                         <Row>
                                             <Col xs="4" className="align-items-center">
@@ -356,6 +377,7 @@ const Registry = () => {
                 <td>{r.record_name}</td>
                 <td>{r.price}</td>
                 <td>{members.find(c => c.id == r.made_by).member_name}</td>
+                <td>{r.shared.toString()}</td>
                 <td>{categories.find(c => c.id == r.category_associated).category_name}</td>
                 <td>{r.sub_category_associated ? subcategories.find(sc => sc.id == r.sub_category_associated).sub_category_name : 'Null'}</td>
                 <td>{r.created_at}</td>
@@ -397,6 +419,7 @@ const Registry = () => {
                                     <th>Name</th>
                                     <th>Price</th>
                                     <th>Member</th>
+                                    <th>Shared</th>
                                     <th>Main Category</th>
                                     <th>Sub Category</th>
                                     <th>Created at</th>

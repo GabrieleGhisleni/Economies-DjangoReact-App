@@ -4,10 +4,12 @@ import { COLORS, SHORT_MONTH } from './colors.js'
 const StatsMember = (data) => {
     const records = data.records
     const members = data.members
+    const shared = data.shared
     const unique_month = new Set()
     records.forEach(r => unique_month.add(new Date(r.created_at).getMonth()))
 
     const unique_member = {};
+    if (shared=='true') unique_member["-1"] = 'shared'
     members.forEach(m => unique_member[m.id] = m.member_name)
 
     const memberCost = {};

@@ -4,13 +4,14 @@ import { SECOND_COLORS, SHORT_MONTH } from './colors.js'
 const StatsCategory = (data) => {
     const records = data.records
     const categories = data.categories
+    const checkset = data.checkset
     const unique_month = new Set()
     const unique_category = {};
 
     records.forEach(r => unique_month.add(new Date(r.created_at).getMonth()))
-    categories.forEach(m => unique_category[m.id] = m.category_name)
-
+    categories.forEach(m => {if (checkset.has(m.id)) unique_category[m.id]=m.category_name})
     const categoryCost = {};
+    
     for (let month of unique_month.keys()) categoryCost[month] = {};
     records.forEach(r => {
         let month = new Date(r.created_at).getMonth()

@@ -24,6 +24,7 @@ const RecordForm = () => {
       member: members[0]? members[0].id:null,
       category: categories[0]? categories[0].id:null,
       sub_category: null,
+      shared: 'false',
       description: "",
       date: new Date().toJSON().slice(0, 10).replace(/-/g, '-')
     },
@@ -36,7 +37,8 @@ const RecordForm = () => {
         values.category,
         values.sub_category,
         values.description,
-        values.date
+        values.date,
+        values.shared
       );
       resetForm({})
       setStatus({success: true})
@@ -45,7 +47,7 @@ const RecordForm = () => {
     validateOnBlur: false
   });
 
-  function addRecord(title, price, member, main_cat, sub_cat, description, date) {
+  function addRecord(title, price, member, main_cat, sub_cat, description, date, shared) {
     var axios = require('axios');
     var config = {
       method: 'post', url: url, headers: headers,
@@ -57,10 +59,12 @@ const RecordForm = () => {
         sub_category_associated: sub_cat,
         description: description,
         created_at: date,
+        shared: shared
       }
     };
     axios(config)
       .then((res) => { 
+        console.log(res.data)
         dispatch(memberSlice.actions.addRecords(res.data))
         setAlert(true)
         setTimeout(()=> setAlert(false), 5000) })
@@ -82,7 +86,6 @@ const RecordForm = () => {
   if (redAlert){c = alertRedButton}
   else if (alert){c = alertButton }
   else{c = 'white'}
-  
 
   return (
     <React.Fragment>
@@ -149,6 +152,27 @@ const RecordForm = () => {
               />
             </Col>
        
+          </Row>
+        </FormGroup>
+        <FormGroup>
+        <Row className="align-items-center">
+            <Col>
+              <Label>Shared</Label>
+            </Col>
+            <Col xs='auto'>
+                        <FormGroup check inline>
+                                <Label check><Input type="radio" 
+                                name='shared' value={"true"}
+                                checked={(formik.values.shared) === "true"}
+                                onChange={formik.handleChange}/> Shared </Label>
+                        </FormGroup>
+                        <FormGroup check inline>
+                                <Label check><Input type="radio" 
+                                name='shared' value={"false"}
+                                checked={(formik.values.shared) === "false"}
+                                onChange={formik.handleChange}/> Not Shared </Label>
+                        </FormGroup>      
+            </Col>
           </Row>
         </FormGroup>
         <FormGroup>

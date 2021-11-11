@@ -18,10 +18,11 @@ body {
   font-size: 1.2rem; }
 
 .dashboard .dashboard-form {
-  padding: 15px;
+  padding: 10px !important;
+  background-color: #f0bf76 !important;
   border-radius: 20px; }
   .dashboard .dashboard-form .dashboard-form-inside {
-    margin: 15px 0; }
+    margin: 5px 0; }
 
 @media screen and (max-width: 900px) {
   .summaryChart {
