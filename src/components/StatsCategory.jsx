@@ -39,8 +39,8 @@ const StatsCategory = (data) => {
                 <XAxis dataKey="month" />
                 <YAxis tickCount={10}/>
                 <Tooltip />
+                <Legend wrapperStyle={{ position: 'relative' }}/>
                 {colorCategory}
-                <Legend position='right'/>
             </BarChart>
         </ResponsiveContainer>
     )

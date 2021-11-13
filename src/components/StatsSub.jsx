@@ -67,10 +67,16 @@ const StatsSubCategory = (data) => {
         })
     })
 
-    const rateo = window.innerWidth < 800 ? 1 : 2.5
-    return (
+    var rateo = 2.5
+    console.log(window.innerWidth)
+    if (window.innerWidth < 1000) { rateo = 1.5}
+    if (window.innerWidth < 800) { rateo=1}
+    if (window.innerWidth < 600) { rateo=0.9}
+    if (window.innerWidth < 500) { rateo=0.8}
+    if (window.innerWidth < 450) { rateo=0.6}
 
-        <ResponsiveContainer width="100%" aspect={rateo}>
+    return (
+        <ResponsiveContainer width="99%" aspect={rateo}>
             <PieChart>
                 <Pie data={dataMain} dataKey="value"
                 paddingAngle={1}
@@ -92,11 +98,12 @@ const StatsSubCategory = (data) => {
                         backgroundColor: "peachpuff",
                     }}
                 />
-                {window.innerWidth < 600 ?
+                {window.innerWidth < 800 ?
                     <Legend
                         margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
                         layout='horizontal' align='center' verticalAlign='bottom' iconSize={10} /> :
                     <Legend
+                   
                         layout="vertical"
                         align="left"
                         verticalAlign="middle"

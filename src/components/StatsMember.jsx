@@ -38,13 +38,12 @@ const StatsMember = (data) => {
             <BarChart
                 width={500}
                 height={300}
-                data={dataMember}
-            >
+                data={dataMember}>
                 <CartesianGrid />
                 <XAxis dataKey="month" />
                 <YAxis domain={[0, max+20]} tickCount={10}/>
                 <Tooltip />
-                <Legend />
+                <Legend  wrapperStyle={{ position: 'relative' }}/>
                 {colorBar}
             </BarChart>
         </ResponsiveContainer>

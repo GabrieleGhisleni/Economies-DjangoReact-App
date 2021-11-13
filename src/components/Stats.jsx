@@ -97,7 +97,7 @@ const Stats = () => {
                     <Col sm='6' xs='12'>
                         <Row>
                             <Col xs="6" className="dashboard-form-inside">
-                                <Label>Filter by category &nbsp;</Label>
+                                <Label>Filter by category</Label>
                                 <Input
                                     name="category"
                                     id="category"
@@ -111,7 +111,7 @@ const Stats = () => {
                                 </Input>
                             </Col>
                             <Col xs="6" className="dashboard-form-inside">
-                                <Label>Differentiate Shared &nbsp;</Label>
+                                <Label>Shared options</Label>
                                 <Input
                                     name="category"
                                     id="category"
@@ -155,11 +155,7 @@ const Stats = () => {
   
             </div>
             <Row className="chart-row">
-                <Col
-                    xs="12"
-                    md="6"
-                    style={{ marginBottom: window.innerHeight < 700 ? "15px" : "30px" }}
-                >
+                <Col  xs="12"      md="6"  style={{ marginBottom: window.innerHeight < 900 ? "50px" : "30px" }}>
                     <Row>
                         <Col className="text-center">
                             <h4>Cost divided by Members</h4>
@@ -171,11 +167,8 @@ const Stats = () => {
                         </Col>
                     </Row>
                 </Col>
-                <Col
-                    xs="12"
-                    md="6"
-                    style={{ marginBottom: window.innerHeight < 700 ? "15px" : "30px" }}
-                >
+                {window.innerHeight < 900 ? <hr/>:null}
+                <Col  xs="12"    md="6"   style={{ marginBottom: window.innerHeight < 900 ? "50px" : "30px" }}>
                     <Row>
                         <Col className="text-center">
                             <h4>Cost divided by Categories</h4>
@@ -188,16 +181,22 @@ const Stats = () => {
                     </Row>
                 </Col>
             </Row>
-            <Row style={{ margin: window.innerHeight < 700 ? "15px 0" : "30px 0" }}>
-                <Col xs="12" md="12" className="text-center">
+            <Row style={{ marginTop: window.innerHeight < 700 ? "15px 0" : "30px 0" }}>
+                <Col xs="12" className="text-center">
                     <hr />
                     <h4>Cost divided by subcategories</h4>
                     <hr />
-                    <StatsSubCategory
+                    <Row>
+                        <Col>
+                        
+                        <StatsSubCategory
                         records={records}
                         categories={categories}
                         subcategories={subcategories}
-                    />
+                    />                        
+                    </Col>
+                    </Row>
+
                 </Col>
             </Row>
         </Container>
