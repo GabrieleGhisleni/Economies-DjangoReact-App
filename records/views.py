@@ -154,8 +154,6 @@ class MemberListApi(mixins.CreateModelMixin,
         if "member_name" not in request.data:
             return Response({"data": self.request.data, "necessary_field": ['member_name']}, status=status.HTTP_400_BAD_REQUEST)
         try:
-            print('here1')
-            print(self.request.user)
             m = Members(member_name = self.request.data['member_name'],
                         user = self.request.user)
             if len(self.get_queryset()) >= max_members:

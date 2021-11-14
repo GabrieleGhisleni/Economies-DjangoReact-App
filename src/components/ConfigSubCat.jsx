@@ -19,13 +19,14 @@ const RenderdSubCat = () => {
     const [type, setType] = useState("add")
     const [addModalS, setaddModalS] = useState(false)
 
-    const renderdCategories = categories.map(c => { return <option value={c.id}>{c.category_name}</option> })
+
 
     const AddModal = () => {
         const formik = useFormik({
             initialValues: { sub_category_name: current.sub_category_name, 
                 primary_category: categories[0]? categories[0].id: '' },
             onSubmit: (values, { resetForm }) => {
+                values.sub_category_name = values.sub_category_name.charAt(0).toUpperCase() + values.sub_category_name.slice(1);
                 setaddModalS(!addModalS)
                 switch (type) {
                     case "add":
@@ -93,7 +94,7 @@ const RenderdSubCat = () => {
                     toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})
                     ) //console.log
         }
-
+        const renderdCategories = categories.map(c => {return <option value={c.id}>{c.category_name}</option>})
         return (
             <Modal isOpen={addModalS} toggle={() => setaddModalS(!addModalS)}>
                 <ModalHeader close={<button className="close" onClick={() => setaddModalS(!addModalS)}>×
@@ -116,7 +117,7 @@ const RenderdSubCat = () => {
                                                     type="select"
                                                     onChange={formik.handleChange}
                                                     value={formik.values.primary_category}
-                                                    placeholder='Insert the new Member Name'
+                               
                                                     required
                                                 >
                                                     {renderdCategories}

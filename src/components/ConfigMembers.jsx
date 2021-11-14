@@ -23,6 +23,7 @@ const RenderMember = () => {
         const formik = useFormik({
             initialValues: { member_name: "" },
             onSubmit: (values, { resetForm }) => {
+                values.member_name = values.member_name.charAt(0).toUpperCase() + values.member_name.slice(1);
                 setaddModal(!addModal)
                 switch (type) {
                     case "add":

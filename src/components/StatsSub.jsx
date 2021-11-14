@@ -68,7 +68,6 @@ const StatsSubCategory = (data) => {
     })
 
     var rateo = 2.5
-    console.log(window.innerWidth)
     if (window.innerWidth < 1000) { rateo = 1.5}
     if (window.innerWidth < 800) { rateo=1}
     if (window.innerWidth < 600) { rateo=0.9}

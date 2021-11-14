@@ -20,6 +20,7 @@ const RenderdCategory = () => {
         const formik = useFormik({
             initialValues: { category_name: "" },
             onSubmit: (values, { resetForm }) => {
+                values.category_name = values.category_name.charAt(0).toUpperCase() + values.category_name.slice(1);
                 setaddModalC(!addModalC)
                 switch (type) {
                     case "add":

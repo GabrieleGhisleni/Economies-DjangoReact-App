@@ -135,7 +135,7 @@ const RecordForm = () => {
                 onChange={formik.handleChange}
                 value={formik.values.title}
                 required
-                placeholder="Dai un Titolo"
+                placeholder="Give a Title"
               />
             </Col>
     
@@ -153,7 +153,7 @@ const RecordForm = () => {
                 type="number"
                 onChange={formik.handleChange}
                 value={formik.values.price}
-                placeholder="Dai un Prezzo"
+                placeholder="Give a Price"
                 required
               />
             </Col>
@@ -267,7 +267,7 @@ const RecordForm = () => {
               type="textarea"
               onChange={formik.handleChange}
               value={formik.values.description}
-              placeholder="Dai una Descrizione"
+              placeholder="Give a Description"
             />
           </Col>
         </FormGroup>
