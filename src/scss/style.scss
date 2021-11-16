@@ -11,7 +11,8 @@ body{
     
 }
 .home-container{
-    margin-top:50px;
+    min-height: calc(100vh - 240px);
+    width: 100%;
 }
 .chart-row{
     margin-top: 25px;
@@ -169,6 +170,7 @@ body{
     margin-top: 15px;
     background-color: $mainColor;
     font-weight: 600;
+    padding-bottom: 30px;
     color:black;
     min-height: 50px;
     .Icons{

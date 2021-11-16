@@ -10,8 +10,8 @@ function Dashboard() {
     useSWR('/api/members/', fetcher)
     return (
         <React.Fragment>
-            <Container className='home-container'>
-                <Row>
+            <Container>
+                <Row className='align-items-center home-container'>
                     <Col xs="12" lg = '8' className='summaryChart'>
                     <SummaryChart />
                     <hr style={{border:"black 1px dashed", display: "none"}}/>
