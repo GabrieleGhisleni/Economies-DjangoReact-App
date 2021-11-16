@@ -75,14 +75,12 @@ body {
     background-color: #f0bf76 !important; }
     .login-register-button .login-register a {
       color: #346288; }
-  .login-register-button .home-description {
-    text-align: left !important; }
-  .login-register-button .iframe {
-    text-align: center;
-    margin: 10px;
-    border-radius: 20px !important; }
-  .login-register-button .img-home {
-    border-radius: 10px; }
+
+.home-description {
+  text-align: left !important; }
+
+.img-home {
+  border-radius: 10px; }
 
 .err {
   font-weight: 800;
@@ -113,9 +111,10 @@ body {
 
 .myFooter {
   margin-top: 15px;
+  margin-bottom: 25px;
+  padding-bottom: 25px;
   background-color: #f0bf76 !important;
   font-weight: 600;
-  padding-bottom: 15px;
   color: black;
   min-height: 50px; }
   .myFooter .Icons {

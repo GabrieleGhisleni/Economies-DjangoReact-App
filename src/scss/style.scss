@@ -105,20 +105,15 @@ body{
             }
         }
     
-    .home-description{
-        text-align: left!important;
     }
-    .iframe{
-        text-align: center;
-        margin:10px;
-        border-radius: 20px!important;
-    }
-    .img-home{
-        border-radius: 10px;
-    }
+    
+.home-description{
+    text-align: left!important;
+}    
 
+.img-home{
+    border-radius: 10px;
 }
-
 
 .err{
     font-weight: 800;
@@ -164,9 +159,10 @@ body{
 
 .myFooter{
     margin-top: 15px;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
     background-color: $mainColor;
     font-weight: 600;
-    padding-bottom: 15px;
     color:black;
     min-height: 50px;
     .Icons{
