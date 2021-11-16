@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import React, {useEffect}  from 'react';
 import Configurations from './Configuration';
@@ -20,11 +20,11 @@ const Main = () => {
             <MyNav />
             {isLogged? <SecondNav/>: <div></div>}
             <Switch>
-                <Route exact path="/home" component={isLogged? Dashboard: Default} />
+                <Route exact path="/home/" component={isLogged? Dashboard: Default} />
                 {isLogged? <Route exact path="/dashboard/" component={Stats} /> : null}
                 {isLogged? <Route exact path="/history/" component={Registry} /> : null}
                 {isLogged? <Route exact path="/configurations/" component={Configurations} />: null}
-                <Redirect to='/home' />
+                <Redirect to='home' />
             </Switch>
             <Footer />
         </React.Fragment>

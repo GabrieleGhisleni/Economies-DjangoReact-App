@@ -103,7 +103,7 @@ const Stats = () => {
                                     id="category"
                                     type="select"
                                     onChange={(e) => setCategory(e.target.value)}
-                                    value={category}
+                                    value={category || " "}
                                     className="form-control"
                                 >
                                     <option value={-1}> None </option>
@@ -117,7 +117,7 @@ const Stats = () => {
                                     id="category"
                                     type="select"
                                     onChange={(e) => setShared(e.target.value)}
-                                    value={shared}
+                                    value={shared || " "}
                                     className="form-control">
                                     <option value={"true"}> Differentiate </option>
                                     <option value={"false"}> Non Differentiate </option>

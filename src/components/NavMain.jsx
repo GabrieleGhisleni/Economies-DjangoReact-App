@@ -1,4 +1,4 @@
-import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, Container } from 'reactstrap';
+import { Navbar, Nav, NavbarToggler, Collapse, Container } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
