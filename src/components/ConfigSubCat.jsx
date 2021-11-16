@@ -94,7 +94,7 @@ const RenderdSubCat = () => {
                     toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})
                     ) //console.log
         }
-        const renderdCategories = categories.map(c => {return <option value={c.id}>{c.category_name}</option>})
+        const renderdCategories = categories.map(c => {return <option key={c.id} value={c.id}>{c.category_name}</option>})
         return (
             <Modal isOpen={addModalS} toggle={() => setaddModalS(!addModalS)}>
                 <ModalHeader close={<button className="close" onClick={() => setaddModalS(!addModalS)}>×
@@ -183,7 +183,7 @@ const RenderdSubCat = () => {
             </Modal>);
     }
 
-    const subcategories = useSelector(state => state.members.subcategories)
+    const subcategories_o = useSelector(state => state.members.subcategories)
     const [current, setCurrent] = useState({})
 
 
@@ -194,14 +194,16 @@ const RenderdSubCat = () => {
         if (a.primary_category > b.primary_category) return 1
         return 0
     }
-    
+
+    const subcategories = JSON.parse(JSON.stringify(subcategories_o))
     subcategories.sort(sortSub)
+
     const subcategoriesRendered = subcategories.map((r) => {
         i++;
         let catname = categories.find(c => c.id == r.primary_category)
         return (
-            <tr>
-                <th>{i}</th>
+            <tr key={r.id}>
+                <td>{i}</td>
                 <td>{r.sub_category_name}</td>
                 <td>{catname? catname.category_name: "This sub category does not exists anymore"}</td>
                 <td>

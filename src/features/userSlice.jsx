@@ -14,16 +14,18 @@ export const authSlice = createSlice({
         setAuthTokens: (state, action) => {
             state.refreshToken = action.payload.refreshToken;
             state.token = action.payload.token;
-            state.isLogged = true;
+           
         },
         setAccount: (state, action) => {
             state.account = action.payload
-            state.isLogged = true;
         },
         logout:( state ) => {
             state.isLogged=false
             state.token = null
             state.refreshToken = null
+        }, 
+        setLogin: (state) =>  {
+            state.isLogged = true
         }
 
     }});

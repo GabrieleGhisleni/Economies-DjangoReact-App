@@ -31,7 +31,11 @@ const MyNav = () => {
     return (
         <Navbar light expand='sm' className='myNav'>
             <Container>
-            <NavbarBrand> <NavLink to='/home'> Economies  <img src='static/piggy_bank.png' width='35' alt='logo piggy bank'/> </NavLink></NavbarBrand>
+          
+                <NavLink id='routerlink' to='/home' className='navbar-brand'> Economies  
+                    <img src='static/piggy_bank.png' width='35' alt='logo piggy bank'/> 
+                </NavLink>
+         
             <NavbarToggler onClick={() => setOpen(!isOpen)} />
             
             <Collapse isOpen={isOpen} navbar>

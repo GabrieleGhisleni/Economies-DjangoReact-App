@@ -45,22 +45,25 @@ const LoginModal = () => {
                 .then(token =>{
 
                     const headers = { headers: { "Authorization": `Bearer ${token}` } }
+
+                    axios.get(`${BASE_URL}/api/category/`, headers)
+                    .then(res => {dispatch(memberSlice.actions.setCategory(res.data)) })
+                    .catch(e => ({ e })) //console.log
+
+                    axios.get(`${BASE_URL}/api/sub_category/`, headers)
+                    .then(res => {dispatch(memberSlice.actions.setSubCategory(res.data)) })
+                    .catch(e => ({ e })) //console.log
+                    
+                    axios.get(`${BASE_URL}/api/members/`, headers)
+                    .then(res => { dispatch(memberSlice.actions.setMembers(res.data))})
+                    .catch(e => ({ e })) //console.log
+
                     axios.get(`${BASE_URL}/api/records/` , headers)
                     .then(res => {dispatch(memberSlice.actions.setRecords(res.data)) })
                     .catch(e => ({ e })) //console.log
     
-                    axios.get(`${BASE_URL}/api/category/`, headers)
-                    .then(res => {dispatch(memberSlice.actions.setCategory(res.data)) })
-                    .catch(e => ({ e })) //console.log
-    
-                    axios.get(`${BASE_URL}/api/sub_category/`, headers)
-                    .then(res => {dispatch(memberSlice.actions.setSubCategory(res.data)) })
-                    .catch(e => ({ e })) //console.log
-    
-                    axios.get(`${BASE_URL}/api/members/`, headers)
-                    .then(res => { dispatch(memberSlice.actions.setMembers(res.data))})
-                    .catch(e => ({ e })) //console.log
                 })
+            .then(() =>{dispatch(authSlice.actions.setLogin())})
             .catch(e => {
                     try{
                     if ({e}.e.response.data.wrong_data) setwrongdata(<div style={{color:"firebrick"}}>User or Psw Wrong!</div>)}
@@ -84,7 +87,7 @@ const LoginModal = () => {
 
     return (
         <React.Fragment>
-            <NavItem className>
+            <NavItem>
                 <NavLink to='#' className='nav-link' onClick={() => setModal(!modal)}>
                     Login
                 </NavLink>

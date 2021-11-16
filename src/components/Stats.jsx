@@ -21,7 +21,7 @@ const Stats = () => {
     const [shared, setShared] = useState("true");
 
     const renderdCategories = categories.map((c) => {
-        return <option value={c.id}>{c.category_name}</option>;
+        return <option key={c.id} value={c.id}>{c.category_name}</option>;
     });
 
     var set_category = new Set()
@@ -56,7 +56,7 @@ const Stats = () => {
         const renderedTable = Object.keys(diff).map(r => {
             let tmp = (avg - diff[r])
             return (
-                <tr>
+                <tr key={r}>
                     <td>{r}</td>
                     <td>{diff[r]}</td>
                     <td>{tmp < 0? 

@@ -160,8 +160,8 @@ const RenderdCategory = () => {
     const categoriesRendered = categories.map((r) => {
         i++;
         return (
-            <tr>
-                <th>{i}</th>
+            <tr key={r.id}>
+                <td>{i}</td>
                 <td>{r.category_name}</td>
                 <td>
                     <Button color="primary" onClick={() => { setaddModalC(!addModalC); setType("update"); setCurrent(r) }} ><i className='fa fa-refresh'></i></Button>

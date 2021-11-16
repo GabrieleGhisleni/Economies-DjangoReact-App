@@ -22,7 +22,7 @@ const Registry = () => {
     const [addModalS, setaddModalS] = useState(false)
     const [iModal, setInfoModal] = useState(false)
 
-    const renderdCategories = categories.map(c => { return <option value={c.id}>{c.category_name}</option> })
+    const renderdCategories = categories.map(c => { return <option key={c.id} value={c.id}>{c.category_name}</option> })
 
     const Info = () => {
         const member__name = current? members.find((c) => c.id == current.made_by):null
@@ -153,9 +153,9 @@ const Registry = () => {
                 .catch(e => 
                     toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})) //console.log
         }
-        const renderedMembers = members.map((m) => { return <option value={m.id}>{m.member_name}</option> });
+        const renderedMembers = members.map((m) => { return <option key={m.id} value={m.id}>{m.member_name}</option> });
         const selectedSub = subcategories.filter(sb => sb.primary_category == formik.values.category_associated)
-        const renderedSubCategories = selectedSub.map((m) => { return <option value={m.id}>{m.sub_category_name}</option> });
+        const renderedSubCategories = selectedSub.map((m) => { return <option key={m.id} value={m.id}>{m.sub_category_name}</option> });
         return (
             <Modal isOpen={addModalS} toggle={() => setaddModalS(!addModalS)}>
                 <ModalHeader close={<button className="close" onClick={() => setaddModalS(!addModalS)}>×
@@ -377,7 +377,7 @@ const Registry = () => {
     const recordsRendered = filteredRecords.map((r) => {
         i++;
         return (
-            <tr>
+            <tr key={r.id}>
                 <td>{i}</td>
                 <td>{r.record_name}</td>
                 <td>{r.price}</td>

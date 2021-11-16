@@ -13,7 +13,7 @@ const LogoutForm = () => {
 
     return (
         <React.Fragment>
-            <NavItem className>
+            <NavItem>
                 <NavLink to='#' className='nav-link' onClick={handleLogout}>
                     Logout
                 </NavLink>

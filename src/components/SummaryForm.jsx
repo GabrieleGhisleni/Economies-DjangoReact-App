@@ -9,14 +9,15 @@ import toast, { Toaster } from 'react-hot-toast';
 const RecordForm = () => {
   const dispatch = useDispatch()
   const token = useSelector((state) => state.auth.token);
+  const BASE_URL = useSelector(state => state.members.base_url)
   const members = useSelector((state) => state.members.members);
-  const headers = { "Authorization": `Bearer ${token}` }
   const categories = useSelector((state) => state.members.categories);
   const subCategories = useSelector((state) => state.members.subcategories);
+  const headers = { "Authorization": `Bearer ${token}` }
+  const url = `${BASE_URL}/api/records/`   
+  
   const [alert, setAlert] = useState(false)
   const [redAlert, setRedAlert] = useState(false)
-  const BASE_URL = useSelector(state => state.members.base_url)
-  const url = `${BASE_URL}/api/records/`   
 
   const formik = useFormik({
     initialValues: {
@@ -81,10 +82,10 @@ const RecordForm = () => {
         try {if (err.e.response.data.forbidden.includes("exceeded")) alert('Max Members Exceeded')}
         catch{}})}
 
-  const renderdCategories = categories.map(c => { return <option value={c.id}>{c.category_name}</option> })
+  const renderdCategories = categories.map(c => { return <option key={c.id} value={c.id}>{c.category_name}</option> })
   const selectedSub = subCategories.filter(sb => sb.primary_category == formik.values.category)
-  const renderedSubCategories = selectedSub.map((m) => { return <option value={m.id}>{m.sub_category_name}</option> });
-  const renderedMembers = members.map((m) => { return <option value={m.id}>{m.member_name}</option> });
+  const renderedSubCategories = selectedSub.map((m) => { return <option key={m.id} value={m.id}>{m.sub_category_name}</option> });
+  const renderedMembers = members.map((m) => { return <option key={m.id} value={m.id}>{m.member_name}</option> });
   
   const alertButton = "rgba(154, 255, 154,0.6)"
   const alertRedButton = "rgba(126, 25, 25,0.7)"
@@ -107,11 +108,11 @@ const RecordForm = () => {
                 type="select"
                 name="member"
                 id="member"
-                value={formik.values.member}
+                value={formik.values.member || ''}
                 onChange={formik.handleChange}
                 className='form-control'
               >
-                {members[0]? <div></div>:  <option value={-1}> None </option>}
+                {members[0]? null:  <option value={-1}> None </option>}
                 {renderedMembers}
               </Input>
             </Col>
@@ -133,7 +134,7 @@ const RecordForm = () => {
                 id="title"
                 type="text"
                 onChange={formik.handleChange}
-                value={formik.values.title}
+                value={formik.values.title || ''}
                 required
                 placeholder="Give a Title"
               />
@@ -152,7 +153,7 @@ const RecordForm = () => {
                 id="price"
                 type="number"
                 onChange={formik.handleChange}
-                value={formik.values.price}
+                value={formik.values.price || ''}
                 placeholder="Give a Price"
                 required
               />
@@ -195,7 +196,7 @@ const RecordForm = () => {
                   formik.handleChange(e);
                   formik.values.sub_category = -1;
                 }}
-                value={formik.values.category}
+                value={formik.values.category || ''}
                 className='form-control'
                 required
               >
@@ -223,7 +224,7 @@ const RecordForm = () => {
                 id="sub_category"
                 type="select"
                 onChange={(e) => { formik.handleChange(e); }}
-                value={formik.values.sub_category}
+                value={formik.values.sub_category || ''}
                 className='form-control'
               >
                 <option value={""}> None </option>

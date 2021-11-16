@@ -4,8 +4,7 @@ body {
   font-family: "Merriweather", serif !important; }
 
 .home-container {
-  min-height: calc(100vh - 240px);
-  width: 100%; }
+  min-height: calc(100vh - 240px); }
 
 .chart-row {
   margin-top: 25px; }
@@ -120,7 +119,7 @@ body {
   margin-top: 15px;
   background-color: #f0bf76 !important;
   font-weight: 600;
-  padding-bottom: 30px;
+  padding-bottom: 15px;
   color: black;
   min-height: 50px; }
   .myFooter .Icons {

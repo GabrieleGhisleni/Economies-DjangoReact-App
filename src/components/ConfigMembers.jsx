@@ -166,8 +166,8 @@ const RenderMember = () => {
     const membersRendered = members.map((r) => {
         i++;
         return (
-            <tr>
-                <th>{i}</th>
+            <tr key={r.id}>
+                <td>{i}</td>
                 <td>{r.member_name}</td>
                 <td>
                     <Button color="primary" onClick={() => { setaddModal(!addModal); setType("update"); setCurrent(r) }} ><i className='fa fa-refresh'></i></Button>

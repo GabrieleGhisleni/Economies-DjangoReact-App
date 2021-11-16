@@ -28,7 +28,7 @@ const StatsCategory = (data) => {
 
     var i = 0;
     const colorCategory = [];
-    Object.keys(unique_category).forEach(m => { colorCategory.push(<Bar dataKey={unique_category[m]} stackId='a' fill={SECOND_COLORS[i]} />); i++ })
+    Object.keys(unique_category).forEach(m => { colorCategory.push(<Bar key={m} dataKey={unique_category[m]} stackId='a' fill={SECOND_COLORS[i]} />); i++ })
     return (
         <ResponsiveContainer width="99%" aspect={1}>
             <BarChart
