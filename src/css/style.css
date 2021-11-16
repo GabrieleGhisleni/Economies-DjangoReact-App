@@ -69,23 +69,19 @@ body {
   padding: 10px;
   margin: 15px; }
 
-.default-container {
-  min-height: calc(100vh - 70px - 140px);
-  padding: 35px !important;
-  margin-top: 35px; }
-  .default-container .login-register-button {
-    margin: 20px 0; }
-    .default-container .login-register-button .login-register {
-      background-color: #f0bf76 !important; }
-      .default-container .login-register-button .login-register a {
-        color: #346288; }
-  .default-container .home-description {
+.login-register-button {
+  margin: 20px 0; }
+  .login-register-button .login-register {
+    background-color: #f0bf76 !important; }
+    .login-register-button .login-register a {
+      color: #346288; }
+  .login-register-button .home-description {
     text-align: left !important; }
-  .default-container .iframe {
+  .login-register-button .iframe {
     text-align: center;
     margin: 10px;
     border-radius: 20px !important; }
-  .default-container .img-home {
+  .login-register-button .img-home {
     border-radius: 10px; }
 
 .err {

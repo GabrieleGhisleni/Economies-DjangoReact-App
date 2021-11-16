@@ -7,7 +7,7 @@ import React from "react";
 const Default = () => {
 
     return (
-        <Container >
+        <Container className="default-container">
             <Row className='align-items-center' style={{ minHeight: "calc(100vh - 180px)"}}>
                 <Col xs={12} sm={6}>
                     <h3 style={{ textAlign: "center", marginBottom: "20px" }}>Gestici le tue Economie SMART!</h3>

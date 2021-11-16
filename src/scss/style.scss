@@ -94,10 +94,7 @@ body{
 }
 
 
-.default-container{
-    min-height: calc(100vh - 70px - 140px);
-    padding:35px!important;
-    margin-top: 35px;
+
     .login-register-button{
         margin: 20px 0;
         .login-register{
@@ -107,7 +104,7 @@ body{
                 ;
             }
         }
-    }
+    
     .home-description{
         text-align: left!important;
     }
