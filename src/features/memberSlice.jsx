@@ -34,8 +34,7 @@ export const memberSlice = createSlice({
             state.categories.push(action.payload)
         },
         removeCat: (state, action) => {
-            state.records = state.records.filter((r) => r.category_associated == action.payload)
-            state.records.forEach((r) => {r.category_associated = null})
+            state.records.forEach((r) => { if (r.category_associated == action.payload) r.category_associated = null} )
             state.categories = state.categories.filter((subc) => subc.id != action.payload)
         },
         updateCat: (state, action) => {
@@ -50,8 +49,7 @@ export const memberSlice = createSlice({
             state.subcategories.push(action.payload)
         },
         removeSub: (state, action) => {
-            state.records = state.records.filter((r) => r.sub_category_associated == action.payload)
-            state.records.forEach((r) => {r.sub_category_associated = null})
+            state.records.forEach((r) => { if (r.sub_category_associated == action.payload) r.sub_category_associated = null} )
             state.subcategories = state.subcategories.filter((subc) => subc.id != action.payload)
         },
         updateSub: (state, action) => {

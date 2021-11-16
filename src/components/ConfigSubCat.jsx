@@ -188,6 +188,14 @@ const RenderdSubCat = () => {
 
 
     let i = 0;
+
+    function sortSub(a,b){
+        if (a.primary_category < b.primary_category) return -1
+        if (a.primary_category > b.primary_category) return 1
+        return 0
+    }
+    
+    subcategories.sort(sortSub)
     const subcategoriesRendered = subcategories.map((r) => {
         i++;
         let catname = categories.find(c => c.id == r.primary_category)
@@ -203,7 +211,6 @@ const RenderdSubCat = () => {
             </tr>
         );
     });
-
     return (
         <Row className='confRow'>
             <AddModal />

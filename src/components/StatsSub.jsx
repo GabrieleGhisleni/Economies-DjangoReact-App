@@ -55,17 +55,21 @@ const StatsSubCategory = (data) => {
 
     let i = 0
     let j = 0
+
+
     Object.keys(dataCate).forEach(k => {
         dataMain.push({ name: k, value: dataCate[k] })
         main_color.push(<Cell key={`cell-${i}`} fill={COLORS[i]} />);
         i++
         Object.keys(dataSub[k]).forEach(kk => {
             dataSec.push({ name: kk, value: dataSub[k][kk] })
+    
             sec_color.push(<Cell key={`cell-${j}`} fill={SECOND_COLORS[j]} />);
             j++
 
         })
     })
+
 
     var rateo = 2.5
     if (window.innerWidth < 1000) { rateo = 1.5}
@@ -97,16 +101,10 @@ const StatsSubCategory = (data) => {
                         backgroundColor: "peachpuff",
                     }}
                 />
-                {window.innerWidth < 800 ?
+                
                     <Legend
                         margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
-                        layout='horizontal' align='center' verticalAlign='bottom' iconSize={10} /> :
-                    <Legend
-                   
-                        layout="vertical"
-                        align="left"
-                        verticalAlign="middle"
-                        iconSize={20} />}
+                        layout='horizontal' align='center' verticalAlign='bottom' iconSize={10} /> 
             </PieChart>
         </ResponsiveContainer>
     )
