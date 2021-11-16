@@ -34,13 +34,20 @@ export const memberSlice = createSlice({
             state.categories.push(action.payload)
         },
         removeCat: (state, action) => {
-            state.records.forEach((r) => { if (r.category_associated == action.payload) r.category_associated = null} )
-            state.categories = state.categories.filter((subc) => subc.id != action.payload)
+            if (action.payload.save !== -1){state.records.forEach((r) => { 
+                if (r.category_associated === action.payload.values) r.category_associated = Number(action.payload.save)
+             })}
+            else {state.records = state.records.filter((r) => r.category_associated != action.payload.values)}
+            state.subcategories = state.subcategories.filter((subc) => subc.primary_category != action.payload.values)
+            state.categories = state.categories.filter((subc) => subc.id != action.payload.values)
         },
         updateCat: (state, action) => {
             const index = state.categories.findIndex((el) => el.id === action.payload.values.data.id)
             state.categories[index] = action.payload.values.data
         },
+
+
+
         // subcategories
         setSubCategory: (state, action) => {
             state.subcategories = action.payload
@@ -49,7 +56,7 @@ export const memberSlice = createSlice({
             state.subcategories.push(action.payload)
         },
         removeSub: (state, action) => {
-            state.records.forEach((r) => { if (r.sub_category_associated == action.payload) r.sub_category_associated = null} )
+            state.records.forEach((r) => { if (r.sub_category_associated == action.payload) r.sub_category_associated = null})
             state.subcategories = state.subcategories.filter((subc) => subc.id != action.payload)
         },
         updateSub: (state, action) => {

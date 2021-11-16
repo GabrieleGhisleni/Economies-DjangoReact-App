@@ -16,9 +16,10 @@ const RenderdCategory = () => {
     const [type, setType] = useState("delete")
     const [addModalC, setaddModalC] = useState(false)
 
+
     const AddModalS = () => {
         const formik = useFormik({
-            initialValues: { category_name: "" },
+            initialValues: { category_name: "", save: -1 },
             onSubmit: (values, { resetForm }) => {
                 values.category_name = values.category_name.charAt(0).toUpperCase() + values.category_name.slice(1);
                 setaddModalC(!addModalC)
@@ -27,7 +28,7 @@ const RenderdCategory = () => {
                         addCategory(values.category_name);
                         break;
                     case "delete":
-                        deleteCategory(current.id);
+                        deleteCategory(current.id, values.save);
                         break;
                     default:
                         modifyCategory(current.id, values.category_name);
@@ -55,7 +56,7 @@ const RenderdCategory = () => {
             })
         }
 
-        function deleteCategory(id) {
+        function deleteCategory(id, save) {
             var config = {
                 method: 'delete',
                 url: url,
@@ -63,7 +64,7 @@ const RenderdCategory = () => {
                 data: { id: id }
             };
             axios(config)
-             .then(() => {dispatch(memberSlice.actions.removeCat(current.id))
+             .then(() => {dispatch(memberSlice.actions.removeCat({values: current.id, save}))
                 toast.success('Successfully delete!', { duration: 4000, position: 'top-center',})})
                 .catch(e =>  toast.error('Something went wrong!', {duration: 4000, position: 'top-center',})({ e })) //console.log
         }
@@ -135,6 +136,25 @@ const RenderdCategory = () => {
                                 </Row> :
                                 <Row className="text-center">
                                     <Col xs={12}>
+                                        <span>
+                                        Eliminating the category means that all the records associated
+                                        with it will be delated, do you want to assign the records to another 
+                                        category and save them?
+                                        </span>
+                                            <Col xs={12}>
+                                                <Input
+                                                    className='form-control'
+                                                    name="save"
+                                                    id="save"
+                                                    type="select"
+                                                    onChange={formik.handleChange}
+                                                    value={formik.values.save}>
+                                                    <option value={-1}>No, delete all the records</option>
+                                                    {renderdCategories_list}
+                                                </Input>
+                                            </Col>
+                                    </Col>
+                                    <Col xs={12}>
                                         <Button type="submit" className='subButton' color='danger'>
                                             Delete Category
                                         </Button>
@@ -152,6 +172,7 @@ const RenderdCategory = () => {
 
 
     const categories = useSelector(state => state.members.categories)
+    const renderdCategories_list = categories.map(c => {return <option key={c.id} value={c.id}>{c.category_name}</option>})
     const [current, setCurrent] = useState({})
     // if (current.lenght > 0) {setCurrent(current[0])}
 
