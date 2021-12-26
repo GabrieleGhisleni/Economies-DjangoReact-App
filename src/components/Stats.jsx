@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import React, { useState } from "react";
 import { Col, Container, Input, Label, Row, Table } from "reactstrap";
 import calculateWith from "./container_width";
-import exportToJson from "./download";
+
 
 const Stats = () => {
     const records_o = useSelector((state) => state.members.records);
