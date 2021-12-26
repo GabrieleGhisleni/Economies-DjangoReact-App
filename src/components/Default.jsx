@@ -1,13 +1,13 @@
 import { Row, Col, Container, List, ListInlineItem, Button } from "reactstrap";
-import Iframe from "react-iframe";
+import calculateWith from "./container_width";
 import LoginModal from "./Login";
 import RegisterForm from "./Register";
 import React from "react";
 
 const Default = () => {
-
+    let myWidth = calculateWith(window.innerWidth);
     return (
-        <Container className="default-container">
+        <Container fluid style={{width: myWidth}} className="default-container">
             <Row className='align-items-center' style={{ minHeight: "calc(100vh - 180px)"}}>
                 <Col xs={12} sm={6}>
                     <h3 style={{ textAlign: "center", marginBottom: "20px" }}>Gestici le tue Economie SMART!</h3>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Button, NavItem } from 'reactstrap'
+import { Row, Col, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Button, NavItem } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector} from 'react-redux';
@@ -11,10 +11,10 @@ import axios from 'axios';
 const RegisterForm = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [modal, setModal] = useState(false)
-    const [col, setCol] = useState('white')
-    const [notavailable, setnotavailable] = useState(<div></div>)
-    const BASE_URL = useSelector(state => state.members.base_url)
+    const [modal, setModal] = useState(false);
+    const [col, setCol] = useState('white');
+    const [notavailable, setnotavailable] = useState(<div></div>);
+    const BASE_URL = useSelector(state => state.members.base_url);
 
     const register = (username, password, email) => {
 

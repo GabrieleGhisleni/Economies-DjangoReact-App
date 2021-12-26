@@ -6,23 +6,24 @@ import {
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { memberSlice } from './../features/memberSlice'
+import { memberSlice } from './../features/memberSlice';
 import toast, { Toaster } from 'react-hot-toast';
+import calculateWith from "./container_width";
 
 const Registry = () => {
     var axios = require("axios")
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
-    const categories = useSelector(state => state.members.categories)
-    const headers = { Authorization: `Bearer ${token}` }
-    const BASE_URL = useSelector(state => state.members.base_url)
-    const url = `${BASE_URL}/api/records/`   
+    const categories = useSelector(state => state.members.categories);
+    const headers = { Authorization: `Bearer ${token}` };
+    const BASE_URL = useSelector(state => state.members.base_url);
+    const url = `${BASE_URL}/api/records/`;
 
-    const [type, setType] = useState("update")
-    const [addModalS, setaddModalS] = useState(false)
-    const [iModal, setInfoModal] = useState(false)
+    const [type, setType] = useState("update");
+    const [addModalS, setaddModalS] = useState(false);
+    const [iModal, setInfoModal] = useState(false);
 
-    const renderdCategories = categories.map(c => { return <option key={c.id} value={c.id}>{c.category_name}</option> })
+    const renderdCategories = categories.map(c => { return (<option key={c.id} value={c.id}>{c.category_name}</option>); })
 
     const Info = () => {
         const member__name = current? members.find((c) => c.id == current.made_by):null
@@ -394,9 +395,9 @@ const Registry = () => {
             </tr>
         );
     });
-
+    let myWidth = calculateWith(window.innerWidth);
     return (
-        <Container>
+        <Container fluid style={{width:myWidth}}>
             < Toaster/>
             {current? <Info />:null}
            {current?  <AddModal />: null}

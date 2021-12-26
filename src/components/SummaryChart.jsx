@@ -39,8 +39,6 @@ const SummaryChart = () => {
     ];
 
     const myRecord = {};
-    console.log('records', records)
-    console.log('categories', categories)
     records.forEach((r) => {
         
         let date = new Date(r.created_at)
@@ -102,8 +100,7 @@ const SummaryChart = () => {
                                 endAngle={360}
                                 innerRadius={window.innerWidth < 500 ? 40 : 110}
                                 paddingAngle={1}
-                                label={window.innerWidth < 500 ? false : label}
-                            >
+                                label={window.innerWidth < 500 ? false : label}>
                                 {cell_color}
                                 <Label width={30} position="center">
                                     {`Tot ${tot}`}

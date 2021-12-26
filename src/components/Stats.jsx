@@ -4,6 +4,7 @@ import StatsSubCategory from "./StatsSub";
 import { useSelector } from "react-redux";
 import React, { useState } from "react";
 import { Col, Container, Input, Label, Row, Table } from "reactstrap";
+import calculateWith from "./container_width";
 
 const Stats = () => {
     const records_o = useSelector((state) => state.members.records);
@@ -21,17 +22,17 @@ const Stats = () => {
     const [shared, setShared] = useState("true");
 
     const renderdCategories = categories.map((c) => {
-        return <option key={c.id} value={c.id}>{c.category_name}</option>;
+        return (<option key={c.id} value={c.id}>{c.category_name}</option>);
     });
 
     var set_category = new Set()
     records.forEach((r) => {
-        r.created_at = new Date(r.created_at)
-        set_category.add(r.category_associated)
+        r.created_at = new Date(r.created_at);
+        set_category.add(r.category_associated);
     })
 
 
-    if (category && category != -1) { records = records.filter((r) => r.category_associated == category) }
+    if (category && category != -1) { records = records.filter((r) => r.category_associated == category); };
     records = records.filter(
         (r) =>
             r.created_at <= new Date(firstdate) &&
@@ -81,9 +82,9 @@ const Stats = () => {
             </Table>)
     }
 
-   
+    let myWidth = calculateWith(window.innerWidth)
     return (
-        <Container className="dashboard">
+        <Container fluid style={{width:myWidth}} className="dashboard">
             <Row className="text-center">
                 <Col>
                     <h2 className="dashboard-title">
