@@ -72,7 +72,9 @@ const StatsSubCategory = (data) => {
 
 
     var rateo = 2.5
-    if (window.innerWidth < 1000) { rateo = 1.5}
+    if (window.innerWidth < 2000) { rateo=2}
+    if (window.innerWidth < 1000) { rateo=1.5}
+    if (window.innerWidth < 900) { rateo=1.2}
     if (window.innerWidth < 800) { rateo=1}
     if (window.innerWidth < 600) { rateo=0.9}
     if (window.innerWidth < 500) { rateo=0.8}
@@ -81,12 +83,12 @@ const StatsSubCategory = (data) => {
     return (
         <ResponsiveContainer width="99%" aspect={rateo}>
             <PieChart>
-                <Pie data={dataMain} dataKey="value"
+                {/* <Pie data={dataMain} dataKey="value"
                 paddingAngle={1}
                  outerRadius={120}
                  fill="#8884d8" >
-                {/* {main_color} */}
-                </Pie>
+
+                </Pie> */}
                 <Pie data={dataSec} 
                 paddingAngle={1}
                 dataKey="value" 

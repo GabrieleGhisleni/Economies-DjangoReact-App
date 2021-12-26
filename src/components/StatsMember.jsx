@@ -31,7 +31,9 @@ const StatsMember = (data) => {
 
     var i = 0;
     const colorBar = [];
-    Object.keys(unique_member).forEach(m => { colorBar.push(<Bar key={m} dataKey={unique_member[m]} fill={COLORS[i]}><LabelList dataKey={unique_member[m]} position="top" /></Bar>); i++ })
+    Object.keys(unique_member).forEach(m => { colorBar.push(<Bar key={m} dataKey={unique_member[m]} fill={COLORS[i]}>
+        {/* <LabelList dataKey={unique_member[m]} position="top" /> */}
+        </Bar>); i++ })
     const max = Math.max.apply(Math, dataMember.map(function(o) { return o.tot; }))
     return (
         <ResponsiveContainer width="99%" aspect={1}>
