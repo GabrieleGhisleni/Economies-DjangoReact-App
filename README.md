@@ -1,7 +1,4 @@
-# Django-React App
+# Economies
 
-Auth system jwt
-Redux toolkit
-Axios
-
-django serializers 
+django react application with auth system
+readme in progress ... 
